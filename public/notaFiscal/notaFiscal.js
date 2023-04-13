@@ -20,6 +20,7 @@ $(document).ready(function () {
   const clickEvent = new MouseEvent('click');
   toggle.dispatchEvent(clickEvent);
     dataAtual()
+    const boleto = document.querySelector("#boleto");
     const fileInput = document.querySelector("#fileInput");
     const enviarNF = document.querySelector("#enviarNF");
     const downloadArquivoNF = document.getElementById("baixar");
@@ -29,7 +30,12 @@ $(document).ready(function () {
     const files = event.target.files;
     arquivoAnexo = files[0]
     NomeArquivoSemAcento = fileInput.value.replace('C:\\fakepath\\','').normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-    // var NomeArquivoSemAcento = arquivoAnexo.innerText.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    });
+
+  boleto.addEventListener("change", event => {
+    const boletofiles = event.target.files;
+    boletoAnexo = boletofiles[0]
+    boletoNomeArquivoSemAcento = boleto.value.replace('C:\\fakepath\\','').normalize('NFD').replace(/[\u0300-\u036f]/g, "");
     });
 
     enviarNF.addEventListener("click", function(){
@@ -240,6 +246,7 @@ async function insertNota() {
             "possuiColaborador": setColaborador,
             "Colaborador": colaboradorNome,
             "Anexo": NomeArquivoSemAcento,
+            "Boleto": boletoNomeArquivoSemAcento,
             "codigoSolicitacao": codigoSolicitacao
 
 
@@ -257,6 +264,7 @@ async function insertNota() {
         })
 
         uploadFile(arquivoAnexo, codigoRetornoNF, NomeArquivoSemAcento)
+        uploadFile(boletoAnexo, codigoRetornoNF, boletoNomeArquivoSemAcento)
 
         limparCampos()
 }
@@ -380,14 +388,14 @@ function validarCampoData(valorCampoDataPagamento){
         labelObrigatorio.setAttribute('class','obrigatorio-DataPagamento');
         labelObrigatorio.textContent = '* Prazo padrão para pagamento de 10 dias após o envio da NF';
         campoObrigatorio.appendChild(labelObrigatorio)
-        listaErros.push('DataPagamentoInvalida')
+        // listaErros.push('DataPagamentoInvalida')
 
     }else if(valorCampoDataPagamento >= dataAtualConf && erroDataMenor){
 
         var camposObr = document.querySelector('.obrigatorio-DataPagamento')
         camposObr.remove()
         erroDataMenor = false
-        listaErros.splice(listaErros.indexOf('DataPagamentoInvalida'), 1);
+        // listaErros.splice(listaErros.indexOf('DataPagamentoInvalida'), 1);
     }
 }
 

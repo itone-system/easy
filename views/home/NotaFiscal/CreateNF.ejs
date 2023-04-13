@@ -217,14 +217,24 @@
                     <div id="app"></div>
                 <!-- <form action="/uploadNF" enctype="multipart/form-data" method="POST"> -->
                   <div class="row g-3"  style="margin-top: 1%;">
-
-                  <div class="col fileInput">
+                  <div class="col-lg-2  fileInput">
+                    <label>Anexar Nota Fiscal:</label>
 
                   <div class="form-group anexo" style="margin-top: 1%; font-size: 13px">
                     <input type="file" name="file" class="form-control-file" id="fileInput">
                   </div>
 
                 </div>
+
+                <div class="col-lg-2  boleto">
+                  <label>Anexar  boleto:</label>
+
+                  <div class="form-group anexo" style="margin-top: 1%; font-size: 13px">
+                    <input type="file" name="file" class="form-control-file" id="boleto">
+                  </div>
+
+                </div>
+
               </div>
               <button id="enviarNF"  value="upload" type="submit" class="btn btn-success"  style="margin-top: 1%;">Salvar</button>
 
