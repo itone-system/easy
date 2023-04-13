@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../partials/head', { title: 'Nota Fiscal' } ) %>
+
+    <script src="../../public/notaFiscal/notaFiscal.js"></script>
+
+    <link rel="stylesheet" href="../../public/notaFiscal/notaFiscal.css">
+    <link rel="stylesheet" href="../../../public/global.css">
+
+
+    <body>
+
+        <%- include('../../components/menu', { } ) %>
+
+            <section class="home">
+                <%- include('../../components/navbar', { usuario: 'Gustavo' } ) %>
+
+
+
+                <main class="text">
+
+                    <h2 style="border-bottom: 1px solid #120947; margin-bottom: 20px; margin-top: 40px; padding: 13px 0">Envio de Documentos</h2>
+                    <p> </p>
+                    <h5 style="margin-bottom: 0px; padding: 13px 0">Dados do Solicitante</h5>
+                    <div class="row g-3">
+                      <div class="col Solicitante">
+                        <label>Solicitante:</label>
+                        <% if(dados.solicitante) { %>
+
+                          <input value="<%= dados.solicitante%>" name="Solicitante" id="Solicitante" for="Solicitante" type="text" class="form-control" readonly>
+
+                          <% } else {%>
+
+
+                            <input value="<%= nome%>" name="Solicitante" id="Solicitante" for="Solicitante" type="text" class="form-control" readonly>
+                            <%}%>
+
+                      </div>
+
+                      <div class="col CentroCusto">
+                        <label>Centro de Custo:</label>
+                        <select name="CentroCusto" id="CentroCusto" class="form-control">
+                          <% if(dados.centroCusto) { %>
+
+                            <option selected><%= dados.centroCusto%></option>
+
+
+                            <% } else {%>
+
+                              <option selected></option>
+
+                              <%}%>
+                        </select>
+                      </div>
+
+                      <p> </p>
+
+                    </div>
+
+                    <h5 style="margin-bottom: 13px; margin-top: 40px">Dados do Serviço:</h5>
+
+
+                    <div class="row g-3">
+                      <div class="col Fornecedor">
+                        <label>Fornecedor:</label>
+                        <input name="Fornecedor"  id="Fornecedor" for="Fornecedor" type="text" class="form-control" placeholder="Fornecedor">
+                      </div>
+
+                      <p> </p>
+                      <div class="col DescServico">
+                        <label>Descrição do Serviço:</label>
+                        <% if(dados.descricao) { %>
+
+                          <input name="DescServico"  id="DescServico" for="DescServico" type="text" class="form-control" placeholder="descrição" value="<%= dados.descricao%>">
+
+                          <% } else {%>
+
+
+                            <input name="DescServico"  id="DescServico" for="DescServico" type="text" class="form-control" placeholder="Descrição Serviço">
+
+                            <%}%>
+                      </div>
+
+                      <p> </p>
+                      <div class="col TipoContrato">
+                        <label>Tipo Contrato:</label>
+                        <select name="TipoContrato"  id="TipoContrato" class="form-control">
+                          <option selected></option>
+                          <option >Pagamento Avulso</option>
+                          <option>Recorrente</option>
+                        </select>
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+
+
+                    <p> </p>
+
+                    <h5 style="margin-bottom: 0px; margin-top: 40px">Dados de Pagamento:</h5>
+
+                    <p> </p>
+
+
+
+
+                    <div class="row g-3" >
+                      <!-- <div class="col DadosPagamento">
+                        <label>Tipo:</label>
+                        <select name="DadosPagamento" id="DadosPagamento" class="form-control">
+                          <option selected></option>
+                          <option>Boleto</option>
+                          <option>Pix</option>
+                          <option>Transfêrencia</option>
+                          <option>Cartão de Crédito</option>
+                        </select>
+                      </div> -->
+
+                      <p> </p>
+                      <div class="col-lg-2 valorNF">
+                        <label>Valor:</label>
+                        <% if(dados.valor) { %>
+
+                          <input name="valorNF" maxlength="9" onkeyup="formatarMoeda()" id="valorNF" type="text" class="form-control" placeholder="valor" value="<%= dados.valor%>">
+                          <% } else {%>
+
+
+                            <input name="valorNF" maxlength="9" onkeyup="formatarMoeda()" id="valorNF" type="text" class="form-control" placeholder="0,00">
+
+                            <%}%>
+
+                      </div>
+
+                      <p> </p>
+                      <div class="col-lg-2  DataPagamento"  >
+                        <label>Data de Pagamento:</label>
+                        <input name="DataPagamento"  id="DataPagamento" min="13-02-2023" for="DataPagamento" type="date" class="form-control">
+
+                      </div>
+
+                      <div class="col-6  DataPagamentoInvalida" style="margin-top: 3%" >
+
+
+                      </div>
+
+
+                    </div>
+                    <p> </p>
+
+
+                    <div class="row g-3" style="margin-right: 5%;">
+                      <div class="col-lg-2 Deal">
+                        <label>Deal:</label>
+                        <% if(dados.deal) { %>
+                          <input min="0" name="Deal" id="Deal" for="Deal" type="number" class="form-control" placeholder="deal" value="<%= dados.deal%>">
+
+
+                          <% } else {%>
+
+
+                            <input min="0" name="Deal" id="Deal" for="Deal" type="number" class="form-control" placeholder="Deal">
+
+                            <%}%>
+                      </div>
+
+                      <div class="col" style="margin-top: 3%;">
+
+                       <a style="font-size: 10.5px; "> Identifique a oportunidade no SAP para esta solicitação ou utilize 1 caso não haja referência   </a>
+
+                    </div>
+
+                  </div>
+                  <p> </p>
+
+                    <div class="row g-3">
+                    <div class="col Observacao">
+                      <label>Observações:</label>
+                      <% if(dados.observacao) { %>
+
+                        <input  id="Observacao" type="text" class="form-control" placeholder="observacao" aria-label="First name" value="<%= dados.observacao%>">
+
+                        <% } else {%>
+
+
+
+                          <input  id="Observacao" type="text" class="form-control" placeholder="Observações" aria-label="First name">
+                          <%}%>
+                    </div>
+                  </div>
+
+                  <p></p>
+
+                          <label style="margin-top: 2%;">Vincular algum colaborador?</label>
+                          <p></p>
+                          <div class="row g-3" style="margin-right: 90%;">
+                            <div class="col">
+
+                         <input    onclick="adicionarCampoColaborador()" type="radio" id="Sim" name="radioColab" value="Sim">
+                         <label for="Sim">Sim</label><br>
+                        </div>
+                        <div class="col">
+
+                        <input    onclick="removerCampoColaborador()" type="radio" id="Não" name="radioColab" value="Não" checked>
+                         <label for="Não">Não</label><br>
+                     </div>
+                    </div>
+
+
+
+                    <div id="campoColaborador" style="margin-right: 70%;">
+
+
+
+                    </div>
+
+
+                    <div id="app"></div>
+                <!-- <form action="/uploadNF" enctype="multipart/form-data" method="POST"> -->
+                  <div class="row g-3"  style="margin-top: 1%;">
+
+                  <div class="col fileInput">
+
+                  <div class="form-group anexo" style="margin-top: 1%; font-size: 13px">
+                    <input type="file" name="file" class="form-control-file" id="fileInput">
+                  </div>
+
+                </div>
+              </div>
+              <button id="enviarNF"  value="upload" type="submit" class="btn btn-success"  style="margin-top: 1%;">Salvar</button>
+
+                </div>
+
+                <input type="text" name="codigo" id="codigoSolicitacao" value="<%= dados.codigo  %>" hidden>
+
+            <!-- </form> -->
+
+
+                      <!-- <button onclick="validarCampos()" class="button button2" type="submit"  role="button" id="botao-solicitar" style="margin-left: 0%;">Solicitar</button> -->
+
+
+
+
+
+                  </main>
+            </section>
+
+
+
+    </body>
+
+</html>

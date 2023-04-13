@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head', { title: 'Login' } ) %>
+
+  <script src="/public/login/index.js"></script>
+  <link rel="stylesheet" href="/public/login/index.css">
+
+  <body>
+    <div class="d-flex flex-column-reverse">
+      <%- include('../components/flash', message) %>
+    </div>
+
+
+    <div class="container" id="container">
+      <div class="form-container sign-in-container">
+        <form id="form" action="<%=locals.endpoints.login%>" method="post">
+          <h1>Entrar</h1>
+          <input type="text" placeholder="Usuario" name="usuario" />
+          <input type="password" placeholder="Senha" name="senha" />
+          <a href="#" data-toggle="modal" data-target="#myModal" aria-hidden="true">Primeiro Acesso? Clique Aqui.</a>
+          <button type="submit">Entrar</button>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-right">
+            <img src="../../public/Fotos/it-one.png" id="foto">
+            <br>
+            <h1 id="ola">Olá!</h1>
+            <br>
+            <p id="informe">Informe seu usuário e senha para entrar na plataforma</p>
+            <br>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-footer">
+    </div>
+
+    <div class="modal fade" id="myModal" role="dialog">
+      <form action="<%=locals.endpoints.trocarSenha%>" method="post">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Altere sua senha</h4>
+              <button type="button" class="close" data-dismiss="modal"><i class='bx bx-x'></i></button>
+            </div>
+
+            <div style="padding: 20px">
+
+              <div class="form-group">
+                <label>Usuário:</label>
+                <input type="text" placeholder="Usuário" name="usuario">
+                <label>Nova Senha:</label>
+                <input type="password" placeholder="Senha" name="senha">
+                <label>Confirmação de Senha:</label>
+                <input type="password" placeholder="Confirmação" name="confirmacao">
+              </div>
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="submit" class="button">Salvar</button>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+
+</html>

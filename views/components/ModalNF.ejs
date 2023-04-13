@@ -1,0 +1,135 @@
+<div class="modal fade" id="myModal" style="font-size:14px">
+
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Detalhamento</h4>
+      </div>
+
+      <!-- Modal body -->
+      <div id="modalBody" class="modal-body">
+        <div>
+
+     <!-- GAMBIARRA MODAL -->
+     <label id="CodigoNF" style="color: #ffffff; display: none; "><%= codigoToken %></label>
+     <label id="retornarNFUser" style="color: #ffffff; display: none; "><%= retornoUser.RETORNAR %></label>
+
+     <div class="dados-modal">
+          <div class="row g-3">
+          <div class="col Solicitacao">
+            <label>N° Solicitação: </label>
+            <input id="NumeroSolicitacaoModal" type="text" name="NumeroSolicitacaoModal" for="NumeroSolicitacao"  style="margin-bottom: 10%; font-size:13px" type="text" class="form-control" readonly>
+
+          </div>
+
+          <div class="col Solicitante">
+              <label>Solicitante: </label>
+              <input id="ModSolicitante" type="text" name="ModSolicitante"  for="Solicitante" style="margin-bottom: 10%; font-size:13px" type="text" class="form-control" readonly>
+              </div>
+        </div>
+        <div class="row g-3">
+        <div class="col Fornecedor">
+          <label>N° Fornecedor:</label>
+          <input id="ModFornecedor" name="ModFornecedor"  for="Fornecedor" style="margin-bottom: 10%; font-size:13px" type="text" class="form-control" readonly>
+
+        </div>
+
+        <div class="col Descricao">
+            <label>Descricao:</label>
+            <input id="ModDescricao" name="ModDescricao"  for="Descricao" style="margin-bottom: 10%; font-size:13px"  type="text" class="form-control"  readonly>
+            </div>
+      </div>
+
+      <div class="row g-3">
+      <div class="col TipoContrato">
+        <label>Tipo do Contrato:</label>
+        <input id="TipoContrato" for="TipoContrato" style="margin-bottom: 10%; font-size:13px" type="text" class="form-control" readonly>
+
+      </div>
+
+      <div class="col Deal">
+          <label>Deal:</label>
+          <input id="Deal" for="Deal" style="margin-bottom: 10%; font-size:13px"  type="text" class="form-control"  readonly>
+          </div>
+      </div>
+
+      <div class="row g-3">
+  
+      <div class="col DataPagamento">
+        <label>Data do Pagamento:</label>
+        <input id="DataPagamento" for="DataPagamento" style="margin-bottom: 10%; font-size:13px" type="text" class="form-control"  readonly>
+        </div>
+
+        <div class="col Colaborador">
+          <label>Colaborador:</label>
+          <input id="Colaborador" for="Colaborador" style="margin-bottom: 5%; font-size:13px"  type="text" class="form-control"  readonly>
+  
+        </div>
+      </div>
+
+
+      <label>Observação:</label>
+      <input id="Observacao" for="Observacao" style="margin-bottom: 5%; font-size:13px"  type="text" class="form-control"readonly>
+
+
+      </div>
+      <center><div   class="col" style=" margin-top: 3%;  font-size:13px">
+
+            <i class='bx bx-download bx-flip-horizontal'  undefined ></i>
+
+              <label id="NomeAnexo"></label>
+
+
+    </div>
+    <a id="baixar" download><button id="baixararq" class="btn btn-secondary" style="font-size:12px"> Baixar Anexo</button></a></center>
+
+    <div class="row g-3" style="margin-top: 5%;">
+      <div class="col-sm-" style="margin-left: 10%; padding: 5px;" >
+    <label>Status:</label>
+    </div>
+
+    <div class="col">
+      <div id="RetornoStatusNF" style=" margin-right: 12%; font-size:13px" >
+
+      <!-- <% if (retornoUser.RETORNAR){%>
+      <select type="submit" id="StatusNF" name="StatusNF"  class="form-control"  style="font-size:13px"  >
+        <option selected>Aguardando envio para pagamento</option>
+        <option>Enviado para pagamento</option>
+      </select>
+
+      <% } else {%>
+        <select type="submit" id="StatusNF" name="StatusNF"  class="form-control" style="width: 320px; font-size:13px" disabled>
+          <option selected>Aguardando envio para pagamento</option>
+          <option>Enviado para pagamento</option>
+        </select>
+        <% } %> -->
+      </div>
+
+
+
+      </div>
+  </div>
+
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button> -->
+
+          <div class="col">
+            <% if(retornoUser.RETORNAR) {%>
+              <button id="salvarCompra" onclick="atualizarStatusNF()" value="Salvar" type="submit" class="btn btn-success" style="margin-right: 100%; ">Salvar</button>
+              <% } %>
+
+      </div>
+
+      <div class="col">
+        <button data-dismiss="modal" class=" button2"  style="margin-left: 55%; " >Fechar</button>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+

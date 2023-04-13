@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "editorconfig.editorconfig",
+        "esbenp.prettier-vscode",
+        "digitalbrainstem.javascript-ejs-support",
+        "taodongwu.ejs-snippets",
+        "j69.ejs-beautify"
+    ]
+}
+  

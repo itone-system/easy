@@ -1,0 +1,12 @@
+{
+    "editor.fontSize": 14,
+    "editor.formatOnSave": false,
+    "editor.formatOnType": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+    },
+    "[html]": {
+      "editor.defaultFormatter": "vscode.html-language-features"
+    }
+  }
+  

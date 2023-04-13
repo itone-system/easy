@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../partials/head', { title: 'Detalhamento' } ) %>
+
+  <script src="/public/detalhamento/detalhamento.js"></script>
+  <!-- <script src="/public/main.js"></script> -->
+  <link rel="stylesheet" href="../../../public/global.css">
+  <link rel="stylesheet" href="/public/detalhamento/detalhamento.css">
+
+  <body>
+
+    <%- include('../../components/menu' ) %>
+
+      <section class="home">
+        <%- include('../../components/navbar') %>
+
+          <main class="text">
+
+            <h2 style="border-bottom: 1px solid #27417B; margin-bottom: 25px; margin-top: 25px;  padding: 13px 0">
+              Detalhamento</h2>
+            <p> </p>
+
+
+            <%- include('../../components/status') %>
+
+
+              <!-- <form action="/compras/comprar" method="get"> -->
+
+
+              <div class="row g-3">
+                <div class="col Descricao">
+                  <label>Solicitante:</label>
+                  <% if(retornoUser.EDITAR && solicitacao.Status_Compra=='P' ){ %>
+                    <input id="Solicitante" for="Solicitante" type="text" class="form-control alterar-background"
+                      placeholder="Solicitante" aria-label="Last name" style="font-size: 13px"
+                      value="<%= solicitacao.Solicitante  %>">
+
+
+
+                    <%} else {%>
+
+                      <input id="Solicitante" for="Solicitante" type="text" class="form-control alterar-background"
+                        placeholder="Solicitante" aria-label="Last name" style="font-size: 13px"
+                        value="<%= solicitacao.Solicitante  %>" readonly>
+
+                      <%}%>
+                        <br>
+                        <label>Motivo Da Compra:</label>
+                        <% if(retornoUser.EDITAR && solicitacao.Status_Compra=='P' ) { %>
+
+                          <input id="Quantidade" for="Quantidade" type="text" class="form-control alterar-background"
+                            placeholder="N°" value="<%= solicitacao.Observacao %>">
+                          <% } else {%>
+                            <input id="Quantidade" for="Quantidade" type="text" class="form-control alterar-background"
+                              placeholder="N°" value="<%= solicitacao.Observacao %>" readonly>
+                            <%}%>
+
+
+
+
+
+
+                </div>
+                <div class="col Quantidade">
+
+                  <label>Descrição:</label>
+                        <% if(retornoUser.EDITAR && solicitacao.Status_Compra=='P' ){ %>
+
+                          <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background"
+                            value="<%= solicitacao.Descricao  %>" placeholder="Descricao do Item">
+
+                          <%} else {%>
+
+                            <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background"
+                              value="<%= solicitacao.Descricao  %>" placeholder="Descricao do Item" readonly>
+
+                            <%}%>
+                        <br>
+
+                        <label>Quantidade:</label>
+                        <% if(retornoUser.EDITAR && solicitacao.Status_Compra=='P' ) { %>
+
+                          <input id="Quantidade" for="Quantidade" type="text" class="form-control alterar-background"
+                            placeholder="N°" value="<%= solicitacao.Quantidade %>">
+                          <% } else {%>
+                            <input id="Quantidade" for="Quantidade" type="text" class="form-control alterar-background"
+                              placeholder="N°" value="<%= solicitacao.Quantidade %>" readonly>
+                            <%}%>
+
+
+
+                </div>
+
+                <input type="text" id="status" value="<%= solicitacao.Status_Compra %>" hidden>
+
+
+
+              </div>
+              <p> </p>
+              <div class="row g-3">
+                <div class="col CentroCusto">
+                  <label>Centro de Custo:</label>
+
+                  <% if(retornoUser.EDITAR && solicitacao.Status_Compra=='P' ) { %>
+
+                    <select id="CentroCusto" class="form-control">
+                      <option selected>"<%= solicitacao.Centro_de_Custo %>"</option>
+
+                    </select>
+
+                    <% } else {%>
+
+                      <select id="CentroCusto" class="form-control" disabled>
+                        <option selected>"<%= solicitacao.Centro_de_Custo %>"</option>
+
+                      </select>
+
+                      <%}%>
+                </div>
+
+                <div class="col Deal">
+                  <label>Deal:</label>
+                  <% if(retornoUser.EDITAR && solicitacao.Status_Compra=='P' ) { %>
+
+                    <input id="Deal" for="Deal" type="text" class="form-control" placeholder="Deal"
+                      value="<%= solicitacao.Deal %>">
+
+                    <% } else {%>
+                      <input id="Deal" for="Deal" type="text" class="form-control" placeholder="Deal"
+                        value="<%= solicitacao.Deal %>" readonly>
+
+                      <%}%>
+
+
+
+
+
+                </div>
+              </div>
+
+
+
+              <p> </p>
+
+              <% if(anexoLink=='anexo' ) { %>
+              </div>
+              <div style="margin-top: 1%;   margin-bottom: 1%;font-size:13px">
+                <i class='bx bx-download bx-flip-horizontal' undefined></i>
+
+                <label id="NomeAnexo">
+                  <%= solicitacao.anexo %>
+                </label>
+
+                <a id="baixar" download><button id="baixararq" href="google.com" class="btn btn-secondary"
+                    style="margin-left: 1%; font-size:12px"> Baixar
+                    Anexo</button></a>
+
+              </div>
+
+
+              <% } %>
+
+              <% if(anexoLink=='link' ) { %>
+
+                <div class="row g-3">
+
+                  <div class="col-lg-4 prevEntrega">
+
+                    <label for="">Link</label>
+                    <input style="margin-bottom: 2.5%" id="linkcompra" type="text" class="form-control"
+                      value="<%= solicitacao.Link %>" readonly>
+                      <% if(solicitacao.Status_Compra=='R' ){ %>
+                        <label>Motivo da Reprovação:</label>
+                        <input id="Quantidade" for="Quantidade" type="text" class="form-control alterar-background"
+                        placeholder="N°" value="<%= solicitacao.MotivoReprovacao %>" readonly>
+
+                          <%}%>
+                  </div>
+
+                  <div class="col-lg-4 prevEntrega">
+
+                    <a id="baixar" href="<%= solicitacao.Link %>" target="_blank"> <button id="abrirArq" class="btn btn-secondary"
+                        style="margin-top: 9%; font-size:12px"> Abrir link</button></a>
+
+                  </div>
+                </div>
+
+
+                <% } %>
+
+              <% if(retornoUser.RETORNAR && solicitacao.Status_Compra=='A' ){ %>
+
+                <%- include('../../components/dadosComprador') %>
+
+                  <%}%>
+
+
+                    <% if(solicitacao.Status_Compra=='C' ){ %>
+
+                      <%- include('../../components/infoCompra') %>
+
+                        <%}%>
+
+
+
+
+                          <p></p>
+                          <% if(retornoUser.EDITAR && aprovacao == false ) { %>
+
+                            <!-- <button type="submit" name="inserir" id="botao-solicitar"
+                  class="btn btn-outline-success">Editar</button> -->
+
+                            <button id="openModal" data-toggle="modal" data-target="#myModal"
+                              class="button2">Editar</button>
+
+
+
+                            <% } %>
+
+
+
+                              <% if(dadosParaBotaoAprovar.Status=='N' && ordem == true ) { %>
+
+                                <!-- <button type="submit" name="inserir" id="botao-solicitar" class=" button"
+                                  onclick="aprovarSolicitacao()">Aprovar</button> -->
+                                  <button class="btn btn-success text-white" onclick="aprovarSolicitacao()">Aprovar</button>
+                                  <button class="btn btn-danger text-white" data-target="#modalDesaprovar" data-toggle="modal">Reprovar</button>
+
+
+                                <% } %>
+
+
+                                  <!-- </form> -->
+
+
+                                  <input id="codigoUsuario" type="text" value="<%= codigoUsuario %>" hidden>
+
+                                  <input id="codigoSolicitacao" type="text" value="<%= solicitacao.Codigo %>" hidden>
+
+                                  <input id="comprador" type="text" value="<%= codigoUsuario %>" hidden>
+
+                                  <div class="modal fade" id="myModal">
+                                    <div class="modal-dialog modal-lg">
+                                      <div class="modal-content">
+
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">Detalhamento</h4>
+                                        </div>
+
+                                        <div class="modal-body" id="modalBody">
+                                          <div class="row g-3">
+                                            <div class="col">
+                                              <label for="fname">Descrição:</label>
+                                              <input id="descricaoModal" class="form-control"
+                                                style="margin-bottom: 10%;" type="text"
+                                                value="<%= solicitacao.Descricao  %>">
+
+                                            </div>
+                                            <div class="col">
+                                              <label for="fname">Motivo:</label>
+                                              <input id="motivoModal" class="form-control" style="margin-bottom: 10%;"
+                                                type="text" value="<%= solicitacao.Observacao  %>">
+                                            </div>
+                                          </div>
+
+                                          <div class="row g-3">
+                                            <div class="col">
+                                              <label for="fname">Quantidade:</label>
+                                              <input id="quantidadeModal" class="form-control"
+                                                style="margin-bottom: 10%;" type="number"
+                                                value="<%= solicitacao.Quantidade  %>">
+                                            </div>
+                                            <div class="col">
+                                              <label for="fname">Centro de Custo:</label>
+                                              <select id="CentroCustoModal" class="form-control centroCusto"
+                                                name="centroCusto">
+
+                                                <option selected id="centroEscolhido">
+                                                  <%= solicitacao.Centro_de_Custo %>
+                                                </option>
+                                              </select>
+                                              <!-- <input id="centroCustoModal" class="form-control" style="margin-bottom: 10%;" type="text"> -->
+                                            </div>
+                                          </div>
+
+                                          <div class="row g-3">
+                                            <div class="col">
+                                              <label for="fname">Deal:</label>
+                                              <input id="dealModal" class="form-control" style="margin-bottom: 10%;"
+                                                type="text" value="<%= solicitacao.Deal  %>">
+                                            </div>
+                                            <div class="col">
+                                            </div>
+                                          </div>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                          <button data-dismiss="modal" class=" button2" style="margin-right: 3%;"
+                                            id="fecharModal">Fechar</button>
+                                          <button style="margin-right: 3%;" onclick="updateSolicitacao()"
+                                            class="button2">Salvar</button>
+
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+
+                                  <div class="modal fade" id="modalDesaprovar">
+                                    <div class="modal-dialog modal-lg">
+                                      <div class="modal-content">
+
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">Motivo</h4>
+                                          <button id="fecharModalRep" type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                          <input id="motivoRep" for="Descricao" type="text" class="form-control mandatory" placeholder="Detalhe"
+                                          name="descricao">
+                                          <div id="descricaoObrigatorio"></div>
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                          <button onclick="reprovarSolicitacao()" type="button" class="btn btn-success" style="position:absolute ; left: 1.5%;" >Salvar</button>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+
+
+
+          </main>
+      </section>
+
+  </body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../partials/head', { title: 'Buscar Notas' } ) %>
+
+    <script src="../../public/buscarNotas/buscarNotas.js"></script>
+    <link rel="stylesheet" href="../../public/buscarNotas/buscarNotas.css">
+    <link rel="stylesheet" href="../../../public/global.css">
+
+
+    <body>
+
+        <%- include('../../components/menu' ) %>
+
+            <section class="home">
+                <%- include('../../components/navbar', { usuario: 'Gustavo' } ) %>
+
+                <main class="text">
+
+                    <div class="altera-titulo">
+                        <h2 style="border-bottom: 1px solid #120947; margin-bottom: 25px; margin-top: 25px; padding: 13px 0"> Notas Recebidas </h2>
+                    </div>
+
+                    <p> </p>
+
+                    <form action="/notafiscal/buscarNotas" method="GET">
+
+                    <div class="row g-3">
+                      <div class="col">
+                        <% if (descricaoSalva){ %>
+                        <input  value="<%= descricaoSalva %>" name="Descricao" id="Descricao" for="Descricao" type="text" class="form-control is-valid" placeholder="Descricao Item" aria-label="First name" style="font-size: 13px">
+                        <%} else{ %>
+                        <input  name="Descricao" id="Descricao" for="Descricao" type="text" class="form-control" placeholder="Descricao Item" aria-label="First name" style="font-size: 13px">
+                        <% } %>
+                      </div>
+                      <div class="col">
+                        <% if (fornecedorSalva){ %>
+                          <input  value="<%= fornecedorSalva %>"  name="Fornecedor" id="Fornecedor" for="Fornecedor" type="text" class="form-control is-valid" placeholder="Fornecedor" aria-label="Last name" style="font-size: 13px">
+                          <%} else{ %>
+                            <input  name="Fornecedor" id="Fornecedor" for="Fornecedor" type="text" class="form-control" placeholder="Fornecedor" aria-label="Last name" style="font-size: 13px">
+                          <% } %>
+                      </div>
+
+                    </div>
+                    <p> </p>
+                    <div class="row g-3">
+                    <div class="col">
+                      <% if (solicitanteSalva){ %>
+                        <input value="<%= solicitanteSalva %>"  name="Solicitante"  id="Solicitante" for="Solicitante" type="text" class="form-control is-valid" placeholder="Solicitante" aria-label="Last name" style="font-size: 13px">
+                        <%} else{ %>
+                          <input  name="Solicitante"  id="Solicitante" for="Solicitante" type="text" class="form-control" placeholder="Solicitante" aria-label="Last name" style="font-size: 13px">
+                          <% } %>
+
+                    </div>
+
+                    <div class="col">
+                      <% if (centroCustoExtensoSalva && centroCustoExtensoSalva != 'Centro de Custo'){ %>
+                        <select class="form-control is-valid" id="CentroCusto" name="CentroCusto" style="font-size: 13px">
+                          <option selected readonly><%= centroCustoExtensoSalva %> </option>
+                          <option readonly>Centro de Custo</option>
+
+                        </select>
+                        <%} else{ %>
+                          <select class="form-control" id="CentroCusto" name="CentroCusto" style="font-size: 13px">
+                            <option selected readonly>Centro de Custo</option>
+                          </select>
+                         <% } %>
+
+
+                    </div>
+              </div>
+                <p></p>
+
+              <button class="button" name="buscar" value="buscar"  type="submit"  role="button" style="margin-left: 93%">🔍 Buscar</button>
+              <p></p>
+
+                    <div class="table-responsive">
+
+                            <table class="table table-sm table-hover" id="myTable"  >
+
+                        <thead style="background-color: #cbcbce; color: rgb(36, 26, 9);   font-size: 13px; text-align: center">
+
+                          <th class="center" > ID do Envio</th>
+                          <th> Solicitante</th>
+                          <th> Centro de Custo</th>
+                          <th> Fornecedor</th>
+                          <th> Descrição do Serviço</th>
+                          <th> Status</th>
+                          <th> Tipo de Contrato </th>
+
+
+                          <th> Data de Pagamento </th>
+                          <th> Deal </th>
+                          <th> Colaborador </th>
+
+
+                        </thead>
+
+                        <tbody style="font-size: 13px; " class="table-line" id="tbody">
+                          <% dados.forEach(socilitacao=> { %>
+                              <tr id="tabelaNF" style="text-align: center;">
+                                  <td>
+                                      <%=socilitacao.Codigo%>
+                                  </td>
+                                  <td >
+                                      <%=socilitacao.Solicitante%>
+                                  </td>
+                                  <td>
+                                      <%=socilitacao.CentroCusto%>
+                                  </td>
+                                  <td>
+                                      <%=socilitacao.Fornecedor%>
+                                  </td>
+                                  <td>
+                                      <%=socilitacao.Descricao%>
+                                  </td>
+                                        <td>
+                                     <% if (socilitacao.StatusNF == 'E'){ %>
+                                      <a class="btn btn-secondary text-white  rounded" style="  height: 27px;  font-size: 11px"  >Enviado para pagamento</a>
+                                     <% } else {%>
+                                      <a class="btn btn-primary text-white  rounded" style=" height: 27px; width: 168px; font-size: 11px"  >Aguardando envio</a>
+                                      <% } %>
+                                        </td>
+                                        <td>
+                                        <%=socilitacao.Tipo_Contrato%>
+                                  </td>
+
+                                <td>
+                                    <%=socilitacao.Data%>
+                                </td>
+                                <td>
+                                    <%=socilitacao.Deal%>
+                                </td>
+                                <td>
+                                  <%=socilitacao.Colaborador%>
+                              </td>
+
+                              </tr>
+                              <% }) %>
+
+
+                      </tbody>
+
+                      </table>
+                    </div>
+                    <div class="row g-2" style="margin-top: 1.5%">
+
+                    <div style="margin-left: 85%">
+
+                      <% if (dados.paginate <= 1){ %>
+                        <button name="paginate" id="prev" value="prev" class=" button2" disabled>Anterior</button>
+                      <% } else {%>
+                        <button name="paginate" id="prev" value="prev" class=" button2">Anterior</button>
+                      <% } %>
+                    </div>
+                    <div >
+                      <% if (dados.paginate == dados.totalPaginas){ %>
+                        <button id="prox" name="paginate" value="prox" class=" button2" style="margin-left: 5%" >Próxima</button>
+                      <% } else {%>
+                        <button id="prox" name="paginate" value="prox" class=" button2" style="margin-left: 5%" disable>Próxima</button>
+                      <% } %>
+                    </div>
+                </div>
+
+                    </div>
+                    </form>
+
+                    <button id="openModal" data-toggle="modal" data-target="#myModal" style="color: #e7e9f5; display: none"></button>
+
+                  </main>
+
+
+                    <%- include('../../components/ModalNF' ) %>
+
+            </section>
+    </body>
+
+</html>

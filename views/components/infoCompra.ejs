@@ -1,0 +1,33 @@
+<div class="row g-3">
+  <div class="col DtCompra">
+    <label for="fname">Data da Compra:</label>
+    <input id="dataDaCompra" class="form-control" type="date" value="<%= dadosParaViewDeCompra.dataCompra %>" readonly>
+  </div>
+
+  <div class="col prevEntrega">
+    <label for="fname">Previsão de Entrega:</label>
+    <input id="previsaoDeEntrega" class="form-control" style="margin-bottom: 10%;" type="date"
+      value="<%= dadosParaViewDeCompra.dataEntrega %>" readonly>
+
+  </div>
+</div>
+<form action="<%=locals.endpoints.inserirNota%>" method="get">
+
+  <input type="text" name="solicitante" value="<%= Comprador  %>" hidden>
+  <input type="text" name="descricao" value="<%= solicitacao.Descricao  %>" hidden>
+  <input type="text" name="observacao" value="<%= solicitacao.Observacao %>" hidden>
+  <input type="text" name="centroCusto" value="<%= solicitacao.Centro_de_Custo %>" hidden>
+  <input type="text" name="deal" value="<%= solicitacao.Deal  %>" hidden>
+  <input type="text" name="codigo" value="<%= solicitacao.Codigo  %>" hidden>
+  <input type="text" name="valor" value="<%= dadosParaViewDeCompra.valor  %>" hidden>
+  <% if(nota == false) { %>
+
+    <% if(perfil == 1) { %>
+
+      <button type="submit" class="button">Incluir Nota</button>
+      <% } %>
+
+    <% }%>
+
+</form>
+

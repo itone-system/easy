@@ -1,0 +1,74 @@
+<form action="/compras/comprar" method="get"></form>
+
+<div class="row g-3" style="margin-bottom: 1%;">
+  <div class="col-lg-2  Valor">
+    <label for="fname">Valor:</label>
+    <!-- <input id="valorDaCompra" class="form-control" type="text"> -->
+    <!-- <input  min="0" step="any" id="valorDaCompra" for="valorNF" type="number" class="form-control" placeholder="0,0"> -->
+    <input type="text" maxlength="9" id="valor" onkeyup="formatarMoeda()" placeholder="0,0" class="form-control">
+    <!-- <label for="fname">Anexo:</label>
+    <input id="valorDaCompra" class="form-control" type="number"> -->
+
+  </div>
+
+  <div class="col-lg-2  metPagamento">
+    <label for="fname">Metodo de Pagamento:</label>
+    <select name="" id="metPagamento" class="form-control">
+      <option value="Cartão Corporativo">Cartão Corporativo</option>
+      <option value="Boleto">Boleto</option>
+      <option value="Pix">Pix</option>
+    </select>
+
+
+
+
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-2 DtCompra">
+    <label for="fname">Data da Compra:</label>
+    <input id="dataDaCompra" class="form-control" type="date">
+  </div>
+
+  <div class="col-lg-2 prevEntrega">
+    <label for="fname">Previsão de Entrega:</label>
+    <input id="previsaoDeEntrega" class="form-control" style="margin-bottom: 1%;" type="date"
+      value="<%= solicitacao.Deal %>">
+
+
+  </div>
+</div>
+
+
+
+
+<label for="cars" style="margin-top: 1.5%;">Possui Parcelas?</label>
+<div>
+    <input onclick="adicionarCampoParcelas()" type="radio" id="Sim" name="fav_language" value="Sim">
+    <label for="Sim">Sim</label><br>
+    <input onclick="removerCampoParcelas()" type="radio" id="Não" name="fav_language" value="Não" checked>
+    <label for="Não">Não</label><br>
+</div>
+
+<div id="divParcela"></div>
+
+
+
+
+
+
+
+
+        <% if(retornoUser.RETORNAR && solicitacao.Status_Compra=='A' ) { %>
+
+          <button type="submit" name="inserir" id="botao-solicitar" class="button2"
+            onclick="insertCompra('<%= solicitacao.Codigo  %>')">Salvar Compra</button>
+
+          <% } %>
+
+
+
+
+            <p> </p>
+            </form>

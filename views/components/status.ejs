@@ -1,0 +1,58 @@
+<div class="mainn">
+    <ul class="ul">
+        <li class="li alterar-bolinha">
+            <% if(solicitacao.Status_Compra == 'P') { %>
+
+                <i class='bx bxs-hourglass bx-tada icon mudar-icon-status' ></i>
+
+                <% } else {%>
+
+                    <i class='bx bx-hourglass icon mudar-icon-status' ></i>
+                  <%}%>
+            <div class="progresss one alterar-after" id="one">
+                    <p class="numero-faltante alterar-numero"> 1</p>
+                <i class="uil uil-check alterar-check"></i>
+            </div>
+            <p class="textt">Aguardando Aprovação</p>
+        </li>
+        <li class="li alterar-bolinha">
+            <% if(solicitacao.Status_Compra == 'A') { %>
+
+                <i class="bx bx-cart-alt bx-tada icon2 mudar-icon-status"></i>
+
+
+                <% } else {%>
+
+                    <i class='bx bx-cart-alt icon2 mudar-icon-status' ></i>
+                  <%}%>
+            <div class="progresss two alterar-after" id="two">
+                <p class="numero-faltante alterar-numero">2</p>
+                <i class="uil uil-check alterar-check"></i>
+            </div>
+            <p class="textt">Aguardando Compra</p>
+        </li>
+
+        <li class="li alterar-bolinha" >
+            <% if(solicitacao.Status_Compra == 'C') { %>
+
+                <i class='bx bx-wink-smile bx-tada icon3 mudar-icon-status' ></i>
+
+
+                <% }else {%>
+
+                    <i class='bx bx-wink-smile icon3 mudar-icon-status'></i>
+                  <%}%>
+            <div class="progresss three alterar-after" id="three">
+                <p class="numero-faltante alterar-numero"> 3</p>
+                <i class="uil uil-check alterar-check"></i>
+            </div>
+            <p class="textt">Comprado</p>
+        </li>
+    </ul>
+
+</div>
+
+
+<link rel="stylesheet" href="../../public/template/status/status.css">
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+<script src="../../public/detalhamento/detalhamento.js"></script>

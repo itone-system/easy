@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../partials/head', { title: 'Nova Solicitação' } ) %>
+
+  <script src="/public/novaSolicitacao/novaSolicitacao.js"></script>
+  <!-- <script src="/public/main.js"></script> -->
+  <link rel="stylesheet" href="../../../public/global.css">
+  <link rel="stylesheet" href="../../public/novaSolicitacao/novaSolicitacao.css">
+
+  <body>
+
+    <%- include('../../components/menu') %>
+
+      <section class="home">
+        <%- include('../../components/navbar') %>
+
+          <div class="d-flex flex-column-reverse">
+            <%- include('../../components/flash', message) %>
+          </div>
+<!-- <h1 style="font-size: 6px;"></h1> -->
+
+          <main class="text">
+            <!-- <form> -->
+              <h2 style="border-bottom: 1px solid #27417B; margin-bottom: 25px; margin-top: 25px;  padding: 13px 0">Nova
+                Solicitação de Compra</h2>
+              <p> </p>
+              <div class="row g-3">
+                <div class="col Descricao">
+                  <label>Item Solicitado:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control mandatory" placeholder="Descricao Item"
+                    name="descricao">
+                    <div id="descricaoObrigatorio"></div>
+
+                </div>
+                <div class="col Quantidade">
+                  <label>Quantidade:</label>
+                  <input id="Quantidade" for="Quantidade" type="text" class="form-control" placeholder="N°"
+                    name="quantidade">
+                    <div id="quantidadeObrigatorio"></div>
+                </div>
+
+              </div>
+              <p> </p>
+              <div class="row g-3">
+                <div class="col CentroCusto">
+                  <label>Centro de Custo:</label>
+                  <select id="CentroCusto" class="form-control" name="centroCusto">
+                    <option selected>Selecionar...</option>
+
+                  </select>
+                  <div id="centroCustoObrigatorio"></div>
+                </div>
+
+
+
+
+                <div class="col Deal">
+                  <label>Deal:</label>
+                  <input id="Deal" for="Quantidade" type="text" class="form-control" placeholder="Caso não tenha, informe o número 1" name="deal">
+                  <div id="dealObrigatorio"></div>
+                </div>
+              </div>
+              <p> </p>
+
+
+
+
+              <label id="MotivoLabel">Motivo da Compra:</label>
+              <input id="Observações" type="text" class="form-control emailText" placeholder="Observações"
+                aria-label="First name" name="observacao">
+                <div id="motivoObrigatorio"></div>
+
+
+              <p> </p>
+              <div class="row g-3" id="aprovacao" name="aprovadores">
+
+                <div id="aprov">
+                  <label id="aprovaLabel">Aprovações:</label>
+
+                </div>
+
+
+                <input type="text" name="solicitante" id="nomeUser" value="<%=nome %>" placeholder="<%=nome %> " hidden>
+
+
+
+              </div>
+
+
+              <label for="cars">Incluir Link ou arquivo:</label>
+              <div>
+                  <input onclick="adicionarCampoLink()" type="radio" id="Sim" name="fav_language" value="Sim">
+                  <label for="Sim">Link</label><br>
+                  <input onclick="adicionarCampoArquivo()" type="radio" id="Não" name="fav_language" value="Não">
+                  <label for="Não">Arquivo</label><br>
+                <div id="arquivoLinkObrigatorio"></div>
+              </div>
+
+              <div id="anexo">
+
+              </div>
+
+              <button style="margin-top: 0.5%" onclick="insert()" type="submit" name="inserir" id="botao-solicitar"
+                class=" button2">Solicitar</button>
+            <!-- </form> -->
+
+
+          </main>
+      </section>
+
+  </body>
+
+</html>
