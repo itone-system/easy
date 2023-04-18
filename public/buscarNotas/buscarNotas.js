@@ -506,6 +506,7 @@ const atualizarStatusNF = () => {
     Fornecedor: Fornecedor
   });
 
+
   let response = fetch(endpoints.AtualizarNF, {
     method: 'POST',
     body: bodyContent,

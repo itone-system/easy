@@ -313,45 +313,57 @@ module.exports = {
         'update NotaFiscal set StatusNF = @StatusNF where Codigo = @Codigo'
       );
 
-    console.log(req.Codigo);
 
-    const token = jwt.sign(
-      {
-        Codigo,
-        Descricao: Descricao
-      },
-      Keytoken.secret,
-      {
-        expiresIn: '100d'
-      }
-    );
 
-    href = domain + '/notafiscal/buscarNotas?tokenReceive=' + token;
+      const dadosEmail = {
+        codigoEmail: Codigo,
+        descricao: Descricao,
+        fornecedor: Fornecedor,
+        solicitante: Solicitante
+      };
 
-    ejs.renderFile(
-      'template-email/retornoEmail.ejs',
-      { req, href },
-      function (err, data) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(data);
+      console.log(dadosEmail);
 
-          var emailFinanceiro = 'financeiro@itone.com.br';
+      // console.log(dadosEmail)
 
-          const emailOptions = {
-            to: emailFinanceiro,
-            subject: 'Recebimento de Nota Fiscal',
-            content: data,
-            isHtlm: true
-          };
+      const token = jwt.sign(
+        {
+          Codigo: Codigo,
+          Descricao: Descricao
 
-          enviarEmail(emailOptions);
+        },
+        Keytoken.secret,
+        {
+          expiresIn: '100d'
         }
-      }
-    );
+      );
 
+      href = domain + '/notafiscal/buscarNotas?tokenReceive=' + token;
+
+      ejs.renderFile(
+        'template-email/retornoEmail.ejs',
+        { dadosEmail, href },
+        function (err, data) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(data);
+
+            var emailFinanceiro = 'financeiro@itone.com.br';
+
+            const emailOptions = {
+              to: emailFinanceiro,
+              subject: 'Recebimento de Nota Fiscal',
+              content: data,
+              isHtlm: true
+            }
+            enviarEmail(emailOptions);
+
+          }
+        }
+      )
     return result;
+
   },
 
   async Criar(request) {

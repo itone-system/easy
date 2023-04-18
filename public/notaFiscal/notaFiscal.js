@@ -12,7 +12,7 @@ let dataAtualConfPadrao = '';
 let erroDataMenor = false;
 let campos = ["Solicitante",'CentroCusto','Fornecedor' , 'DescServico', 'TipoContrato','valorNF','Deal','Observacao', 'fileInput']
 let colaboradorNome = ''
-
+let boletoNomeArquivoSemAcento = ''
 
 
 $(document).ready(function () {
@@ -269,58 +269,58 @@ async function insertNota() {
         limparCampos()
 }
 
-function validarCamposBackup() {
+// function validarCamposBackup() {
 
-    buscarValoresCampos()
+//     buscarValoresCampos()
 
-    validarCampoData(document.getElementById('DataPagamento').value)
+//     validarCampoData(document.getElementById('DataPagamento').value)
 
 
-    if(!trueColaborador) { listaErros.splice(listaErros.indexOf('Colaborador'), 1) }
+//     if(!trueColaborador) { listaErros.splice(listaErros.indexOf('Colaborador'), 1) }
 
-    for (let i = 0; i < campos.length; i++) {
+//     for (let i = 0; i < campos.length; i++) {
 
-        var camposObr = document.querySelector('.obrigatorio-'+campos[i])
+//         var camposObr = document.querySelector('.obrigatorio-'+campos[i])
 
-        const busca = lista.find(element => element == campos[i])
+//         const busca = lista.find(element => element == campos[i])
+//         if (document.getElementById(campos[i]).value == '' && !busca) {
 
-        if (document.getElementById(campos[i]).value == '' && !busca) {
+//             const campoObrigatorio = campos[i] == 'valorNF' || campos[i] == 'Deal' ? document.querySelector('.col-lg-2.' + campos[i]) : document.querySelector('.col.' + campos[i])
 
-            const campoObrigatorio = campos[i] == 'valorNF' ? document.querySelector('.col-lg-2.' + campos[i]) : document.querySelector('.col.' + campos[i])
-            var labelObrigatorio = document.createElement('label')
-            labelObrigatorio.setAttribute('ID', 'obrigatorio');
-            labelObrigatorio.setAttribute('class','obrigatorio-'+campos[i]);
-            labelObrigatorio.textContent = '* Campo obrigatório';
-            campoObrigatorio.appendChild(labelObrigatorio)
-            listaErros.push(campos[i])
-            lista = listaErros
+//             var labelObrigatorio = document.createElement('label')
+//             labelObrigatorio.setAttribute('ID', 'obrigatorio');
+//             labelObrigatorio.setAttribute('class','obrigatorio-'+campos[i]);
+//             labelObrigatorio.textContent = '* Campo obrigatório';
+//             campoObrigatorio.appendChild(labelObrigatorio)
+//             listaErros.push(campos[i])
+//             lista = listaErros
 
-        }
+//         }
 
-        else if(camposObr && document.getElementById(campos[i]).value != '')  {
-            camposObr.remove()
+//         else if(camposObr && document.getElementById(campos[i]).value != '')  {
+//             camposObr.remove()
 
-            listaErros.splice(listaErros.indexOf(campos[i]), 1);
+//             listaErros.splice(listaErros.indexOf(campos[i]), 1);
 
-        }
+//         }
 
-        const dadosCompleto = {
-            Campo: campos[i],
-            Buscas: busca,
-            ValorCampo: document.getElementById(campos[i]).value,
-            listaErros: listaErros
+//         const dadosCompleto = {
+//             Campo: campos[i],
+//             Buscas: busca,
+//             ValorCampo: document.getElementById(campos[i]).value,
+//             listaErros: listaErros
 
-        }
-        // console.log(dadosCompleto)
+//         }
+//         // console.log(dadosCompleto)
 
-    }
+//     }
 
-    if(listaErros == '' || listaErros == undefined ){
-        this.insertNota()
+//     if(listaErros == '' || listaErros == undefined ){
+//         this.insertNota()
 
-    }
+//     }
 
-};
+// };
 
 function validarCampos() {
 
@@ -336,7 +336,7 @@ function validarCampos() {
 
         if (document.getElementById(campos[i]).value == '' && !busca) {
 
-            const campoObrigatorio = campos[i] == 'valorNF' ? document.querySelector('.col-lg-2.' + campos[i]) : document.querySelector('.col.' + campos[i])
+            const campoObrigatorio = campos[i] == 'valorNF' || campos[i] == 'Deal' || campos[i] == 'fileInput' ? document.querySelector('.col-lg-2.' + campos[i]) : document.querySelector('.col.' + campos[i])
             var labelObrigatorio = document.createElement('label')
             labelObrigatorio.setAttribute('ID', 'obrigatorio');
             labelObrigatorio.setAttribute('class','obrigatorio-'+campos[i]);
