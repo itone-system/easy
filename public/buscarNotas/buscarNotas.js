@@ -14,10 +14,13 @@ $(document).ready(function () {
   // $('#prev').css("visibility", "hidden")
   conveniaCentroCusto();
 
+
   const downloadArquivoNF = document.getElementById('baixararq');
   downloadArquivoNF.addEventListener('click', function () {
     downloadNF();
   });
+
+
 
   let elementModal = document.getElementById('openModal');
 
@@ -578,6 +581,8 @@ function gerarDadosModal(codigo) {
       document.getElementById('Observacao').value = data[0].Observacao;
       document.getElementById('Colaborador').value = data[0].Colaborador;
       document.getElementById('NomeAnexo').innerText = data[0].Anexo;
+      // document.getElementById('NomeAnexoBoleto').innerText = data[0].BOLETO;
+
       retornarNFUser = document.getElementById('retornarNFUser').innerText;
       // localRetorno.innerHTML = '<select type="submit" id="StatusNF" name="StatusNF"  class="form-control" style="font-size:13px; margin-bottom: 3%"  disabled>        <option selected >Enviado para pagamento</option>      </select>'
 
@@ -591,6 +596,25 @@ function gerarDadosModal(codigo) {
         localRetorno.innerHTML =
           '<select type="submit" id="StatusNF" name="StatusNF"  class="form-control"  style="font-size:13px"  disabled>        <option selected>Aguardando lançamento no SAP</option>        <option>Enviado para pagamento</option>      </select>';
       }
+
+      if(data[0].BOLETO){
+        document.querySelector(".camposBoleto").innerHTML = `<div class="row g-3"  style=" margin-top: 3%; ">
+        <div class="col" style=" margin-top: 3%;  font-size:13px">
+
+              <i class='bx bx-download bx-flip-horizontal'  undefined ></i>
+              <label style=" margin-right: 1%;">Boleto:</label>
+
+                <label id="NomeAnexoBoleto"> ${data[0].BOLETO}</label>
+
+
+        <a id="baixarBoletos" download><button id="baixararqBoleto" onclick="downloadBoleto()" class="btn btn-secondary" style=" margin-left: 3%;font-size:12px"> Baixar Anexo</button></a>
+        </div>
+
+        </div>`
+      }else{
+        document.querySelector(".camposBoleto").innerHTML = ""
+      }
+
     });
 }
 
@@ -603,6 +627,18 @@ function downloadNF() {
     'DCT-' + codigoNF + ' ' + document.getElementById('NomeAnexo').innerText;
 
   baixar.href = endpoints.downloadNF + arquivo;
+
 }
 
+function downloadBoleto() {
+  baixar = document.getElementById('baixarBoletos');
+
+  var codigoNF = document.getElementById('NumeroSolicitacaoModal').value;
+
+  var arquivo =
+    'DCT-' + codigoNF + ' ' + document.getElementById('NomeAnexoBoleto').innerText;
+
+  baixar.href = endpoints.downloadNF + arquivo;
+
+}
 
