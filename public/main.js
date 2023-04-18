@@ -1,4 +1,4 @@
-const URL_APP = 'http://itonerdp06:80';
+const URL_APP = 'http://itonerdp06:5050';
 
 
 const endpoints = {
