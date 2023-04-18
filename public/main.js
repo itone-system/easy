@@ -1,4 +1,6 @@
-const URL_APP = 'http://itonerdp06:5050';
+const URL_APP = 'http://itonerdp06:80';
+
+
 const endpoints = {
   trocarSenha: URL_APP + '/trocar_senha',
   login: URL_APP + '/',

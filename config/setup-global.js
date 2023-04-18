@@ -1,4 +1,4 @@
-const { domain } = require('./env')
+const { domain } = require('./env');
 
 module.exports = (app) => {
   app.locals = {
@@ -11,7 +11,7 @@ module.exports = (app) => {
       NotaFiscal: '/notafiscal/incluirNota',
       ListarNotas: '/listarnotas',
       NovaSolicitacao: '/solicitacoes/criar',
-      AtualizarNF: '/atualizarStatusNota',
+      AtualizarNF: '/notafiscal/atualizarStatusNota',
       ListarUsuarios: '/users/listar',
       ListarItens: '/itens',
       AprovarSolicitacao: '/solicitacoes/aprovar',
@@ -26,5 +26,5 @@ module.exports = (app) => {
       uploadItem: '/solicitacoes/uploadItem/',
       insertNF: '/notafiscal/insertnotafiscal'
     }
-  }
+  };
 };
