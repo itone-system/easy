@@ -8,6 +8,7 @@ module.exports = (app) => {
       login: '/',
       ListarSolicitacoes: '/listar',
       Comprar: '/compras/',
+      Pagamento:'/compras/enviarParaPagamento',
       NotaFiscal: '/notafiscal/incluirNota',
       ListarNotas: '/listarnotas',
       NovaSolicitacao: '/solicitacoes/criar',

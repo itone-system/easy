@@ -118,7 +118,7 @@ exports.simpleUserVerification = async (usuario) => {
   const conexao = await sql.connect(db);
   const result = await conexao.request().query(`select VALIDACAO_SENHA from Usuarios where LOGIN_USUARIO = '${usuario}'`)
   if (result.recordset[0]) {
-    return(result.recordset[0].VALIDACAO_SENHA)
+    return (result.recordset[0].VALIDACAO_SENHA)
   } else {
     return ('error')
   }

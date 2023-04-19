@@ -44,6 +44,16 @@ body.dark {
   --text-color: #ccc;
 }
 
+body::-webkit-scrollbar{
+  background:transparent;
+  width:10px;
+}
+
+body::-webkit-scrollbar-thumb{
+  background: #27417b;
+  border-radius:7px;
+}
+
 /*teste*/
 .barraLateral {
   position: fixed;
