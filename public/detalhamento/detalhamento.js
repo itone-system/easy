@@ -19,13 +19,10 @@ $(document).ready(function () {
 
 
 
-  const downloadArquivoNF = document.getElementById("baixararq");
-  downloadArquivoNF.addEventListener("click", function(){
-
+  const downloadArquivoNF = document.getElementById("baixararquivo");
+  downloadArquivoNF.addEventListener("click", function () {
     downloadItem()
-
   });
-
 });
 
 window.onload = () => {
@@ -33,6 +30,45 @@ window.onload = () => {
   const clickEvent = new MouseEvent('click');
   toggle.dispatchEvent(clickEvent);
 };
+
+function enviarCompraParaPagamento() {
+
+  const dataDaCompra = document.getElementById('dataDaCompra').value;
+  const valorDaCompra = document.getElementById('valor').value;
+  const previsaoDeEntrega = document.getElementById('previsaoDeEntrega').value;
+  const codigo2 = document.getElementById('codigoSol').value;
+  const metodoDePagamento = document.getElementById('metPagamento').value;
+  const comprador = document.getElementById('comprador').value;
+  const pix = document.getElementById('linkPix').value;
+
+  const dados = {
+    dataDaCompra: dataDaCompra,
+    valorDaCompra: valorDaCompra,
+    previsaoDeEntrega: previsaoDeEntrega,
+    codigo: codigo2,
+    metodoDePagamento: metodoDePagamento,
+    comprador: comprador,
+    pix: pix
+  };
+
+  fetch(endpoints.Pagamento, {
+    method: 'POST',
+    body: JSON.stringify(dados),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  }).then((dados) => {
+    return dados.json();
+  }).then((dados) => {
+    if (dados) {
+      alert(dados);
+    }
+    $('#botao-solicitar').attr('hidden', true);
+    window.location.reload();
+  });
+
+}
 
 function formatarMoeda() {
   var elemento = document.getElementById('valor');
@@ -44,11 +80,11 @@ function formatarMoeda() {
   valor = valor.replace(/([0-9]{2})$/g, ",$1");
 
   if (valor.length > 6) {
-      valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+    valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
   }
 
   elemento.value = valor;
-  if(valor == 'NaN') elemento.value = '';
+  if (valor == 'NaN') elemento.value = '';
 }
 
 function adicionarCampoParcelas() {
@@ -133,7 +169,7 @@ function reprovarSolicitacao() {
       return dados.json();
     })
     .then((dados) => {
-  console.log(dados)
+      console.log(dados)
 
       if (dados) {
         alert(dados);
@@ -142,7 +178,7 @@ function reprovarSolicitacao() {
     });
 }
 
-function insertCompra (codigo) {
+function insertCompra(codigo) {
   let quantidadeDeParcelas = null;
   let dataDaPrimeiraParcela = null;
 
@@ -196,7 +232,7 @@ function insertCompra (codigo) {
     });
 };
 
-function updateSolicitacao(){
+function updateSolicitacao() {
   const descricao = document.getElementById('descricaoModal').value;
   const motivo = document.getElementById('motivoModal').value;
   const quantidade = document.getElementById('quantidadeModal').value;
@@ -282,14 +318,27 @@ function removeAnex() {
 }
 
 
-function downloadItem(){
-
-  baixar = document.getElementById('baixar')
-
-  // var codigoNF = document.getElementById("NumeroSolicitacaoModal").value;
+function downloadItem() {
   const codigo = document.getElementById('codigoSolicitacao').value;
+  let arquivo = 'SLT-' + codigo + ' ' + document.getElementById('NomeAnexo').innerText
 
-  var arquivo = 'SLT-'+codigo+' '+document.getElementById('NomeAnexo').innerText
+  fetch(`${endpoints.downloadItem}/${arquivo}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  }).then(response => response.blob())
+    .then(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = arquivo
+      a.click();
+      window.URL.revokeObjectURL(url);
+    })
+}
 
-  baixar.href = endpoints.downloadItem+arquivo
+function adicionarCampoPix() {
+  document.getElementById('teste123').innerHTML = ''
 }

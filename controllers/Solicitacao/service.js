@@ -110,6 +110,8 @@ exports.enviarEmail = async (email, token) => {
 exports.buscarProximoAprovador = async (codigo) => {
   const conexao = await sql.connect(db);
 
+  const solicitacao = await conexao.request().query(`select * from Solicitacao_Item where Codigo = ${codigo}`)
+
   const busca = await conexao.request().query(`select top 1
         t1.EMAIL_USUARIO, t1.COD_USUARIO
     from
@@ -124,6 +126,38 @@ exports.buscarProximoAprovador = async (codigo) => {
 
   if (busca.recordsets[0].length == 0) {
     console.log('todos aprovaram');
+
+    if (solicitacao.recordset[0].pix) {
+      const alterarStatusServicoAdiantamento = await conexao
+      .request()
+      .query(
+        `update Solicitacao_Item set Status_Compra = 'E' where Codigo = ${codigo}`
+      );
+      // email solicitante
+      // const emailOptions = {
+      //   to: 'gustavo.pereira@itone.com.br',
+      //   subject: 'Solicitção Aprovada',
+      //   content: solicitacaoAprovada({
+      //     descricao: queryDesc.recordset[0].Descricao,
+      //     codigo
+      //   }),
+      //   isHtlm: true
+      // };
+
+      // const emailOptionsFinanceiro = {
+      //   to: 'gustavo.pereira@itone.com.br',
+      //   subject: 'Solicitção Aguardando Pagamento',
+      //   content: solicitacaoAprovada({
+      //     descricao: queryDesc.recordset[0].Descricao,
+      //     codigo
+      //   }),
+      //   isHtlm: true
+      // };
+      // enviarEmail(emailOptions)
+      // enviarEmail(emailOptionsFinanceiro)
+      return
+    }
+
     const alterarStatus = await conexao
       .request()
       .query(
@@ -231,6 +265,7 @@ exports.create = async (data, returnField = null) => {
   try {
     return await TableSolicitacao.insert(data, returnField);
   } catch (error) {
+    console.log(error)
     throw new Error('Ocorreu uma excecao');
   }
 };

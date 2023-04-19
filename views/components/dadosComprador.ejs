@@ -14,7 +14,8 @@
   <div class="col-lg-2  metPagamento">
     <label for="fname">Metodo de Pagamento:</label>
     <select name="" id="metPagamento" class="form-control">
-      <option value="Cartão Corporativo">Cartão Corporativo</option>
+      <option value="Selecione" selected>Selecione...</option>
+      <option value="Cartao Corporativo">Cartão Corporativo</option>
       <option value="Boleto">Boleto</option>
       <option value="Pix">Pix</option>
     </select>
@@ -38,32 +39,38 @@
 
 
   </div>
+
+  <div class="col-lg-2" id="divcolunaEsq"></div>
 </div>
 
 
 
 
-<label for="cars" style="margin-top: 1.5%;">Possui Parcelas?</label>
-<div>
-    <input onclick="adicionarCampoParcelas()" type="radio" id="Sim" name="fav_language" value="Sim">
-    <label for="Sim">Sim</label><br>
-    <input onclick="removerCampoParcelas()" type="radio" id="Não" name="fav_language" value="Não" checked>
-    <label for="Não">Não</label><br>
+<div id="teste123">
+  <label for="cars" style="margin-top: 1.5%;">Possui Parcelas?</label>
+  <div>
+    <input onclick="adicionarCampoParcelas()" type="radio" id="Sim" name="fav_language" value="Sim">
+    <label for="Sim">Sim</label><br>
+    <input onclick="removerCampoParcelas()" type="radio" id="Não" name="fav_language" value="Não" checked>
+    <label for="Não">Não</label><br>
+  </div>
+
 </div>
 
 <div id="divParcela"></div>
 
 
-
+<input type="text" value="<%= solicitacao.Codigo  %>" hidden id="codigoSol">
 
 
 
 
 
         <% if(retornoUser.RETORNAR && solicitacao.Status_Compra=='A' ) { %>
-
-          <button type="submit" name="inserir" id="botao-solicitar" class="button2"
-            onclick="insertCompra('<%= solicitacao.Codigo  %>')">Salvar Compra</button>
+          <div id="idBotaoCompras">
+            <button type="submit" name="inserir" id="botao-solicitar" class="button2"
+              onclick="insertCompra('<%= solicitacao.Codigo  %>')">Salvar Compra</button>
+          </div>
 
           <% } %>
 

@@ -194,3 +194,82 @@ Label{
   font-size: 14px;
 
 }
+
+
+/* .col-md-6 {
+  margin-top: 10px;
+} */
+/* #aprovacao {
+  width: 100%;
+} */
+
+/* #aprov {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+} */
+
+
+#checkboxes {
+  /* display: inline; */
+  margin-left: 100px;
+}
+
+.btn-outline-secondary {
+  border-color: #27417B
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+
+.mb-2, .my-2 {
+  margin-bottom: 0.5rem !important;
+}
+
+button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
+  cursor: pointer;
+}
+
+#btn-product:hover, #btn-service:hover{
+  background-color:#27417B;
+}
+
+.active2{
+  background-color:#27417B;
+  color:#ffffff;
+}
+
+.form-check-input{
+  margin-left:15px;
+}
+
+.row{
+  width:100%;
+}
+
+#space-no{
+  margin-left:35px;
+}
+
+@media screen and (max-width: 1310px){
+    #falseAdiantamento{
+      margin-left:80%;
+    }
+    #space-no{
+      margin-left:180%;
+    }
+    
+}
+
+@media screen and (max-width: 1190px){
+  #falseAdiantamento{
+    margin-left:120%;
+  }
+  #space-no{
+    margin-left:230%;
+  }
+  
+}

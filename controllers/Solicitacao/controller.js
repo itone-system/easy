@@ -1,15 +1,12 @@
 const SolicitacaoService = require('./service');
-const SolicitacaoServiceLogin = require('../Login/service');
 const { renderView, renderJson, redirect } = require('../../helpers/render');
-const jwt = require('jsonwebtoken');
 const { db } = require('../../config/env');
 const sql = require('mssql');
 const enviarEmail = require('../../infra/emailAdapter');
-const { Keytoken, domain, pathCmP } = require('../../config/env');
+const { domain, pathCmP } = require('../../config/env');
 const aprovacaoPendenteTemplate = require('../../template-email/aprovacao_pendente');
 const solicitacaoReprovadaTemplate = require('../../template-email/solicitacao_reprovada');
 const tokenAdapter = require('../../infra/tokenAdapter');
-
 const model = require('../../infra/dbAdapter');
 
 module.exports = {
@@ -18,13 +15,14 @@ module.exports = {
     try {
       const user = request.session.get('user');
 
-      let body = ({
+      let {
         pagina = 1,
         Descricao,
         Solicitante,
         statusItem,
         centroCustoFiltro
-      } = request);
+      } = request;
+
       const centroCustoNormal = centroCustoFiltro;
 
       if (centroCustoFiltro) {
@@ -83,7 +81,6 @@ module.exports = {
           listaAprovadores = ''
         }
       }
-      console.log(user)
 
       return renderView('home/solicitacoes/Index', {
         solicitacoes: result.data,
@@ -180,37 +177,111 @@ module.exports = {
   },
 
   async Create(request) {
-    const {
+
+    // tipoTrabalho = 'servico' | 'produto' | 'adiantamento'
+
+    // if (tipoTrabalho) {
+    //   // excecao
+    // }
+
+    let { 
+      adiantamentoServico,
+      adiantamentoProduto,
+      normalServico,
+      normalProduto,
       descricao,
-      quantidade,
-      deal,
-      observacao,
+      deal = null,
+      observacao = null,
       dataCriacao = new Date(),
-      centroCusto,
-      arquivo,
-      linkk
-    } = request;
+      centroCusto = null,
+      pix = null,
+      valor = null,
+      filial = null,
+      dataPagamento = new Date(),
+      quantidade = null,
+      linkProduto = null,
+      arquivo = null,
+    } = request
+
+    const user = request.session.get('user');
+    let CodigoObject = null;
 
     try {
-      const user = request.session.get('user');
+      if (adiantamentoServico) {
+        CodigoObject = await SolicitacaoService.create(
+          {
+            Descricao: descricao,
+            Centro_de_Custo: centroCusto,
+            Deal: deal,
+            Observacao: observacao,
+            Solicitante: user.nome,
+            DataCriacao: dataCriacao,
+            Status_Compra: 'P',
+            pix: pix,
+            valor: valor,
+            filial: filial,
+            dataPagamento: dataPagamento
+          },
+          'Codigo'
+        );
+      }
 
-      let CodigoObject = null;
+      if (adiantamentoProduto) {
+        CodigoObject = await SolicitacaoService.create(
+          {
+            Descricao: descricao,
+            Quantidade: quantidade,
+            Centro_de_Custo: centroCusto,
+            Deal: deal,
+            Observacao: observacao,
+            Solicitante: user.nome,
+            DataCriacao: dataCriacao,
+            Status_Compra: 'P',
+            pix: pix,
+            valor: valor,
+            filial: filial,
+            dataPagamento: dataPagamento
 
-      CodigoObject = await SolicitacaoService.create(
-        {
-          Descricao: descricao,
-          Quantidade: quantidade,
-          Centro_de_Custo: centroCusto,
-          Deal: deal,
-          Observacao: observacao,
-          Solicitante: user.nome,
-          DataCriacao: dataCriacao,
-          Status_Compra: 'P',
-          Link: linkk,
-          anexo: arquivo
-        },
-        'Codigo'
-      );
+          },
+          'Codigo'
+        );
+      }
+
+      if (normalServico) {
+        CodigoObject = await SolicitacaoService.create(
+          {
+            Descricao: descricao,
+            Centro_de_Custo: centroCusto,
+            Deal: deal,
+            Observacao: observacao,
+            Solicitante: user.nome,
+            DataCriacao: dataCriacao,
+            Status_Compra: 'P',
+            filial: filial,
+          },
+          'Codigo'
+        );
+      }
+
+      if (normalProduto) {
+  
+        CodigoObject = await SolicitacaoService.create(
+          {
+            Descricao: descricao,
+            Quantidade: quantidade,
+            Centro_de_Custo: centroCusto,
+            Deal: deal,
+            Observacao: observacao,
+            Solicitante: user.nome,
+            DataCriacao: dataCriacao,
+            Status_Compra: 'P',
+            Link: linkk,
+            anexo: arquivo
+          },
+          'Codigo'
+        );
+      }
+
 
       const Codigo = CodigoObject.Codigo;
 
@@ -244,16 +315,14 @@ module.exports = {
       let contador = 1;
 
       for (let index = 0; index < ordemAprovadores.length; index++) {
-        let resultado = await conexao
+       await conexao
           .request()
           .query(
-            `INSERT INTO Aprovacoes ( Codigo_Solicitacao, Codigo_Aprovador, Ordem) VALUES (${Codigo}, ${
-              ordemAprovadores[index]
+            `INSERT INTO Aprovacoes ( Codigo_Solicitacao, Codigo_Aprovador, Ordem) VALUES (${Codigo}, ${ordemAprovadores[index]
             }, ${index + 1})`
           );
         contador++;
       }
-      console.log('ordem',ordemAprovadores)
 
       const firstEmail = await model('Usuarios')
         .select('EMAIL_USUARIO')
@@ -420,9 +489,8 @@ module.exports = {
     const conexao = await sql.connect(db);
 
     const result = await conexao.request().query(`UPDATE Solicitacao_Item
-            SET Descricao = '${descricao}', Quantidade = ${quantidade}, Centro_de_Custo = '${
-      centroDeCusto.split('. ')[0]
-    }', Deal = '${deal}', Observacao = '${motivo}'
+            SET Descricao = '${descricao}', Quantidade = ${quantidade}, Centro_de_Custo = '${centroDeCusto.split('. ')[0]
+      }', Deal = '${deal}', Observacao = '${motivo}'
             WHERE Codigo = ${codigo}`);
 
     const corpo = 'Solicitação N° ' + codigo + ' Editada com sucesso';
@@ -438,9 +506,9 @@ module.exports = {
   },
 
   async downloadItem(request, response) {
-    response.download(
-      `${pathCmP}` +
-        request.params.path
+    const filePath = pathCmP+request.params.path
+    response.sendFile(
+      filePath
     );
   },
 

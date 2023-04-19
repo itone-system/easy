@@ -1,49 +1,48 @@
 module.exports = ({ link, codigoSolicitacao, descricao }) => {
-    return `<body style="margin: 0; padding:0; font-family: Arial, Helvetica, sans-serif;" >
-    <table border="0" width="100%" cellpadding="0" cellspacing="0">
-        <tr>
-            <td>
-                <!---------Header------>
-                <table align="center" border="0" width="600px" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td align="center" style="padding: 60px 0 50px 0; background-color:#002f71">
-                            <img src="https://uploaddeimagens.com.br/images/004/276/696/thumb/logo_branca.png?1672249934" style="width: 150px;">
-                        </td>
-                    </tr>
-                    <!-----Corpo---->
-                    <tr>
-                        <td bgcolor="#fff" align="center" style="background-color: #ffffff;">
-                            <table border="0" width="600px" cellpadding="0" cellspacing="0" style="padding: 30px; color: #313131;" >
-                                <tr align="left">
-                                    <td>
-                                        <center><h3 >Você tem uma solicitação Pendente</h3></center><br></br>
+    return `<body style="background-color: #f5f5f5; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td>
+          <!-- Header -->
+          <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+            <tr>
+              <td align="center" bgcolor="#002f71" style="padding: 50px 0 60px 0;">
+                <img src="https://uploaddeimagens.com.br/images/004/276/696/thumb/logo_branca.png?1672249934" alt="Logo" width="150">
+              </td>
+            </tr>
+          </table>
 
-                                        <span>Gestão Compras informou que a solicitação abaixo está aguardando aprovação</span> <br></br>
-                                        <span>Solicitação n° ${codigoSolicitacao}</span><br></br>
-                                        <span>Descrição: ${descricao}</span><br></br>
-                                    </td>
-                                </tr>
-                            </table>
-                            <table border="0" width="600px" cellpadding="0" cellspacing="0" style="padding: 15px;">
+          <!-- Content -->
+          <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+            <tr>
+              <td bgcolor="#ffffff" style="padding: 30px; color: #313131;">
+                <h1 style="font-size: 24px; font-weight: bold; margin: 0 0 20px 0;">Você tem uma solicitação pendente</h1>
+                <p style="font-size: 16px; line-height: 1.5em; margin: 0 0 10px 0;">A Gestão de Compras informou que a solicitação abaixo está aguardando aprovação:</p>
+                <ul style="font-size: 16px; line-height: 1.5em; margin: 0;">
+                  <li><strong>Solicitação n°:</strong> ${codigoSolicitacao}</li>
+                  <li><strong>Descrição:</strong> ${descricao}</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
 
-                            </table>
-                        </td>
-                    </tr>
-                    <!-----Footer----->
-                    <tr>
-                        <td style="padding: 20px; background-color:#002f71;">
-                            <table border="0" width="600px" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td width="85%">
-                                      <center>  <a href="${link}" style="color:#ffffff; "  type="button">Acessar Plataforma</a></center>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+          <!-- Footer -->
+          <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
+            <tr>
+              <td bgcolor="#002f71" style="padding: 20px;">
+                <p style="color: #ffffff; font-size: 16px; line-height: 1.5em; margin: 0;">
+                  Para acessar a plataforma, clique no botão abaixo:
+                </p>
+                <p style="margin: 20px 0 0 0; text-align: center;">
+                  <a href="${link}" style="background-color: #ffffff; border: none; border-radius: 4px; color: #002f71; display: inline-block; font-size: 16px; font-weight: bold; padding: 10px 20px; text-decoration: none; text-transform: uppercase;">Acessar plataforma</a>
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
     </table>
-</body> `
+  </body>`
 }
 
 
