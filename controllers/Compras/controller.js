@@ -1,4 +1,3 @@
-// const SolicitacaoService = require('./service');
 const { renderJson } = require('../../helpers/render');
 const { db } = require('../../config/env');
 const sql = require('mssql');
@@ -28,8 +27,6 @@ module.exports = {
       metodoDePagamento,
       comprador
     } = request;
-    console.log(previsaoDeEntrega)
-
     const conexao = await sql.connect(db);
 
     const inserirCompra = await conexao.query(`
@@ -87,5 +84,33 @@ module.exports = {
       'Solicitação N° ' + codigo + ' Foi adicionado para itens comprados';
 
     return renderJson(corpo);
+  },
+
+  async enviarParaPagamento(request) {
+
+    const {
+      dataDaCompra,
+      valorDaCompra,
+      previsaoDeEntrega,
+      codigo,
+      metodoDePagamento,
+      comprador
+    } = request;
+
+
+    const conexao = await sql.connect(db);
+
+    const inserirCompra = await conexao.query(`
+        insert into Compras (dataDaCompra, previsaoDeEntrega, codigo_solicitacao, metodo_De_Pagamento, id_Comprador )
+        values ('${dataDaCompra}', '${previsaoDeEntrega}', ${codigo},'${metodoDePagamento}', ${comprador})`);
+
+    await conexao.query(`update Solicitacao_Item
+        set Status_Compra = 'E'
+        where Codigo = ${codigo}`);
+
+        const corpo =
+        'Solicitação N° ' + codigo + ' Foi enviado para pagamento';
+  
+      return renderJson(corpo);
   }
 };
