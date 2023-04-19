@@ -200,7 +200,7 @@ module.exports = {
         {
           Descricao: descricao,
           Quantidade: quantidade,
-          Centro_de_Custo: centroCusto.split('. ')[0],
+          Centro_de_Custo: centroCusto,
           Deal: deal,
           Observacao: observacao,
           Solicitante: user.nome,

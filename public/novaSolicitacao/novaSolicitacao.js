@@ -76,7 +76,8 @@ const insert = () => {
       '<h1 style="color: red; font-size: 12px;">* Campo obrigatório</h1>';
     return;
   }
-  const centroCusto = document.getElementById('CentroCusto').value;
+  const centroCusto = document.getElementById('CentroCusto').value.split('. ');
+  const centroCustoFilial = document.getElementById('CentroCusto').value.split('- ');
 
   if (centroCusto == 'Selecionar...') {
     document.getElementById('centroCustoObrigatorio').innerHTML =
@@ -125,7 +126,7 @@ const insert = () => {
   let bodyContent = {
     descricao: descricao,
     quantidade: quantidade,
-    centroCusto: centroCusto,
+    centroCusto: centroCusto[0].length > 10 ? centroCustoFilial[0] : centroCusto[0],
     deal: deal,
     observacao: observacao,
     solicitante: solicitante,
