@@ -5,6 +5,7 @@ const UsuariosRouter = require('../controllers/Usuarios/router');
 const HomeRouter = require('../controllers/Home/router');
 const LoginRouter = require('../controllers/Login/router');
 const { auth } = require('../middlewares/auth-middleware');
+const AdmissaoRouter = require('../controllers/DepartamentoPessoal/Admissao/router')
 
 module.exports = (app) => {
   app.use(LoginRouter);
@@ -13,5 +14,5 @@ module.exports = (app) => {
   app.use('/users', auth, UsuariosRouter);
   app.use('/compras', auth, ComprasRouter);
   app.use('/notafiscal', auth, NotasRouter);
-
+  app.use('/admissao', AdmissaoRouter)
 };
