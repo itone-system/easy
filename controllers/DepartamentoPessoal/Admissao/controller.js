@@ -47,54 +47,63 @@ module.exports = {
                 solicitante: solicitante
             })
 
-            // return renderJson(corpo = codigoInsert, statusCode = 200)
-            //buscar diretor da area por centro de custo e diretor financeiro, necessário garantir que o diretor da área esteja na posição 0
-            // add centro de custo ao retorno do usuario 
-            const centroTest = '6.4. GERENCIA DE TI E SISTEMAS'
-            console.log('chegiou aq')
-            const buscaAprovadores = await conexao.request().query(`SELECT Usuarios.COD_USUARIO as codigoDiretor, diretorFinanceiro.codigo as codigoDiretorFinanceiro
+            const buscaAprovadores = await conexao.request().query(`
+            SELECT Usuarios.COD_USUARIO as codigoDiretor, diretorFinanceiro.codigo as codigoDiretorFinanceiro
             FROM Usuarios
             INNER JOIN centrocusto ON Usuarios.COD_USUARIO = centrocusto.codigoDiretor
             LEFT JOIN diretorFinanceiro ON diretorFinanceiro.id = 1
-            WHERE centroDeCusto = '${centroTest}'
+            WHERE centroDeCusto = ${user.cenroCusto}
             `)
-            console.log(buscaAprovadores)
-            let aprovadores = []
-            aprovadores[0] = buscaAprovadores.recordset[0].codigoDiretor
-            aprovadores[1] = buscaAprovadores.recordset[0].codigoDiretorFinanceiro
-            console.log(codigoInsert)
+            let aprovadores = [
+                {
+                    codigo: buscaAprovadores.recordset[0].codigoDiretor
+                },
+                {
+                    codigo: buscaAprovadores.recordset[0].codigoDiretorFinanceiro
+                }
+            ]
 
-            for (let index = 0; index < aprovadores.length; index++) {
+            let ordem = 1;
+
+            for await (const { codigo } of aprovadores) {
                 await conexao
                     .request()
                     .query(
-                        `INSERT INTO AprovacoesMovimentacao ( Codigo_Solicitacao, Codigo_Aprovador, Ordem, Tipo) VALUES (${codigoInsert}, ${aprovadores[index]
-                        }, ${index + 1}, 1)`
+                        `INSERT INTO Aprovacoes ( Codigo_Solicitacao, Codigo_Aprovador, Ordem, Tipo) VALUES (${codigoInsert}, ${codigo}, ${ordem}, 3)`
                     );
+                ordem++
             }
 
-            // const token = tokenAdapter({
-            //     codigoInsert,
-            //     aprovador: aprovadores[0],
-            //     id: aprovadores[0],
-            //     router: `/admissoes/${codigoInsert}/edit`
-            //   });
 
-            // const link = `${domain}//${token}`
+            const token = tokenAdapter({
+                codigoInsert,
+                aprovador: aprovadores[0].codigo,
+                id: aprovadores[0].codigo,
+                router: `/admissoes/${codigoInsert}/detail`
+            });
 
-            // emailOptionsDiretorArea = {
-            //     to: aprovadores[0],
-            //     subject: 'Solicitação de Aprovação',
-            //     content: aprovacaoPendente({
-            //         link,
-            //         codigoInsert
-            //     }),
-            //     isHtlm: true
-            // };
+            const link = `${domain}//${token}`
+            
+            const emailDiretor = await conexao.request().query(`select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${aprovadores[0].codigo}`)
+            
+            const emailOptionsDiretorArea = {
+                to: emailDiretor.recordset[0].EMAIL_USUARIO,
+                subject: 'Solicitação de Aprovação',
+                content: aprovacaoPendente({
+                    link,
+                    codigoSolicitacao:codigoInsert,
+                    cargo: cargo,
+                    unidade: unidade,
+                    departamento: departamento,
+                    gestorImediato: gestorImediato
 
-            // enviarEmail(emailOptionsDiretorArea)
+                }),
+                isHtlm: true
+            };
 
-            return renderJson(corpo = codigoInsert, statusCode = 200)
+            enviarEmail(emailOptionsDiretorArea)
+
+            return renderJson(codigoInsert)
 
 
         } catch (error) {

@@ -28,6 +28,8 @@ exports.obterDadosUser = async (codigo) => {
       (dadosUserSolicitacao.loginUsuario = query.recordset[0].LOGIN_USUARIO),
       (dadosUserSolicitacao.nome = query.recordset[0].NOME_USUARIO),
       (dadosUserSolicitacao.email = query.recordset[0].EMAIL_USUARIO),
+      (dadosUserSolicitacao.centroCusto = query.recordset[0].ID_DEPARTAMENTO.split('.')[0]),
+      // console.log('teste agora', query.recordset[0])
       (dadosUserSolicitacao.departamento = query.recordset[0].ID_DEPARTAMENTO),
       (dadosUserSolicitacao.Perfil = query.recordset[0].Perfil),
       (dadosUserSolicitacao.permissaoCompras = '');
