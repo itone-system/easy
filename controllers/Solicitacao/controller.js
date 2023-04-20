@@ -275,7 +275,7 @@ module.exports = {
             Solicitante: user.nome,
             DataCriacao: dataCriacao,
             Status_Compra: 'P',
-            Link: linkk,
+            Link: linkProduto,
             anexo: arquivo
           },
           'Codigo'

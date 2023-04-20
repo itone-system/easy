@@ -95,7 +95,7 @@ const insert = () => {
     return;
   }
 
-  centroCusto = centroCusto.split(/[\.-]/)[0].trim()
+  centroCusto = centroCusto.match(/[\d\.]+/)[0].trim()
 
   const deal = document.getElementById('Deal').value;
 
@@ -304,13 +304,16 @@ function insertAdiantamento() {
     //     '<h1 style="color: red; font-size: 12px;">* Campo obrigatório</h1>';
     //   return;
     // }
-    const centroCusto = document.getElementById('CentroCusto').value;
+    let centroCusto = document.getElementById('CentroCusto').value;
 
     if (centroCusto == 'Selecionar...') {
       document.getElementById('centroCustoObrigatorio').innerHTML =
         '<h1 style="color: red; font-size: 12px;">* Campo obrigatório</h1>';
       return;
     }
+
+    centroCusto = centroCusto.match(/[\d\.]+/)[0].trim()
+
     const deal = document.getElementById('Deal').value;
 
     if (deal.length == 0) {
@@ -398,7 +401,9 @@ function insertAdiantamento() {
         '<h1 style="color: red; font-size: 12px;">* Campo obrigatório</h1>';
       return;
     }
-    const centroCusto = document.getElementById('CentroCusto').value;
+    let centroCusto = document.getElementById('CentroCusto').value;
+
+    centroCusto = centroCusto.match(/[\d\.]+/)[0].trim()
 
     if (centroCusto == 'Selecionar...') {
       document.getElementById('centroCustoObrigatorio').innerHTML =
@@ -489,13 +494,16 @@ function insertNormalServico() {
     return;
   }
 
-  const centroCusto = document.getElementById('CentroCusto').value;
+  let centroCusto = document.getElementById('CentroCusto').value;
 
   if (centroCusto == 'Selecionar...') {
     document.getElementById('centroCustoObrigatorio').innerHTML =
       '<h1 style="color: red; font-size: 12px;">* Campo obrigatório</h1>';
     return;
   }
+
+  centroCusto = centroCusto.match(/[\d\.]+/)[0].trim()
+
   const deal = document.getElementById('Deal').value;
 
   if (deal.length == 0) {
