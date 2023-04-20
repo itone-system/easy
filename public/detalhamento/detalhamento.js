@@ -19,16 +19,143 @@ $(document).ready(function () {
 
 
 
-  const downloadArquivoNF = document.getElementById("baixararquivo");
-  downloadArquivoNF.addEventListener("click", function () {
-    downloadItem()
-  });
+  // const downloadArquivoNF = document.getElementById("baixararquivo");
+  // downloadArquivoNF.addEventListener("click", function () {
+  //   downloadItem()
+  // });
+
+
+  // const select = document.getElementById('metPagamento')
+
+  // select.addEventListener('change', (event) => {
+  //   const selectedOption = event.target.value;
+  //   console.log('ola mudno')
+  //   if (selectedOption == 'Pix') {
+  //     document.getElementById('teste123').innerHTML = ''
+
+  //     if (document.getElementById('boletoDetalhamento')) {
+  //       document.getElementById('boletoDetalhamento').innerHTML=''
+  //     }
+  //     document.getElementById('divcolunaEsq').innerHTML = ` <div id="pixDetalhamento">
+  //     <label for="exampleFormControlFile1">Digite o Pix</label>
+  //     <input type="text" class="form-control"  id="linkPix">
+  //     </div>
+  //     `
+
+  //     document.getElementById('idBotaoCompras').innerHTML=''
+  //     document.getElementById('idBotaoCompras').innerHTML=`
+  //     <br>
+  //     <button type="submit" name="inserir" id="botao-solicitar" class="button2"
+  //     onclick="enviarCompraParaPagamento('<%= solicitacao.Codigo  %>')">Enviar para pagamento</button>`
+  //   }
+
+  //   if (selectedOption == 'Boleto') {
+  //     document.getElementById('teste123').innerHTML = ''
+  //     if (document.getElementById('pixDetalhamento')) {
+  //       document.getElementById('pixDetalhamento').innerHTML = ''
+  //     }
+  //     document.getElementById('divcolunaEsq').innerHTML = ` <div id="boletoDetalhamento">
+  //     <label for="exampleFormControlFile1">Anexar Arquivo</label>
+  //     <input type="file" name="file" class="arqcontrol " id="fileInput">
+  //     </div>`
+
+  //     document.getElementById('idBotaoCompras').innerHTML=''
+  //     document.getElementById('idBotaoCompras').innerHTML=`
+  //     <br>
+  //     <button type="submit" name="inserir" id="botao-solicitar" class="button2"
+  //     onclick="enviarCompraParaPagamento('<%= solicitacao.Codigo  %>')">Enviar para pagamento</button>`
+  //   }
+
+  //   if (selectedOption == 'Cartao Corporativo') {
+
+  //     if (document.getElementById('boletoDetalhamento')) {
+  //       document.getElementById('boletoDetalhamento').innerHTML=''
+  //     }
+  //     if (document.getElementById('pixDetalhamento')) {
+  //       document.getElementById('pixDetalhamento').innerHTML = ''
+  //     }
+  //     document.getElementById('teste123').innerHTML = ` <label for="cars" style="margin-top: 1.5%;">Possui Parcelas?</label>
+  //     <div>
+  //       <input onclick="adicionarCampoParcelas()" type="radio" id="Sim" name="fav_language" value="Sim">
+  //         <label for="Sim">Sim</label><br>
+  //         <input onclick="removerCampoParcelas()" type="radio" id="Não" name="fav_language" value="Não" checked>
+  //         <label for="Não">Não</label><br>
+  //     </div>`
+  //   }
+
+
+
+
+  // });
 });
 
 window.onload = () => {
   const toggle = body.querySelector(".toggle")
   const clickEvent = new MouseEvent('click');
   toggle.dispatchEvent(clickEvent);
+
+  const select = document.getElementById('metPagamento')
+
+  select.addEventListener('change', (event) => {
+    const selectedOption = event.target.value;
+    console.log('ola mudno')
+    if (selectedOption == 'Pix') {
+      document.getElementById('teste123').innerHTML = ''
+
+      if (document.getElementById('boletoDetalhamento')) {
+        document.getElementById('boletoDetalhamento').innerHTML=''
+      }
+      document.getElementById('divcolunaEsq').innerHTML = ` <div id="pixDetalhamento">
+      <label for="exampleFormControlFile1">Digite o Pix</label>
+      <input type="text" class="form-control"  id="linkPix">
+      </div>
+      `
+
+      document.getElementById('idBotaoCompras').innerHTML=''
+      document.getElementById('idBotaoCompras').innerHTML=`
+      <br>
+      <button type="submit" name="inserir" id="botao-solicitar" class="button2"
+      onclick="enviarCompraParaPagamento('<%= solicitacao.Codigo  %>')">Enviar para pagamento</button>`
+    }
+
+    if (selectedOption == 'Boleto') {
+      document.getElementById('teste123').innerHTML = ''
+      if (document.getElementById('pixDetalhamento')) {
+        document.getElementById('pixDetalhamento').innerHTML = ''
+      }
+      document.getElementById('divcolunaEsq').innerHTML = ` <div id="boletoDetalhamento">
+      <label for="exampleFormControlFile1">Anexar Arquivo</label>
+      <input type="file" name="file" class="arqcontrol " id="fileInput">
+      </div>`
+
+      document.getElementById('idBotaoCompras').innerHTML=''
+      document.getElementById('idBotaoCompras').innerHTML=`
+      <br>
+      <button type="submit" name="inserir" id="botao-solicitar" class="button2"
+      onclick="enviarCompraParaPagamento('<%= solicitacao.Codigo  %>')">Enviar para pagamento</button>`
+    }
+
+    if (selectedOption == 'Cartao Corporativo') {
+
+      if (document.getElementById('boletoDetalhamento')) {
+        document.getElementById('boletoDetalhamento').innerHTML=''
+      }
+      if (document.getElementById('pixDetalhamento')) {
+        document.getElementById('pixDetalhamento').innerHTML = ''
+      }
+      document.getElementById('teste123').innerHTML = ` <label for="cars" style="margin-top: 1.5%;">Possui Parcelas?</label>
+      <div>
+        <input onclick="adicionarCampoParcelas()" type="radio" id="Sim" name="fav_language" value="Sim">
+          <label for="Sim">Sim</label><br>
+          <input onclick="removerCampoParcelas()" type="radio" id="Não" name="fav_language" value="Não" checked>
+          <label for="Não">Não</label><br>
+      </div>`
+    }
+
+
+
+
+  });
 };
 
 function enviarCompraParaPagamento() {
