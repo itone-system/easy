@@ -40,7 +40,7 @@ $(document).ready(function () {
 
   enviarNF.addEventListener("click", function () {
 
-    validarCampos()
+    limparCampos()
 
   });
 
@@ -196,7 +196,7 @@ function limparCampos() {
 
     switch (element) {
       case 'Solicitante':
-        document.getElementById(element).value = 'Wesley'
+
         break
       case 'DataPagamento':
         document.getElementById(element).value = dataAtualConf
