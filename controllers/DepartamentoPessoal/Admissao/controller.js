@@ -52,7 +52,7 @@ module.exports = {
             FROM Usuarios
             INNER JOIN centrocusto ON Usuarios.COD_USUARIO = centrocusto.codigoDiretor
             LEFT JOIN diretorFinanceiro ON diretorFinanceiro.id = 1
-            WHERE centroDeCusto = ${user.cenroCusto}
+            WHERE centroDeCusto = 6
             `)
             let aprovadores = [
                 {
@@ -79,13 +79,13 @@ module.exports = {
                 codigoInsert,
                 aprovador: aprovadores[0].codigo,
                 id: aprovadores[0].codigo,
-                router: `/admissoes/${codigoInsert}/detail`
+                router: `/vagas/${codigoInsert}/detail`
             });
 
-            const link = `${domain}//${token}`
+            const link = `${domain}/vagas/${codigoInsert}/detail?token=${token}`
             
             const emailDiretor = await conexao.request().query(`select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${aprovadores[0].codigo}`)
-            
+
             const emailOptionsDiretorArea = {
                 to: emailDiretor.recordset[0].EMAIL_USUARIO,
                 subject: 'Solicitação de Aprovação',
@@ -124,6 +124,13 @@ module.exports = {
 
     },
 
+    async detail(request) {
+        console.log(request.codigo)
+        const solicitacao = await solicitacaoService.solicitacaoUnica(request.codigo)
+
+        return renderView('home/Movimentacao/Admissao/Detail', {solicitacao});
+    },
+
     async aprovar(request) {
         const { codigoSolicitacao, tipo } = request;
 
@@ -142,10 +149,10 @@ module.exports = {
                 codigoInsert,
                 aprovador: aprovadores[0],
                 id: aprovadores[0],
-                router: `/admissoes/${codigoInsert}/edit`
+                router: `/vagas/${codigoInsert}/edit`
             });
 
-            const link = `${domain}//${token}`
+            const link = `${domain}/vagas/${token}`
 
             emailOptionsDiretorArea = {
                 to: aprovadores[0],

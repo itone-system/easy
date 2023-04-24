@@ -19,3 +19,13 @@ exports.insert = async (dados) => {
     console.log('dados', result.recordset[0].Codigo)
     return result.recordset[0].Codigo
 }
+
+exports.solicitacaoUnica = async (codigo) => {
+    const conexao = await sql.connect(db);
+
+    const solicitacao = await conexao.request().query(`select * from solicitacaoAdmissao where Codigo = ${codigo}`)
+
+
+    return solicitacao.recordset[0]
+
+}

@@ -450,9 +450,9 @@ th {
 }
 
 .img {
-    background-image: url('../../public/Fotos/teste1.png');
-    width: 25px;
-    height: 25px;
+    /* background-image: url('../../public/Fotos/teste1.png'); */
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     margin-right:20px;
 }

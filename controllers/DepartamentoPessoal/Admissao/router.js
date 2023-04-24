@@ -6,7 +6,7 @@ AdmissaoRouter.get('/', (request, response) => {
     response.render('home/Movimentacao/Admissao/Create', { nome: 'Gustavo Costa' })
 })
 AdmissaoRouter.get('/index', (request, response) => {
-    response.render('home/Movimentacao/Index', {
+    response.render('home/Movimentacao/Admissao/Index', {
         nome: 'Gustavo Costa', solicitacoes: [
             {
                 Codigo: 49,
@@ -87,5 +87,7 @@ AdmissaoRouter.get('/index', (request, response) => {
     })
 })
 AdmissaoRouter.post('/insert', expressAdapter(admissaoController.insert))
+
+AdmissaoRouter.get('/:codigo/detail', expressAdapter(admissaoController.detail))
 
 module.exports = AdmissaoRouter;

@@ -14,5 +14,5 @@ module.exports = (app) => {
   app.use('/users', auth, UsuariosRouter);
   app.use('/compras', auth, ComprasRouter);
   app.use('/notafiscal', auth, NotasRouter);
-  app.use('/admissao', AdmissaoRouter)
+  app.use('/vagas', AdmissaoRouter)
 };
