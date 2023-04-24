@@ -40,7 +40,7 @@ $(document).ready(function () {
 
   enviarNF.addEventListener("click", function () {
 
-    limparCampos()
+    validarCampos()
 
   });
 
