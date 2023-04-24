@@ -404,7 +404,7 @@ function validarCampoData(valorCampoDataPagamento) {
   }
 }
 
-function formatarMoeda() {
+function formatarMoeda(){
   var elemento = document.getElementById('valorNF');
   var valor = elemento.value;
 
@@ -419,7 +419,6 @@ function formatarMoeda() {
 
   elemento.value = valor;
   if (valor == 'NaN') elemento.value = '';
-}
+};
 
-conveniaCentroCusto()
-
+conveniaCentroCusto();
