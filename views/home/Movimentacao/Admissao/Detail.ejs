@@ -1,12 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>ola</h1>
-</body>
+<%- include('../../../partials/head', { title: 'Nova Solicitação' } ) %>
+    <link rel="stylesheet" href="../../../../public/global.css">
+    <link rel="stylesheet" href="../../../../public/Movimentacao/Admissao/detalhamento.css">
+    <script src="../../../../public/Movimentacao/Admissao/detalhamento.js"></script>
+
+    <body>
+
+        <%- include('../../../components/menu') %>
+
+            <section class="home">
+
+                <%- include('../../../components/navbar') %>
+
+                    <main class="text">
+
+                        <h2
+                            style="border-bottom: 1px solid #27417B; margin-bottom: 25px; margin-top: 25px;  padding: 13px 0">
+                            Detalhamento</h2>
+                        <p> </p>
+
+                        <%- include('../../../components/statusVagas.ejs') %>
+                        <br>
+                        <br>
+                            <div class="row g-3">
+                                <div class="col Descricao">
+                                    <label>Tipo de Admissão:</label>
+
+                                    <input id="Solicitante" for="Solicitante" type="text"
+                                        class="form-control alterar-background inputDetail" placeholder="Solicitante"
+                                        aria-label="Last name" style="font-size: 13px" value="<%=solicitacao.tipoDeAdmissao%>" readonly>
+
+
+
+
+
+
+
+                                </div>
+                                <div class="col">
+
+                                    <label>Unidade de Contratação:</label>
+
+
+                                    <input id="Descricao" for="Descricao" type="text"
+                                        class="form-control alterar-background inputDetail" value="<%=solicitacao.unidade%>"
+                                        placeholder="Descricao do Item" readonly>
+
+
+
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row g-3">
+                                <div class="col">
+
+                                    <label>Cargo:</label>
+
+
+                                    <input id="Descricao" for="Descricao" type="text"
+                                        class="form-control alterar-background inputDetail" value="<%=solicitacao.cargo%>"
+                                        placeholder="Descricao do Item" readonly>
+
+
+                                </div>
+                                 <div class="col">
+
+                                    <label>Salário:</label>
+
+
+                                    <input id="Descricao" for="Descricao" type="text"
+                                        class="form-control alterar-background inputDetail" value="<%=solicitacao.salario%>"
+                                        placeholder="Descricao do Item" readonly>
+
+
+                                </div>
+                                <div class="col">
+
+                                    <label>Gestor Imediato:</label>
+
+
+                                    <input id="Descricao" for="Descricao" type="text"
+                                        class="form-control alterar-background inputDetail" value="<%=solicitacao.gestorImediato%>"
+                                        placeholder="Descricao do Item" readonly>
+
+
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row g-3">
+                                <div class="col">
+
+                                    <label>Horário de Trabalho:</label>
+
+
+                                    <input id="Descricao" for="Descricao" type="text"
+                                        class="form-control alterar-background inputDetail" value="<%=solicitacao.horario%>"
+                                        placeholder="Descricao do Item" readonly>
+
+
+                                </div>
+                                 <div class="col">
+
+                                    <label>Departamento:</label>
+
+
+                                    <input id="Descricao" for="Descricao" type="text"
+                                        class="form-control alterar-background inputDetail" value="<%=solicitacao.departamento%>"
+                                        placeholder="Descricao do Item" readonly>
+
+
+                                </div>
+                                <div class="col">
+
+                                    <label>Centro de Custo:</label>
+
+
+                                    <input id="Descricao" for="Descricao" type="text"
+                                        class="form-control alterar-background inputDetail" value="<%=solicitacao.centroDecusto%>"
+                                        placeholder="Descricao do Item" readonly>
+
+
+                                </div>
+
+                                <div class="col">
+
+                                    <label>Cliente/Deal</label>
+
+
+                                    <input id="Descricao" for="Descricao" type="text"
+                                        class="form-control alterar-background inputDetail" value="<%=solicitacao.deal%>"
+                                        placeholder="Descricao do Item" readonly>
+
+
+                                </div>
+                            </div>
+                            <br>
+                            <button class="btn btn-success text-white" onclick="aprovarSolicitacao()">Aprovar</button>
+                            <button class="btn btn-danger text-white" data-target="#modalDesaprovar" data-toggle="modal">Reprovar</button>
+
+                            <!-- inputs para pegar valores -->
+                            <input type="text" id="codigoSolicitacao" value="<%=solicitacao.Codigo%>" hidden>
+                            <!-- ------------------------- -->
+
+                    </main>
+            </section>
+
+    </body>
+
 </html>

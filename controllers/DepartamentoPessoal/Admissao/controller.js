@@ -83,7 +83,7 @@ module.exports = {
             });
 
             const link = `${domain}/vagas/${codigoInsert}/detail?token=${token}`
-            
+
             const emailDiretor = await conexao.request().query(`select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${aprovadores[0].codigo}`)
 
             const emailOptionsDiretorArea = {
@@ -91,7 +91,7 @@ module.exports = {
                 subject: 'Solicitação de Aprovação',
                 content: aprovacaoPendente({
                     link,
-                    codigoSolicitacao:codigoInsert,
+                    codigoSolicitacao: codigoInsert,
                     cargo: cargo,
                     unidade: unidade,
                     departamento: departamento,
@@ -125,10 +125,17 @@ module.exports = {
     },
 
     async detail(request) {
-        console.log(request.codigo)
+        
         const solicitacao = await solicitacaoService.solicitacaoUnica(request.codigo)
-
-        return renderView('home/Movimentacao/Admissao/Detail', {solicitacao});
+      
+        solicitacao.etapas = {
+            'aprovacao-vaga': 'done',
+            'processo-seletivo': 'done',
+            propostas: 'done',
+            'exame-admissional': 'done',
+            contratado: 'ondone'
+        };
+        return renderView('home/Movimentacao/Admissao/Detail', { solicitacao, nome: 'Gustavo Costa' });
     },
 
     async aprovar(request) {
@@ -141,37 +148,120 @@ module.exports = {
         await conexao
             .request()
             .query(
-                `UPDATE AprovacoesMovimentacao SET Status = 'Y' WHERE Codigo_Aprovador = ${user.codigo} and Codigo_Solicitacao = ${codigoSolicitacao}`
+                `UPDATE Aprovacoes SET Status = 'Y' WHERE Codigo_Aprovador = ${user.codigo} and Codigo_Solicitacao = ${codigoSolicitacao} and Tipo = ${tipo}`
             );
-        // add cargo no retorno do usuário
-        if (user.cargo != 'Diretor Financeiro') {
+
+        const codigoDiretorFinanceiro = await conexao.request().query(`select codigo from DiretorFinanceiro df `)
+
+        const emailDiretorFinanceiro = await conexao.request().query(`select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${codigoDiretorFinanceiro}`)
+
+        const solicitacao = await solicitacaoService.solicitacaoUnica(codigoSolicitacao)
+
+        if (user.codigo != codigoDiretorFinanceiro.recordset[0].codigo) {
+
             const token = tokenAdapter({
-                codigoInsert,
-                aprovador: aprovadores[0],
-                id: aprovadores[0],
-                router: `/vagas/${codigoInsert}/edit`
+                codigoSolicitacao,
+                aprovador: codigoDiretorFinanceiro,
+                id: codigoDiretorFinanceiro,
+                router: `/vagas/${codigoSolicitacao}/detail`
             });
 
-            const link = `${domain}/vagas/${token}`
+            const link = `${domain}/vagas/${codigoSolicitacao}/detail?token=${token}`
 
-            emailOptionsDiretorArea = {
-                to: aprovadores[0],
+            const emailOptionsDiretorFinanceiro = {
+                to: emailDiretorFinanceiro.recordset[0].EMAIL_USUARIO,
                 subject: 'Solicitação de Aprovação',
                 content: aprovacaoPendente({
                     link,
-                    codigoInsert
+                    codigoSolicitacao: codigoSolicitacao,
+                    cargo: solicitacao.cargo,
+                    unidade: solicitacao.unidade,
+                    departamento: solicitacao.departamento,
+                    gestorImediato: solicitacao.gestorImediato
+
                 }),
                 isHtlm: true
             };
 
-            enviarEmail(emailOptionsDiretorArea)
+            enviarEmail(emailOptionsDiretorFinanceiro)
+
+            const corpo =
+                'Solicitação N° ' + codigoSolicitacao + ' aprovada com sucesso';
+
+            return renderJson(corpo);
         }
+
+        // enviar email para começar o fluxo de processo seletivo
+        // decidir como será o acesso deste departamento no sistema
+        // 
 
         const corpo =
             'Solicitação N° ' + codigoSolicitacao + ' aprovada com sucesso';
 
         return renderJson(corpo);
-    }
+    },
+
+    async Reprovar(request) {
+        const { codigoSolicitacao, motivoReprovacao, Tipo } = request;
+
+        const user = request.session.get('user');
+
+        const conexao = await sql.connect(db);
+    
+        await conexao
+          .request()
+          .query(
+            `UPDATE Aprovacoes SET Status = 'R' WHERE Codigo_Solicitacao = ${codigoSolicitacao}`
+          );
+    
+        await conexao
+          .request()
+          .query(
+            `update solicitacaoAdmissao set Status_Compra = 'R' where Codigo = ${codigoSolicitacao}`
+          );
+    
+        await conexao
+          .request()
+          .query(
+            `update Aprovacoes set Reprovador = ${user.codigo} where Codigo = ${codigoSolicitacao}`
+          );
+    
+        await conexao
+          .request()
+          .query(
+            `update Aprovacoes set MotivoReprovacao = '${motivoReprovacao}' where Codigo = ${codigoSolicitacao}`
+          );
+    
+        const corpo = 'Solicitação N° ' + codigoSolicitacao + ' foi reprovada';
+
+        const emailSolicitante = await SolicitacaoService.buscarEmailSolicitante(codigoSolicitacao);
+
+        const solicitacao = await solicitacaoService.solicitacaoUnica(
+          codigoSolicitacao
+        );
+    
+        // const reprovador = await conexao.request().query(`SELECT u.NOME_USUARIO
+        // FROM Usuarios u
+        // INNER JOIN Solicitacao_Item p ON p.Reprovador= u.COD_USUARIO
+        // WHERE p.Codigo = ${codigoSolicitacao} `);
+        const reprovador = await conexao.request().query(`select NOME_USUARIO from Usuarios where COD_USUARIO = ${user.codigo}`)
+    
+        const emailOptions = {
+          to: email,
+          subject: 'Solicitação De Compra reprovada',
+          content: solicitacaoReprovadaTemplate({
+            codigo: codigoSolicitacao,
+            descricao,
+            reprovador: reprovador.recordset[0].NOME_USUARIO,
+            motivo: motivoReprovacao
+          }),
+          isHtlm: true
+        };
+    
+        enviarEmail(emailOptions);
+    
+        return renderJson(corpo);
+      }
 
 
 }

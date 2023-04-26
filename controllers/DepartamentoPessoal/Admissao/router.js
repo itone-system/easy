@@ -90,4 +90,6 @@ AdmissaoRouter.post('/insert', expressAdapter(admissaoController.insert))
 
 AdmissaoRouter.get('/:codigo/detail', expressAdapter(admissaoController.detail))
 
+AdmissaoRouter.post('/aprovar', expressAdapter(admissaoController.aprovar))
+
 module.exports = AdmissaoRouter;
