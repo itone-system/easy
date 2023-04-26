@@ -14,5 +14,5 @@ module.exports = async (app) => {
   app.use('/users', auth, UsuariosRouter);
   app.use('/compras', auth, ComprasRouter);
   app.use('/notafiscal', auth, NotasRouter);
-  app.use('/vagas', AdmissaoRouter)
+  app.use('/vagas', auth, AdmissaoRouter)
 };

@@ -52,7 +52,7 @@ module.exports = {
             FROM Usuarios
             INNER JOIN centrocusto ON Usuarios.COD_USUARIO = centrocusto.codigoDiretor
             LEFT JOIN diretorFinanceiro ON diretorFinanceiro.id = 1
-            WHERE centroDeCusto = 6
+            WHERE centroDeCusto = ${user.centroCusto}
             `)
             let aprovadores = [
                 {
@@ -153,16 +153,16 @@ module.exports = {
 
         const codigoDiretorFinanceiro = await conexao.request().query(`select codigo from DiretorFinanceiro df `)
 
-        const emailDiretorFinanceiro = await conexao.request().query(`select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${codigoDiretorFinanceiro}`)
+        const emailDiretorFinanceiro = await conexao.request().query(`select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${codigoDiretorFinanceiro.recordset[0].codigo}`)
 
         const solicitacao = await solicitacaoService.solicitacaoUnica(codigoSolicitacao)
 
         if (user.codigo != codigoDiretorFinanceiro.recordset[0].codigo) {
-
+        
             const token = tokenAdapter({
                 codigoSolicitacao,
-                aprovador: codigoDiretorFinanceiro,
-                id: codigoDiretorFinanceiro,
+                aprovador: codigoDiretorFinanceiro.recordset[0].codigo,
+                id: codigoDiretorFinanceiro.recordset[0].codigo,
                 router: `/vagas/${codigoSolicitacao}/detail`
             });
 
