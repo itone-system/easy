@@ -1,6 +1,6 @@
 const { domain } = require('./env');
 
-module.exports = (app) => {
+module.exports = async (app) => {
   app.locals = {
     domain,
     endpoints: {

@@ -13,7 +13,10 @@ const {
   DOMAIN,
   EMAIL,
   PATHNF,
-  PATHCMP
+  PATHCMP,
+  SESSION_CACHE_HOST,
+  SESSION_CACHE_PORT,
+  SESSION_CACHE_PASSWORD
 } = process.env;
 
 const port = parseInt(PORT || 5050)
@@ -24,6 +27,9 @@ if (isProd && !DOMAIN) {
 }
 
 const domain = DOMAIN || (port !== 80 ? `http://localhost:${port}` : 'http://localhost')
+
+const oneDaySession = 24 * 60 * 60 * 1000
+const oneWeekSession = 7 * oneDaySession
 
 module.exports = {
   enviroment: ENVIRONMENT,
@@ -49,7 +55,13 @@ module.exports = {
   },
   session: {
     key: SESSION_SECRET,
-    age: 3600000
+    age: isProd ? oneDaySession : oneWeekSession,
+    service: ENVIRONMENT === 'dev' ? {
+      host: SESSION_CACHE_HOST || null,
+      port: SESSION_CACHE_PORT || null,
+      password: SESSION_CACHE_PASSWORD || null,
+      prefix: 'itone'
+    } : null
   },
   Keytoken: {
     secret: SECRET
