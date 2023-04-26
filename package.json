@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "dev": "nodemon --inspect server"
+    "dev": "nodemon --inspect server",
+    "sync": "browser-sync start --config bs-config.js"
   },
   "keywords": [],
   "author": "",

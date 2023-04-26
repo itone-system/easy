@@ -19,7 +19,7 @@ const {
   SESSION_CACHE_PASSWORD
 } = process.env;
 
-const port = parseInt(PORT || 5050)
+const port = parseInt(PORT || 3000)
 const isProd = ENVIRONMENT !== 'dev'
 
 if (isProd && !DOMAIN) {
