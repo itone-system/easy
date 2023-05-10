@@ -45,6 +45,7 @@ window.onload = () => {
     toggle.dispatchEvent(clickEvent);
 
     conveniaCentroCusto()
+    conveniaColaborares()
 
     // Selecionar botão de enviar
     // const enviarForm = document.querySelector("#botaoEnviar");
@@ -273,11 +274,11 @@ function enviarDados(event) {
 // }
 
 function desabilitarCampoSubstituicao() {
-    document.getElementById("empSubs").disabled = true;
+    document.getElementById("ColaboradorInsert").disabled = true;
 }
 
 function habilitarCampoSubstituicao() {
-    document.getElementById("empSubs").disabled = false;
+    document.getElementById("ColaboradorInsert").disabled = false;
     return true;
 }
 
@@ -366,4 +367,36 @@ function getFormValues() {
 //         document.getElementById('deal').disabled = false;
 //     }
 // }
+
+const conveniaColaborares = () => {
+
+    fetch("https://public-api.convenia.com.br/api/v3/employees", {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        "token": "82856aeb-fa11-4918-b2bc-f7a49322f69b"
+      }
+    }).then(response => {
+      return response.json()
+    }).then(result => {
+      var dados = result.data
+      let listaColab = []
+  
+      dados.forEach(element => {
+        listaColab.push(element.name + ' ' + element.last_name)
+        listaColab.sort()
+      });
+  
+      listaColab.forEach(element => {
+        var localColab = document.getElementById('ColaboradorInsert')
+        var option = document.createElement('option');
+        option.textContent = element;
+        localColab.appendChild(option);
+  
+      });
+    })
+  
+  }
 

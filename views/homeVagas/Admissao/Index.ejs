@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../../partials/head', { title: 'Acompanhar' } ) %>
+    <!-- <script src="/public/novaSolicitacao/novaSolicitacao.js"></script> -->
+    <link rel="stylesheet" href="../../../../public/global.css">
+    <link rel="stylesheet" href="../../../../public/Movimentacao/index.css">
+    <script src="../../../../public/Movimentacao/index.js"></script>
+
+    <body>
+        <%- include('../../../components/menuVagas') %>
+
+            <section class="home">
+                <%- include('../../../components/navbar') %>
+
+                    <main class="text">
+                        <div class="row">
+                            <div class="col" style="display:flex;justify-content:center;flex-direction:column;align-items: left;">
+                                <input type="text" placeholder="Descrição Item" class="input-descrip">
+                                <br>
+                                <select name="" id="" class="select-opt">
+                                    <option>Status</option>
+                                    <option>Aguardando Aprovação</option>
+                                    <option>Processo Seletivo</option>
+                                    <option>Propostas</option>
+                                    <option>Exame Admissional</option>
+                                    <option>Contratado</option>
+
+                                </select>
+                            </div>
+                            <div class="col" style="display:flex;justify-content:center;flex-direction:column;align-items: center;">
+                                <input type="text" class="input-descrip">
+                                <br>
+                                <select name="status" id="" class="select-opt">
+                                    <option>Status</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                       
+                        <div class="table-responsive">
+
+
+                            <table class="table table-sm table-hover" id="myTable">
+            
+                              <thead class="topo-tabela">
+            
+                                <th class="center" style="text-align: center;"> N° da Solicitação</th>
+                                <th style="text-align: center;"> Solicitante</th>
+                                <th style="text-align: center;"> Departamento</th>
+                                <th style="text-align: center;"> Cargo</th>
+                                <th style="text-align: center;"> Unidade </th>
+                                <th style="text-align: center;"> Data De Abertura </th>
+                                <th style="text-align: center;"> Dias em aberto </th>
+                                <th style="text-align: center;"> Status </th>
+                              </thead>
+            
+            
+                              <tbody style="font-size: 13px" class="table-line" id="tbody">
+                                <% solicitacoes.forEach(socilitacao=> { %>
+                                  <tr  style="text-align: center;">
+                                    <td class="linhas">
+                                      <%=socilitacao.Codigo%>
+                                    </td>
+                                    <td class="linhas">
+                                      <%=socilitacao.solicitante%>
+                                    </td>
+                                    <td class="linhas">
+                                      <%=socilitacao.departamento%>
+                                    </td>
+                                    <td class="linhas">
+                                      <%=socilitacao.cargo%>
+                                    </td>
+                                    <td class="linhas">
+                                      <%=socilitacao.unidade%>
+                                    </td>
+                                    <td class="linhas">
+                                      15/04/2023
+                                    </td>
+                                    <td class="linhas">
+                                        15
+                                      </td>
+                                      <td class="linhas">
+                                        <a class="btn btn-primary text-white buttonStatus" style=" height: 27px; font-size: 11px">Aguardando Compra</a>
+                                      </td>
+                                    <td class="linhas">
+                                      <% if(socilitacao.Status_Compra == 'A') { %>
+                                        <a class="btn btn-primary text-white buttonStatus" style=" height: 27px; font-size: 11px">Aguardando Compra</a>
+                                        <% } %>
+                                        <% if(socilitacao.Status_Compra == 'P') { %>
+                                          <a id="pendentes" class="btn btn-warning text-white buttonStatus"  style=" height: 27px; font-size: 11px" data-toggle="tooltip" data-placement="top" title="<%=socilitacao.listaAprovadores%>">Pendente Aprovação</a>
+                                            <input id="tooltips" type="text" value="<%=JSON.stringify(socilitacao.aprovadores)%>" hidden>
+            
+                                          <% } %>
+                                          <% if(socilitacao.Status_Compra == 'C') { %>
+                                            <a class="btn btn-success text-white buttonStatus" style=" height: 27px; font-size: 11px">Comprado</a>
+                                            <% } %>
+                                            <% if(socilitacao.Status_Compra == 'R') { %>
+                                              <a class="btn btn-danger text-white buttonStatus" style=" height: 27px; font-size: 11px">Reprovado</a>
+                                              <% } %>
+                                              <% if(socilitacao.Status_Compra == 'E') { %>
+                                                <a class="btn btn-dark text-white buttonStatus" style=" height: 27px; font-size: 10px">Enviado Para Pagamento</a>
+                                                <% } %>
+            
+            
+                                    </td>
+                                    <td class="linhas">
+                                      <a href="/solicitacoes/<%=socilitacao.Codigo%>/edit"> <i class='bx bx-edit iconEdit alterar-icon'></i></a>
+                                    </td>
+                                  </tr>
+                                  <% }) %>
+            
+            
+                              </tbody>
+            
+            
+                            </table>
+            
+            
+            
+            
+                            <button id="openModal" data-toggle="modal" data-target="#myModal" class=" button2"
+                              hidden>Próxima</button>
+            
+            
+                          </div>
+            
+                          <div class="row g-2" style="margin-top: 1.5%; margin-left: 0%">
+                            <div>
+                              <button id="prev" onclick="prevPage()" class=" button-anterior">Anterior</button>
+                            </div>
+                            <div>
+                              <button id="prox" onclick="proxPage()" class=" button-proximo">Próxima</button>
+                            </div>
+                          </div>
+                    </main>
+            </section>
+    </body>

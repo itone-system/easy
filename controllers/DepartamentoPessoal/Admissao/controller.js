@@ -121,21 +121,21 @@ module.exports = {
         try {
 
             const user = request.session.get('user');
-    
+
             const conexao = await sql.connect(db);
-            
-    
+
+
             const busca = await conexao.request().query(`SELECT TOP 7 *
             FROM solicitacaoAdmissao
             ORDER BY dataDeAbertura DESC
             `)
-    
+
             const result = busca.recordset
             console.log(result)
             return renderView('home/Movimentacao/Admissao/Index', {
                 solicitacoes: result,
                 nome: user.nome,
-              });
+            });
         } catch (error) {
             console.log(error)
             return redirect('/vagas');
@@ -423,6 +423,16 @@ module.exports = {
         enviarEmail(emailOptions);
 
         return renderJson(corpo);
+    },
+
+    async home(request) {
+        const user = request.session.get('user');
+        return renderView('homeVagas/index', { nome: user.nome, dadosUser: user })
+    },
+
+    async criar(request) {
+        const user = request.session.get('user');
+        return renderView('homeVagas/Admissao/Create', { nome: user.nome })
     }
 
 

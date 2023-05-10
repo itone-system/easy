@@ -129,7 +129,5 @@ module.exports = {
     return redirect('/')
   },
 
-  async menu (request) {
-    return renderView('homeVagas/index', {nome: 'Gustavo Costa'})
-  }
+
 };

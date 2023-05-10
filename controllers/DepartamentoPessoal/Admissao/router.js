@@ -2,9 +2,12 @@ const { Router } = require('express');
 const AdmissaoRouter = Router();
 const admissaoController = require('./controller')
 const { expressAdapter } = require('../../../infra/expressAdapter');
-AdmissaoRouter.get('/', (request, response) => {
-    response.render('home/Movimentacao/Admissao/Create', { nome: 'Gustavo Costa' })
-})
+// const { renderView, renderJson, redirect } = require('../../../helpers/render');
+
+AdmissaoRouter.get('/create', expressAdapter(admissaoController.criar))
+
+AdmissaoRouter.get('/', expressAdapter(admissaoController.home));
+
 AdmissaoRouter.get('/index', expressAdapter(admissaoController.listar))
             
 AdmissaoRouter.post('/insert', expressAdapter(admissaoController.insert))
