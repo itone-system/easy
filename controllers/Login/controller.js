@@ -56,7 +56,11 @@ module.exports = {
       return redirect('/home?token=' + request.token);
     }
 
-    return redirect('/home');
+    // return redirect('/home');
+    // console.log('teste')
+    // return renderView('InitMenu/MenuInicial')
+    return redirect('/menu');
+
   },
 
   async ChangePass(request) {
@@ -123,5 +127,9 @@ module.exports = {
   async Logoff (request) {
     request.session.destroy()
     return redirect('/')
+  },
+
+  async menu (request) {
+    return renderView('homeVagas/index', {nome: 'Gustavo Costa'})
   }
 };

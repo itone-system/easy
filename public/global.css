@@ -332,7 +332,7 @@ body.dark .home .text {
 .topnav {
   overflow: hidden;
   background-color: #27417b;
-  border-radius: 30px;
+  border-radius: 10px;
   position: relative;
   width: 96%;
   right: -30px;

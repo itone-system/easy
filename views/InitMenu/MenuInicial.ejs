@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head', { title: 'Acompanhar' } ) %>
+
+    <link rel="stylesheet" href="../../../public/MenuPrincipal/menu.css">
+
+
+    <body>
+        <div class="img">
+            <img src="../../public/Fotos/itone.png" alt="logo-itone">
+        </div>
+
+        <div class="container" style="width:1500px;">
+
+            <div>
+                <h2 style="color:white;">Menu</h2>
+            </div>
+
+            <div class="icons">
+
+                <div class="elements campo1" style="background:rgb(207, 207, 207);">
+                    <a href="">
+                        <img src="../../public/Fotos/dashboard.png" alt="dashboard" title="Dashboard">
+                        <h4>Dashboard</h4>
+                    </a>
+                </div>
+                <% if (dadosUser.permissoes.COMPRAS) { %>
+
+                    <div class="elements campo2" style="background:rgb(207, 207, 207);">
+                        <a href="/home">
+                            <img src="../../public/Fotos/shopping-cart.png" alt="Carrinho de Compra" title="Compras">
+                            <h4>Gestão de Compras</h4>
+                        </a>
+                    </div>
+                    <% } %>
+
+
+
+                        <div class="elements campo3" style="background:rgb(207, 207, 207);">
+                            <a href="">
+                                <img src="../../public/Fotos/calendar.png" alt="Calendário" title="Calendário">
+                                <h4>Calendário</h4>
+                            </a>
+                        </div>
+                        <% if (dadosUser.permissoes.NOTA_FISCAL) { %>
+
+                            <div class="elements campo3" style="background:rgb(207, 207, 207);">
+                                <a href="">
+                                    <img src="../../public/Fotos/calendar.png" alt="Calendário" title="Calendário">
+                                    <h4>Controle de Notas</h4>
+                                </a>
+                            </div>
+                            <% } %>
+
+                                <% if (dadosUser.permissoes.FERIAS || dadosUser.permissoes.ALTERACAO || dadosUser.permissoes.RESCISAO) { %>
+                                    
+                                    <div class="elements campo4" style="background:rgb(207, 207, 207);">
+                                        <a href="">
+                                            <img src="../../public/Fotos/contrato.png"
+                                                alt="Formulário de movimentação" title="Formulário Movimentação">
+                                            <h4>Formulário de movimentação</h4>
+                                        </a>
+                                    </div>
+                                    <% } %>
+
+
+
+                                        <% if (dadosUser.permissoes.ADMISSAO) { %>
+
+                                            <div class="elements campo5" style="background:rgb(207, 207, 207);">
+                                                <a href="/homeVagas">
+                                                    <img src="../../public/Fotos/user.png" alt="Departamento Pessoals"
+                                                        title="Departemento Pessoal">
+                                                    <h4>Portal de Vagas</h4>
+                                                </a>
+                                            </div>
+                                            <% } %>
+
+
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+
+    </body>

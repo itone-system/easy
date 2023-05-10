@@ -6,6 +6,7 @@ const HomeRouter = require('../controllers/Home/router');
 const LoginRouter = require('../controllers/Login/router');
 const { auth } = require('../middlewares/auth-middleware');
 const AdmissaoRouter = require('../controllers/DepartamentoPessoal/Admissao/router')
+const MenuRouter = require('../controllers/MenuPrincipal/router')
 
 module.exports = async (app) => {
   app.use(LoginRouter);
@@ -14,5 +15,6 @@ module.exports = async (app) => {
   app.use('/users', auth, UsuariosRouter);
   app.use('/compras', auth, ComprasRouter);
   app.use('/notafiscal', auth, NotasRouter);
-  app.use('/vagas', auth, AdmissaoRouter)
+  app.use('/vagas', auth, AdmissaoRouter);
+  app.use('/menu', auth, MenuRouter)
 };

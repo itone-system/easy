@@ -7,33 +7,7 @@ textarea:valid {
     resize: none;
 }
 
-.form-check-input {
-    appearance: none;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    border-radius: 100%;
-    outline: none;
-    border: 2px solid black;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-.form-check-input::before {
-    content: '';
-    height: 10px;
-    width: 10px;
-    background: white;
-    border-radius: 50%;
-    opacity: 0%;
-    transition: all 300 ms;
-}
-
-.form-check-input:checked::before {
-    opacity: 1;
-}
 
 .campo{
     font-size: 13px;
@@ -43,4 +17,9 @@ textarea:valid {
 Label{
     font-size: 14px;
   
+  }
+
+  .botaoEnviar {
+    border: none;
+    background: #27417B;
   }
