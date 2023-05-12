@@ -74,11 +74,11 @@
                       <select id="unidadeContratacao" class="form-control border-secondar shadow-none"
                         aria-label="Default select example" required name="unidade">
                         <option selected value="">Selecione...</option>
-                        <option value="Belo Horizonte">Belo Horizonte - 05.333.907/0001-96</option>
-                        <option value="Distrito Federal">Distrito Federal - 05.333.907/0004-39</option>
-                        <option value="São Paulo">São Paulo - 05.333.907/0005-10</option>
-                        <option value="Espirito Santo">Espirito Santo - 05.333.907/0007-81</option>
-                        <option value="ITPS">iTPS - 07.895.506./001-55</option>
+                        <option value="Belo Horizonte">Belo Horizonte</option>
+                        <option value="Distrito Federal">Distrito Federal</option>
+                        <option value="São Paulo">São Paulo</option>
+                        <option value="Espirito Santo">Espirito Santo</option>
+                        <option value="ITPS">iTPS</option>
                       </select>
                       <label class="campo">* Campo obrigatório</label>
                     </div>
@@ -87,13 +87,9 @@
                     <div class="mb-3">
                       <label for="exampleInputText" class="form-label">Centro de Custos:</label>
                       <select class="form-control border-secondar shadow-none" aria-label="Default select example"
-                        id="centroCusto" required onchange="verificarOpcaoSelecionada(this)" name="centroDecusto">
+                        id="centroCusto" required name="centroDecusto">
                         <option selected value="">Selecione...</option>
-                        <!-- <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option> -->
-                        <option value="Recursos Dedicado">Centro Recursos Dedicado</option>
+
                       </select>
                       <label class="campo">* Campo obrigatório</label>
                     </div>
@@ -193,7 +189,7 @@
                     <div class="mb-3">
                       <label for="exampleInputText" class="form-label">Cliente:</label>
                       <input type="text" class="form-control border-secondar shadow-none" id="cliente"
-                        aria-describedby="textHelp" required placeholder="" name="cliente">
+                        aria-describedby="textHelp" required placeholder="caso não tenha, informe 1" name="cliente">
                       <label class="campo">* Campo obrigatório</label>
                     </div>
                   </div>
@@ -201,7 +197,7 @@
                     <div class="mb-3">
                       <label for="exampleInputText" class="form-label">Deal:</label>
                       <input type="text" class="form-control border-secondar shadow-nonev" id="deal"
-                        aria-describedby="textHelp" required placeholder="" name="deal">
+                        aria-describedby="textHelp" required placeholder="caso não tenha, informe 1" name="deal">
                       <label class="campo">* Campo obrigatório</label>
                     </div>
                   </div>
@@ -261,6 +257,22 @@
                         </div>
                       </div>
                       <label class="campo">* Campo obrigatório</label>
+                    </div>
+                    <div class="col">
+                      <div class="mb-2">
+                        <label for="EscolhadeSubstuição" class="form-label">Vaga Exclusiva Para PCD:</label>
+                        <br>
+                        <div class="form-check form-check-inline mt-2">
+                          <input class="form-check-input shadow-none" type="radio" name="pcd" id=""
+                            value="S" required>
+                          <label class="form-check-label">Sim</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left: 5%;">
+                          <input class="form-check-input shadow-none" type="radio" name="pcd" id=""
+                            value="N" required>
+                          <label class="form-check-label">Não</label>
+                        </div>
+                      </div>
                     </div>
                   </div>
 

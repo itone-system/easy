@@ -15,7 +15,7 @@ module.exports = {
             unidade, departamento, centroDecusto,
             salario, cliente = 'N', gestorImediato,
             cargo, deal = 'N', horario, equipamento, cartaoDeVisita = 'S',
-            celularCorporativo = 'S', usuarioSimilarAtivo, acessosEspecificos,
+            celularCorporativo = 'S', pcd = 'S', usuarioSimilarAtivo, acessosEspecificos,
             dataDeAbertura = new Date() } = request
 
         try {
@@ -32,7 +32,7 @@ module.exports = {
                 substituicao: substituicao,
                 unidade: unidade,
                 departamento: departamento,
-                centroDecusto: centroDecusto,
+                centroDecusto: centroDecusto.match(/[\d\.]+/)[0].trim(),
                 salario: salario,
                 cliente: cliente,
                 gestorImediato: gestorImediato,
@@ -45,7 +45,8 @@ module.exports = {
                 usuarioSimilarAtivo: usuarioSimilarAtivo,
                 acessosEspecificos: acessosEspecificos,
                 dataDeAbertura: dataDeAbertura,
-                solicitante: user.codigo
+                solicitante: user.codigo,
+                pcd: pcd
             })
 
             const buscaAprovadores = await solicitacaoService.buscaAprovadores(user)

@@ -20,8 +20,7 @@
             <p> </p>
 
             <%- include('../../components/statusVagas.ejs') %>
-              <br>
-              <br>
+            
               <div class="row g-3">
                 <div class="col Descricao">
                   <label>Tipo de Admissão:</label>
@@ -55,6 +54,17 @@
 
 
                 </div>
+
+                <div class="col">
+
+                  <label>Gestor Imediato:</label>
+
+
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.gestorImediato%>" placeholder="Descricao do Item" readonly>
+
+
+                </div>
               </div>
               <br>
 
@@ -79,13 +89,17 @@
 
 
                 </div>
-                <div class="col">
+                <div class="col Descricao">
+                  <label>Usuário Similar Ativo:</label>
 
-                  <label>Gestor Imediato:</label>
+                  <input id="Solicitante" for="Solicitante" type="text"
+                    class="form-control alterar-background inputDetail" placeholder="Solicitante" aria-label="Last name"
+                    style="font-size: 13px" value="<%=solicitacao.tipoDeAdmissao%>" readonly>
 
 
-                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
-                    value="<%=solicitacao.gestorImediato%>" placeholder="Descricao do Item" readonly>
+
+
+
 
 
                 </div>
@@ -130,17 +144,17 @@
 
 
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
-                    value="<%=solicitacao.centroDecusto%>" placeholder="Descricao do Item" readonly>
+                    value="<%=solicitacao.CENTRO_DE_CUSTO%>" placeholder="Descricao do Item" readonly>
 
 
                 </div>
 
                 <div class="col Descricao">
-                  <label>Usuário Similar Ativo:</label>
+                  <label>Vaga Para PCD:</label>
 
                   <input id="Solicitante" for="Solicitante" type="text"
                     class="form-control alterar-background inputDetail" placeholder="Solicitante" aria-label="Last name"
-                    style="font-size: 13px" value="<%=solicitacao.tipoDeAdmissao%>" readonly>
+                    style="font-size: 13px" value="<%= solicitacao.PCD === 'S' ? 'Sim' : 'Não' %>" readonly>
 
 
 

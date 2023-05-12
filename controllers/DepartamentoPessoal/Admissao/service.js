@@ -9,14 +9,14 @@ exports.insert = async (dados) => {
     (TIPO_DE_ADMISSAO, SUBSTITUICAO, UNIDADE, DEPARTAMENTO,
      CENTRO_DE_CUSTO, SALARIO, CLIENTE, GESTOR_IMEDIATO,
      CARGO, DEAL, HORARIO, EQUIPAMENTO, CARTAO_DE_VISITA, CELULAR_CORPORATIVO, USUARIO_SIMILARATIVO,
-     ACESSOS_ESPECIFICOS, DATA_DE_ABERTURA, SOLICITANTE, STATUS) 
+     ACESSOS_ESPECIFICOS, DATA_DE_ABERTURA, SOLICITANTE, STATUS, PCD) 
 OUTPUT Inserted.CODIGO 
 VALUES 
     ('${dados.tipoDeAdmissao}', '${dados.substituicao}', '${dados.unidade}', '${dados.departamento}',
-     '${dados.centroDeCusto}', '${dados.salario}', '${dados.cliente}',
+     '${dados.centroDecusto}', '${dados.salario}', '${dados.cliente}',
      '${dados.gestorImediato}', '${dados.cargo}', '${dados.deal}', '${dados.horario}', '${dados.equipamento}',
      '${dados.cartaoDeVisita}', '${dados.celularCorporativo}', '${dados.usuarioSimilarAtivo}',
-     '${dados.acessosEspecificos}', '${dados.dataDeAbertura.toISOString()}', ${dados.solicitante}, 'A');
+     '${dados.acessosEspecificos}', '${dados.dataDeAbertura.toISOString()}', ${dados.solicitante}, 'A', '${dados.pcd}');
 
     `)
     console.log('dados', result.recordset[0].CODIGO)
