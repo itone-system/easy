@@ -1,6 +1,7 @@
 const { db } = require('../../../config/env');
 const enviarEmail = require('../../../infra/emailAdapter');
 const tokenAdapter = require('../../../infra/tokenAdapter');
+const verifyIndiceAdapter = require('../../../infra/verifyIndiceAdapter');
 const aprovacaoPendente = require('../../../template-email/Movimentacao/Admissao/aprovacao_pendente')
 const processoSeletivo = require('../../../template-email/Movimentacao/Admissao/processo_seletivo')
 const solicitacaoService = require('./service')
@@ -24,6 +25,8 @@ module.exports = {
             const user = request.session.get('user');
 
             //inserir e retornar o código 
+            await verifyIndiceAdapter('SOLICITACAO_ADMISSAO','CODIGO')
+
             const codigoInsert = await solicitacaoService.insert(dados = {
                 tipoDeAdmissao: tipo,
                 substituicao: substituicao,
@@ -45,47 +48,30 @@ module.exports = {
                 solicitante: user.codigo
             })
 
-            const buscaAprovadores = await conexao.request().query(`
-            SELECT Usuarios.COD_USUARIO as codigoDiretor, diretorFinanceiro.codigo as codigoDiretorFinanceiro
-            FROM Usuarios
-            INNER JOIN centrocusto ON Usuarios.COD_USUARIO = centrocusto.codigoDiretor
-            LEFT JOIN diretorFinanceiro ON diretorFinanceiro.id = 1
-            WHERE centroDeCusto = ${user.centroCusto}
-            `)
-            let aprovadores = [
-                {
-                    codigo: buscaAprovadores.recordset[0].codigoDiretor
-                },
-                {
-                    codigo: buscaAprovadores.recordset[0].codigoDiretorFinanceiro
-                }
-            ]
-
-            let ordem = 1;
-
-            for await (const { codigo } of aprovadores) {
+            const buscaAprovadores = await solicitacaoService.buscaAprovadores(user)
+            console.log(buscaAprovadores[0])
+            for await (const { COD_USUARIO, Ordem } of buscaAprovadores) {
                 await conexao
                     .request()
                     .query(
-                        `INSERT INTO Aprovacoes ( Codigo_Solicitacao, Codigo_Aprovador, Ordem, Tipo) VALUES (${codigoInsert}, ${codigo}, ${ordem}, 3)`
+                        `INSERT INTO Aprovacoes ( Codigo_Solicitacao, Codigo_Aprovador, Ordem, Modulo) VALUES (${codigoInsert}, ${COD_USUARIO}, ${Ordem}, 3)`
                     );
-                ordem++
             }
 
 
             const token = tokenAdapter({
                 codigoInsert,
-                aprovador: aprovadores[0].codigo,
-                id: aprovadores[0].codigo,
+                aprovador: buscaAprovadores[0].COD_USUARIO,
+                id: buscaAprovadores[0].COD_USUARIO,
                 router: `/vagas/${codigoInsert}/detail`
             });
 
             const link = `${domain}/vagas/${codigoInsert}/detail?token=${token}`
 
-            const emailDiretor = await conexao.request().query(`select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${aprovadores[0].codigo}`)
+            const firstEmail = await conexao.request().query(`select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${buscaAprovadores[0].COD_USUARIO}`)
 
-            const emailOptionsDiretorArea = {
-                to: emailDiretor.recordset[0].EMAIL_USUARIO,
+            const emailOptions = {
+                to: firstEmail.recordset[0].EMAIL_USUARIO,
                 subject: 'Solicitação de Aprovação',
                 content: aprovacaoPendente({
                     link,
@@ -99,8 +85,7 @@ module.exports = {
                 isHtlm: true
             };
 
-            enviarEmail(emailOptionsDiretorArea)
-
+            enviarEmail(emailOptions)
             return renderJson(codigoInsert)
 
 
@@ -117,24 +102,25 @@ module.exports = {
     },
 
     async listar(request) {
-        // let { Descricao, Solicitante, statusItem, centroCustoFiltro } = request
+        const { solicitante = '', status = '', departamento = '', unidade = '', page = 1 } = request
+
         try {
 
             const user = request.session.get('user');
 
-            const conexao = await sql.connect(db);
+            const usuarios = await solicitacaoService.solicitantes(user)
+
+            const busca = await solicitacaoService.listar({solicitante, status, departamento, unidade},page, user)
 
 
-            const busca = await conexao.request().query(`SELECT TOP 7 *
-            FROM solicitacaoAdmissao
-            ORDER BY dataDeAbertura DESC
-            `)
+            const result = busca
 
-            const result = busca.recordset
-            console.log(result)
-            return renderView('home/Movimentacao/Admissao/Index', {
+            return renderView('homeVagas/Admissao/Index', {
                 solicitacoes: result,
                 nome: user.nome,
+                dadosUser: user,
+                usuarios: usuarios,
+                page: page
             });
         } catch (error) {
             console.log(error)
@@ -148,6 +134,7 @@ module.exports = {
     async detail(request) {
 
         const solicitacao = await solicitacaoService.solicitacaoUnica(request.codigo)
+        const user = request.session.get('user')
 
         // solicitacao.etapas = {
         //     'aprovacao-vaga': 'done',
@@ -157,22 +144,20 @@ module.exports = {
         //     contratado: 'ondone'
         // };
 
-        if (solicitacao.status == 'A') {
+        if (solicitacao.STATUS == 'A') {
 
             solicitacao.etapas = {
                 'aprovacao-vaga': 'done',
                 'processo-seletivo': 'ondone',
-                propostas: 'ondone',
                 'exame-admissional': 'ondone',
                 contratado: 'ondone'
             };
         }
-        if (solicitacao.status == 'PS') {
+        if (solicitacao.STATUS == 'PS') {
 
             solicitacao.etapas = {
                 'aprovacao-vaga': 'done',
                 'processo-seletivo': 'done',
-                propostas: 'ondone',
                 'exame-admissional': 'ondone',
                 contratado: 'ondone'
             };
@@ -180,23 +165,21 @@ module.exports = {
 
 
 
-        if (solicitacao.status == 'E') {
+        if (solicitacao.STATUS == 'PA') {
 
             solicitacao.etapas = {
                 'aprovacao-vaga': 'done',
                 'processo-seletivo': 'done',
-                propostas: 'done',
                 'exame-admissional': 'done',
                 contratado: 'ondone'
             };
         }
 
-        if (solicitacao.status == 'C') {
+        if (solicitacao.STATUS == 'C') {
 
             solicitacao.etapas = {
                 'aprovacao-vaga': 'done',
                 'processo-seletivo': 'done',
-                propostas: 'done',
                 'exame-admissional': 'done',
                 contratado: 'done'
             };
@@ -205,7 +188,7 @@ module.exports = {
         const candidato = {}
 
 
-        return renderView('home/Movimentacao/Admissao/Detail', { solicitacao, nome: 'Gustavo Costa', candidato });
+        return renderView('homeVagas/Admissao/Detail', { solicitacao, nome: user.nome, candidato, dadosUser: user, momentoAprovacao: 'Y' });
     },
 
     async insertCandidato(request) {
@@ -432,7 +415,7 @@ module.exports = {
 
     async criar(request) {
         const user = request.session.get('user');
-        return renderView('homeVagas/Admissao/Create', { nome: user.nome })
+        return renderView('homeVagas/Admissao/Create', { nome: user.nome, dadosUser: user })
     }
 
 

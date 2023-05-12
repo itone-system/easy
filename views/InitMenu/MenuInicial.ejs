@@ -1,87 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../partials/head', { title: 'Acompanhar' } ) %>
 
-    <link rel="stylesheet" href="../../../public/MenuPrincipal/menu.css">
+<link rel="stylesheet" href="../../../public/MenuPrincipal/menu.css">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+</head>
 
-    <body>
-        <div class="img">
-            <img src="../../public/Fotos/itone.png" alt="logo-itone">
-        </div>
+<body>
+    <nav class="menu">
 
-        <div class="container" style="width:1500px;">
+        <img src="../../public/Fotos/logoOriginal.png" class="logo" alt="">
+        <ul>
+            <li class="menu-option">
+                <a class="menu-link" href="/home">
+                    <ion-icon name="grid"></ion-icon>
+                    <h3>Dashboard</h3>
+                </a>
+            </li>
 
-            <div>
-                <h2 style="color:white;">Menu</h2>
-            </div>
+            <% if (dadosUser.permissoes.COMPRAS) { %>
 
-            <div class="icons">
-
-                <div class="elements campo1" style="background:rgb(207, 207, 207);">
-                    <a href="">
-                        <img src="../../public/Fotos/dashboard.png" alt="dashboard" title="Dashboard">
-                        <h4>Dashboard</h4>
+                <li class="menu-option">
+                    <a class="menu-link" href="/home">
+                        <ion-icon name="cart-outline"></ion-icon>
+                        <!-- <ion-icon name="wallet"></ion-icon> -->
+                        <h3>Compras</h3>
                     </a>
-                </div>
-                <% if (dadosUser.permissoes.COMPRAS) { %>
-
-                    <div class="elements campo2" style="background:rgb(207, 207, 207);">
-                        <a href="/home">
-                            <img src="../../public/Fotos/shopping-cart.png" alt="Carrinho de Compra" title="Compras">
-                            <h4>Gestão de Compras</h4>
+                </li>
+                <% } %>
+                    <li class="menu-option">
+                        <a class="menu-link" href="/home">
+                            <ion-icon name="calendar"></ion-icon>
+                            <h3>Calendário</h3>
                         </a>
-                    </div>
-                    <% } %>
+                    </li>
 
+                    <% if (dadosUser.permissoes.NOTA_FISCAL) { %>
 
-
-                        <div class="elements campo3" style="background:rgb(207, 207, 207);">
-                            <a href="">
-                                <img src="../../public/Fotos/calendar.png" alt="Calendário" title="Calendário">
-                                <h4>Calendário</h4>
+                        <li class="menu-option">
+                            <a class="menu-link" href="/home">
+                                <ion-icon name="document"></ion-icon>
+                                <h3>Notas</h3>
                             </a>
-                        </div>
-                        <% if (dadosUser.permissoes.NOTA_FISCAL) { %>
+                        </li>
+                        <% } %>
 
-                            <div class="elements campo3" style="background:rgb(207, 207, 207);">
-                                <a href="">
-                                    <img src="../../public/Fotos/calendar.png" alt="Calendário" title="Calendário">
-                                    <h4>Controle de Notas</h4>
-                                </a>
-                            </div>
-                            <% } %>
+                            <% if (dadosUser.permissoes.FERIAS || dadosUser.permissoes.ALTERACAO || dadosUser.permissoes.RESCISAO) { %>
 
-                                <% if (dadosUser.permissoes.FERIAS || dadosUser.permissoes.ALTERACAO || dadosUser.permissoes.RESCISAO) { %>
-                                    
-                                    <div class="elements campo4" style="background:rgb(207, 207, 207);">
-                                        <a href="">
-                                            <img src="../../public/Fotos/contrato.png"
-                                                alt="Formulário de movimentação" title="Formulário Movimentação">
-                                            <h4>Formulário de movimentação</h4>
-                                        </a>
-                                    </div>
-                                    <% } %>
+                                <li class="menu-option">
+                                    <a class="menu-link" href="/home">
+                                        <ion-icon name="newspaper"></ion-icon>
+                                        <h3>Movimentação</h3>
+                                    </a>
+                                </li>
+                                <% } %>
 
+                                    <% if (dadosUser.permissoes.ADMISSAO) { %>
 
-
-                                        <% if (dadosUser.permissoes.ADMISSAO) { %>
-
-                                            <div class="elements campo5" style="background:rgb(207, 207, 207);">
-                                                <a href="/vagas">
-                                                    <img src="../../public/Fotos/user.png" alt="Departamento Pessoals"
-                                                        title="Departemento Pessoal">
-                                                    <h4>Portal de Vagas</h4>
-                                                </a>
-                                            </div>
-                                            <% } %>
-
-
-            </div>
-        </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-
-    </body>
+                                        <li class="menu-option">
+                                            <a class="menu-link" href="/vagas">
+                                                <ion-icon name="people"></ion-icon>
+                                                <h3>Vagas</h3>
+                                            </a>
+                                        </li>
+                                        <% } %>
+        </ul>
+    </nav>
+</body>
