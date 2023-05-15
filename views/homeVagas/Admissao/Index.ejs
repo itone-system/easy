@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<%- include('../../partials/head', { title: 'Acompanhar' } ) %>
+  <!-- <script src="/public/novaSolicitacao/novaSolicitacao.js"></script> -->
+  <link rel="stylesheet" href="../../../public/global.css">
+  <link rel="stylesheet" href="../../../public/Vagas/acompanhar.css">
+  <script src="../../../public/Vagas/acompanhar.js"></script>
+
+  <body>
+    <%- include('../../components/Vagas/menuVagas') %>
+
+      <section class="home">
+        <%- include('../../components/navbar') %>
+
+          <main class="text">
+            
+
+            <div id="alterar-solicitacoes">
+              <h2 style="border-bottom: 1px solid #27417B; margin-bottom: 25px; padding: 13px 0">
+                Vagas
+              </h2>
+            </div>
+
+            <p> </p>
+            <form action="/vagas/index" method="get" id="myForm">
+
+              <div class="row">
+                <div class="col" style="display:flex;justify-content:center;flex-direction:column;align-items: left;" id="col">
+
+                  <select id="Descricao" name="solicitante" class="form-control" style="font-size: 13px">
+                    <option value="">Selecione um solicitante</option>
+                    <% usuarios.forEach(usuario => { %>
+                      <option value="<%= usuario.COD_USUARIO %>"><%= usuario.NOME_USUARIO %></option>
+                  <% }); %>
+                </select>
+                  <!-- <input name="solicitante" id="Descricao" for="Descricao" type="text" class="form-control"
+                    placeholder="Solicitante" aria-label="First name" style="font-size: 13px;"> -->
+
+                  <select name="status" class="form-control" id="Status" style="font-size: 13px">
+                    <option selected value="">Selecione o status</option>
+                    <option value="A">Aguardando Aprovação</option>
+                    <option>Processo Seletivo</option>
+                    <option>Processo Admissional</option>
+                    <option>Contratado</option>
+
+                  </select>
+                  
+                </div>
+                
+                <div class="col" style="display:flex;justify-content:center;flex-direction:column;align-items: center;" id="col">
+                  <select name="departamento" class="form-control" id="Status2" style="font-size: 13px">
+                    <option selected value="">Selecione o departamento</option>
+                    <option value="Administrativo">Administrativo</option>
+                    <option value="CEO">CEO</option>
+                    <option value="Comercial">Comercial</option>
+                    <option value="Conselho Administrativo">Conselho Administrativo</option>
+                    <option value="Gente e Cultura">Gente e Cultura</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Pré Vendas">Pré Vendas</option>
+                    <option value="Produtos">Produtos</option>
+                    <option value="Serviços">Serviços</option>
+                  </select>
+
+
+                  <select name="unidade" class="form-control" id="Status3" style="font-size: 13px">
+                    <option selected value="">Selecione a unidade</option>
+                    <option value="Belo Horizonte">Belo Horizonte</option>
+                    <option value="Distrito Federal">Distrito Federal</option>
+                    <option value="São Paulo">São Paulo</option>
+                    <option value="Espirito Santo">Espirito Santo</option>
+                    <option value="ITPS">iTPS</option>
+                  </select>
+                  
+                </div>  
+              </div>
+              <button class="button" type="submit" role="button" id="buscar" onclick="listar()"><i class='bx bx-search'></i>
+                Buscar</button>
+
+              <div class="table-responsive" id="tabela-responsiva">
+
+
+                <table class="table table-sm table-hover" id="myTable">
+
+                  <thead class="topo-tabela">
+
+                    <th class="center" style="text-align: center;"> N° da Solicitação</th>
+                    <th style="text-align: center;"> Solicitante</th>
+                    <th style="text-align: center;"> Departamento</th>
+                    <th style="text-align: center;"> Cargo</th>
+                    <th style="text-align: center;"> Unidade </th>
+                    <th style="text-align: center;"> Data De Aberturaa</th>
+                    <th style="text-align: center;"> Dias em aberto </th>
+                    <th style="text-align: center;"> Status </th>
+                  </thead>
+
+
+                  <tbody style="font-size: 13px" class="table-line" id="tbody">
+                    <% solicitacoes.forEach(socilitacao=> { %>
+                      <tr class="table-row" data-codigo="<%=socilitacao.CODIGO%>" style="text-align: center;">
+                        <td class="linhas">
+                          <%=socilitacao.CODIGO%>
+                        </td>
+                        <td class="linhas">
+                          <%=socilitacao.NOME_SOLICITANTE%>
+                        </td>
+                        <td class="linhas">
+                          <%=socilitacao.DEPARTAMENTO%>
+                        </td>
+                        <td class="linhas">
+                          <%=socilitacao.CARGO%>
+                        </td>
+                        <td class="linhas">
+                          <%=socilitacao.UNIDADE%>
+                        </td>
+                        <td class="linhas">
+                          <%=socilitacao.DATA_DE_ABERTURA%>
+                        </td>
+                        <td class="linhas">
+                          <%=socilitacao.DIAS_EM_ABERTO%>
+                        </td>
+                     
+                        <td class="linhas">
+                          <% if(socilitacao.STATUS =='A' ) { %>
+                            <a id="pendentes" class="btn btn-warning text-white buttonStatus"
+                            style=" height: 27px; font-size: 11px" data-toggle="tooltip" data-placement="top">Pendente Aprovação</a>
+                            <% } %>
+                              <% if(socilitacao.STATUS=='PS' ) { %>
+                                <a class="btn btn-primary text-white buttonStatus"
+                                style=" height: 27px; font-size: 11px">Processo Seletivo</a>
+                                <input id="tooltips" type="text" value="<%=JSON.stringify(socilitacao.aprovadores)%>"
+                                  hidden>
+
+                                <% } %>
+                                  <% if(socilitacao.STATUS=='PA' ) { %>
+                                    <a class="btn btn-success text-white buttonStatus"
+                                      style=" height: 27px; font-size: 11px">Comprado</a>
+                                    <% } %>
+                                      <% if(socilitacao.STATUS=='C' ) { %>
+                                        <a class="btn btn-danger text-white buttonStatus"
+                                          style=" height: 27px; font-size: 11px">Reprovado</a>
+                                        <% } %>
+                                          <% if(socilitacao.STATUS=='R' ) { %>
+                                            <a class="btn btn-dark text-white buttonStatus"
+                                              style=" height: 27px; font-size: 10px">Enviado Para Pagamento</a>
+                                            <% } %>
+
+
+                        </td>
+                  
+                      </tr>
+                      <% }) %>
+
+
+                  </tbody>
+
+
+                </table>
+
+
+
+
+                <button id="openModal" data-toggle="modal" data-target="#myModal" class=" button2"
+                  hidden>Próxima</button>
+
+
+              </div>
+              <input type="hidden" id="currentPage" name="page" value="<%=page%>">
+
+              <div class="row g-2" style="margin-top: 1.5%; margin-left: 0%">
+                <div>
+                  <button id="previous" class=" button-anterior">Anterior</button>
+                </div>
+                <div>
+                  <button id="next"  class=" button-proximo">Próxima</button>
+                </div>
+              </div>
+
+            </form>
+
+          </main>
+      </section>
+  </body>

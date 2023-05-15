@@ -1,0 +1,25 @@
+
+form .form-select {
+    cursor: pointer;
+}
+
+textarea:valid {
+    resize: none;
+}
+
+
+
+.campo{
+    font-size: 13px;
+    display: none;
+    color: red;
+}
+Label{
+    font-size: 14px;
+  
+  }
+
+  .botaoEnviar {
+    border: none;
+    background: #27417B;
+  }

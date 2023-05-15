@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="../../../public/Vagas/template/statusVagas/style.css">
+
+<body>
+    <div class="timeline-container">
+        <ul class="timeline">
+            <li>
+                <div class="timeline-box">
+                    <div class="timeline-line timeline-line-<%=solicitacao.etapas['aprovacao-vaga']%>"></div>
+                    <div class="timeline-options timeline-options-<%=solicitacao.etapas['aprovacao-vaga']%>">
+                        <span>Aguardando Aprovação</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="timeline-box" id="processo-seletivo">
+                   <div class="timeline-line timeline-line-<%=solicitacao.etapas['processo-seletivo']%>"></div>
+                    <div class="timeline-options timeline-options-<%=solicitacao.etapas['processo-seletivo']%>">
+                        <span>Processo Seletivo</span>
+                    </div>
+                </div>
+            </li>
+          
+            <li>
+                <div class="timeline-box" id="exame-admissional">
+                    <div class="timeline-line timeline-line-<%=solicitacao.etapas['exame-admissional']%>"></div>
+                    <div class="timeline-options timeline-options-<%=solicitacao.etapas['exame-admissional']%>">
+                        <span>Processo Admissional</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="timeline-box" id="contratado">
+                    <div class="timeline-line timeline-line-<%=solicitacao.etapas['contratado']%>"></div>
+                    <div class="timeline-options timeline-options-<%=solicitacao.etapas['contratado']%>">
+                        <span>Contratado</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <hr/>
+    </div>
+</body>
+</html>

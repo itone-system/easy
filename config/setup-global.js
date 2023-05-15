@@ -24,7 +24,10 @@ module.exports = (app) => {
       uploadNF: '/notafiscal/uploadNF/',
       downloadItem: '/solicitacoes/downloadItem/',
       uploadItem: '/solicitacoes/uploadItem/',
-      insertNF: '/notafiscal/insertnotafiscal'
+      insertNF: '/notafiscal/insertnotafiscal',
+      aprovarAdmissao: '/vagas/aprovar',
+      insertVaga: '/vagas/insert',
+      insertCandidato: '/vagas/insertCandidato'
     }
   };
 };
