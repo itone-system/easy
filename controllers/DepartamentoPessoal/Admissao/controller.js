@@ -25,7 +25,7 @@ module.exports = {
             const user = request.session.get('user');
 
             //inserir e retornar o código 
-            await verifyIndiceAdapter('SOLICITACAO_ADMISSAO','CODIGO')
+            await verifyIndiceAdapter('SOLICITACAO_ADMISSAO', 'CODIGO')
 
             const codigoInsert = await solicitacaoService.insert(dados = {
                 tipoDeAdmissao: tipo,
@@ -111,7 +111,7 @@ module.exports = {
 
             const usuarios = await solicitacaoService.solicitantes(user)
 
-            const busca = await solicitacaoService.listar({solicitante, status, departamento, unidade},page, user)
+            const busca = await solicitacaoService.listar({ solicitante, status, departamento, unidade }, page, user)
 
 
             const result = busca
@@ -251,7 +251,9 @@ module.exports = {
     },
 
     async aprovar(request) {
-        const { codigoSolicitacao, tipo } = request;
+        const { codigoSolicitacao } = request;
+
+        const modulo = 3
 
         const user = request.session.get('user')
 
@@ -260,14 +262,12 @@ module.exports = {
         await conexao
             .request()
             .query(
-                `UPDATE Aprovacoes SET Status = 'Y' WHERE Codigo_Aprovador = ${user.codigo} and Codigo_Solicitacao = ${codigoSolicitacao} and Tipo = ${tipo}`
+                `UPDATE Aprovacoes SET Status = 'Y' WHERE Codigo_Aprovador = ${user.codigo} and Codigo_Solicitacao = ${codigoSolicitacao} and MODULO = ${modulo}`
             );
 
 
 
-        const codigoDiretorFinanceiro = await conexao.request().query(`select codigo from DiretorFinanceiro df `)
-
-        const emailDiretorFinanceiro = await conexao.request().query(`select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${codigoDiretorFinanceiro.recordset[0].codigo}`)
+        // buscar proximo aprovador
 
         const solicitacao = await solicitacaoService.solicitacaoUnica(codigoSolicitacao)
 
