@@ -56,7 +56,7 @@ module.exports = {
       return redirect('/home?token=' + request.token);
     }
 
-    return redirect('/home');
+    return redirect('/menu');
   },
 
   async ChangePass(request) {
