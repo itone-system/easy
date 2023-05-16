@@ -8,7 +8,7 @@ const { auth } = require('../middlewares/auth-middleware');
 const AdmissaoRouter = require('../controllers/DepartamentoPessoal/Admissao/router')
 const MenuRouter = require('../controllers/MenuPrincipal/router');
 
-module.exports = (app) => {
+module.exports = async (app) => {
   app.use(LoginRouter);
   app.use('/home', auth, HomeRouter);
   app.use('/solicitacoes', auth, SolicitacaoRouter);

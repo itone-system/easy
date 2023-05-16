@@ -307,3 +307,12 @@ exports.verifyAprovador = async (codigoAprovador, codigoSolicitacao) => {
 exports.buscarDadosCandidato = async () => {
 
 }
+
+exports.buscarCargoUsuario = async (codigoUsuario, codigoSolicitacao) => {
+    const conexao = await sql.connect(db);
+
+    const result = await conexao.request().query(`select CARGO from Usuarios where COD_USUARIO = ${codigoUsuario}`)
+
+    
+    return result.recordset[0].CARGO
+}

@@ -135,13 +135,17 @@
                                     <a class="btn btn-secondary text-white buttonStatus"
                                       style=" height: 27px; font-size: 11px">Processo Admissional</a>
                                     <% } %>
+                                    <% if(socilitacao.STATUS=='CO' ) { %>
+                                      <a class="btn text-white buttonStatus"
+                                        style=" height: 27px; font-size: 11px; background-color: blueviolet;">Em Conferência</a>
+                                      <% } %>
                                       <% if(socilitacao.STATUS=='C' ) { %>
                                         <a class="btn btn-success text-white buttonStatus"
                                           style=" height: 27px; font-size: 11px">Contratado</a>
                                         <% } %>
                                           <% if(socilitacao.STATUS=='R' ) { %>
-                                            <a class="btn btn-dark text-white buttonStatus"
-                                              style=" height: 27px; font-size: 10px">Enviado Para Pagamento</a>
+                                            <a class="btn btn-danger text-white buttonStatus"
+                                              style=" height: 27px; font-size: 10px">Indeferido</a>
                                             <% } %>
 
 
@@ -179,4 +183,5 @@
 
           </main>
       </section>
+      <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
   </body>

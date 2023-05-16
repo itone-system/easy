@@ -59,34 +59,48 @@ module.exports = {
                     );
             }
 
+            const cargoUser = await solicitacaoService.buscarCargoUsuario(user.codigo)
+            console.log('teste 2 ',cargoUser)
+            if (cargoUser != 'DIRETOR(a) ADMINISTRATIVO') {
+                console.log('entrou')
+                const token = tokenAdapter({
+                    codigoInsert,
+                    aprovador: buscaAprovadores[0].COD_USUARIO,
+                    id: buscaAprovadores[0].COD_USUARIO,
+                    router: `/vagas/${codigoInsert}/detail`
+                });
+    
+                const link = `${domain}/vagas/${codigoInsert}/detail?token=${token}`
+    
+                const firstEmail = await conexao.request().query(`select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${buscaAprovadores[0].COD_USUARIO}`)
+    
+                const emailOptions = {
+                    to: firstEmail.recordset[0].EMAIL_USUARIO,
+                    subject: 'Solicitação de Aprovação',
+                    content: aprovacaoPendente({
+                        link,
+                        codigoSolicitacao: codigoInsert,
+                        cargo: cargo,
+                        unidade: unidade,
+                        departamento: departamento,
+                        gestorImediato: gestorImediato
+    
+                    }),
+                    isHtlm: true
+                };
+    
+                enviarEmail(emailOptions)
+                return renderJson(codigoInsert)
+            } 
 
-            const token = tokenAdapter({
-                codigoInsert,
-                aprovador: buscaAprovadores[0].COD_USUARIO,
-                id: buscaAprovadores[0].COD_USUARIO,
-                router: `/vagas/${codigoInsert}/detail`
-            });
+            if (cargoUser == 'DIRETOR(a) ADMINISTRATIVO') {
+                await conexao.request().query(`update Aprovacoes set Status = 'Y' where Codigo_Aprovador = ${user.codigo} and Codigo_Solicitacao = ${codigoInsert}`)
 
-            const link = `${domain}/vagas/${codigoInsert}/detail?token=${token}`
+                await conexao.request().query(`update SOLICITACAO_ADMISSAO set STATUS = 'PS' where CODIGO = ${codigoInsert}`)
 
-            const firstEmail = await conexao.request().query(`select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${buscaAprovadores[0].COD_USUARIO}`)
+            }
 
-            const emailOptions = {
-                to: firstEmail.recordset[0].EMAIL_USUARIO,
-                subject: 'Solicitação de Aprovação',
-                content: aprovacaoPendente({
-                    link,
-                    codigoSolicitacao: codigoInsert,
-                    cargo: cargo,
-                    unidade: unidade,
-                    departamento: departamento,
-                    gestorImediato: gestorImediato
 
-                }),
-                isHtlm: true
-            };
-
-            enviarEmail(emailOptions)
             return renderJson(codigoInsert)
 
 
@@ -398,7 +412,10 @@ module.exports = {
     async criar(request) {
         const user = request.session.get('user');
         return renderView('homeVagas/Admissao/Create', { nome: user.nome, dadosUser: user })
-    }
+    },
 
+    async conferencia() {
+
+    }
 
 }
