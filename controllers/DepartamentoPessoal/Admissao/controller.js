@@ -188,8 +188,25 @@ module.exports = {
 
         const candidato = {}
 
+        if (solicitacao.STATUS == 'PA') {
+            
+        }
 
-        return renderView('homeVagas/Admissao/Detail', { solicitacao, nome: user.nome, candidato, dadosUser: user, momentoAprovacao: 'Y' });
+        const momentoAprovacaoPesquisa = await solicitacaoService.verifyAprovador(user.codigo, solicitacao.CODIGO)
+
+        let momentoAprovacao = 'N'
+
+        if (momentoAprovacaoPesquisa == 1) {
+            momentoAprovacao = 'Y'
+            console.log('é sua vez')
+        }
+
+        if (momentoAprovacaoPesquisa == 0) {
+            console.log('não é sua vez')
+            
+        }
+
+        return renderView('homeVagas/Admissao/Detail', { solicitacao, nome: user.nome, candidato, dadosUser: user, momentoAprovacao: momentoAprovacao });
     },
 
     async insertCandidato(request) {
@@ -264,82 +281,41 @@ module.exports = {
             .query(
                 `UPDATE Aprovacoes SET Status = 'Y' WHERE Codigo_Aprovador = ${user.codigo} and Codigo_Solicitacao = ${codigoSolicitacao} and MODULO = ${modulo}`
             );
+        
 
-
-
-        // buscar proximo aprovador
+        const buscarProximoAprovador = await solicitacaoService.buscarProximoAprovador(codigoSolicitacao)
 
         const solicitacao = await solicitacaoService.solicitacaoUnica(codigoSolicitacao)
 
-        if (user.codigo != codigoDiretorFinanceiro.recordset[0].codigo) {
+        if (buscarProximoAprovador != undefined) {
 
             const token = tokenAdapter({
                 codigoSolicitacao,
-                aprovador: codigoDiretorFinanceiro.recordset[0].codigo,
-                id: codigoDiretorFinanceiro.recordset[0].codigo,
+                aprovador: buscarProximoAprovador.COD_USUARIO,
+                id: buscarProximoAprovador.COD_USUARIO,
                 router: `/vagas/${codigoSolicitacao}/detail`
             });
-
+            
             const link = `${domain}/vagas/${codigoSolicitacao}/detail?token=${token}`
 
-            const emailOptionsDiretorFinanceiro = {
-                to: emailDiretorFinanceiro.recordset[0].EMAIL_USUARIO,
+            const emailOptions = {
+                to: buscarProximoAprovador.EMAIL_USUARIO,
                 subject: 'Solicitação de Aprovação',
                 content: aprovacaoPendente({
                     link,
                     codigoSolicitacao: codigoSolicitacao,
-                    cargo: solicitacao.cargo,
-                    unidade: solicitacao.unidade,
-                    departamento: solicitacao.departamento,
-                    gestorImediato: solicitacao.gestorImediato
+                    cargo: solicitacao.CARGO,
+                    unidade: solicitacao.UNIDADE,
+                    departamento: solicitacao.DEPARTAMENTO,
+                    gestorImediato: solicitacao.GESTOR_IMEDIATO
 
                 }),
                 isHtlm: true
             };
 
-            enviarEmail(emailOptionsDiretorFinanceiro)
-
-            const corpo =
-                'Solicitação N° ' + codigoSolicitacao + ' aprovada com sucesso';
-
-            return renderJson(corpo);
+            enviarEmail(emailOptions)
         }
-        await conexao
-            .request()
-            .query(
-                `UPDATE solicitacaoAdmissao SET status = 'PS' WHERE Codigo = ${codigoSolicitacao}`
-            );
-        // enviar email para começar o fluxo de processo seletivo
-        // criar lógica de buscar email do responsável por gente e cultura
-        const emailGenteCultura = 'gustavo@.com.br'
-
-        const token = tokenAdapter({
-            codigoSolicitacao,
-            aprovador: 2,
-            router: `/vagas/${codigoSolicitacao}/detail`
-        });
-
-        const link = `${domain}/vagas/${codigoSolicitacao}/detail?token=${token}&approved=true`
-
-        const emailOptionsGenteCultura = {
-            to: emailGenteCultura,
-            subject: 'Processo Seletivo',
-            content: processoSeletivo({
-                link,
-                codigoSolicitacao: codigoSolicitacao,
-                cargo: solicitacao.cargo,
-                unidade: solicitacao.unidade,
-                departamento: solicitacao.departamento,
-                gestorImediato: solicitacao.gestorImediato
-
-            }),
-            isHtlm: true
-        };
-
-        enviarEmail(emailOptionsGenteCultura)
-
-        // decidir como será o acesso deste departamento no sistema
-
+        console.log(buscarProximoAprovador)
 
         const corpo =
             'Solicitação N° ' + codigoSolicitacao + ' aprovada com sucesso';

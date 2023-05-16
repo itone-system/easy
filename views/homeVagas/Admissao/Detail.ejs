@@ -217,7 +217,7 @@
                   data-toggle="modal">Reprovar</button>
                 <% } %>
 
-                  <% if (solicitacao.status=='PS' ) { %>
+                  <% if (solicitacao.STATUS=='PS' ) { %>
                     <div class="container">
                       <!-- Button to Open the Modal -->
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
@@ -244,10 +244,10 @@
                                     <div class="col">
                                       <div class="mb-3">
                                         <label for="exampleInputText" class="form-label">Nome Completo Do Candidato
-                                          Aprovado</label>
+                                          Aprovado:</label>
                                         <input type="text" class="form-control border-secondar shadow-none"
                                           id="nomeCompleto" aria-describedby="textHelp" required
-                                          placeholder="nome completo aprovado" name="nomeProfissional">
+                                          placeholder="" name="nomeProfissional">
                                         <label class="campo"></label>
                                       </div>
                                     </div>
@@ -255,7 +255,7 @@
                                       <label for="exampleInputText" class="form-label">Tutor Durante o
                                         Onboarding:</label>
                                       <input type="text" class="form-control border-secondar shadow-none" id="tutor"
-                                        aria-describedby="textHelp" required placeholder="tutor" name="tutorOnboarding">
+                                        aria-describedby="textHelp" required placeholder="" name="tutorOnboarding">
                                       <label class="campo"></label>
                                     </div>
                                   </div>
@@ -264,7 +264,7 @@
                                     <div class="col mb-3">
                                       <label for="exampleInputText" class="form-label">Telefone Pessoal:</label>
                                       <input type="tel" class="form-control border-secondar shadow-none" id="telPessoal"
-                                        aria-describedby="textHelp" required placeholder="(99) 99999-9999"
+                                        aria-describedby="textHelp" required placeholder=""
                                         onkeyup="mascaraTelefone(event)" maxlength="15" name="Telefone">
                                       <label class="campo"></label>
                                     </div>
@@ -272,24 +272,24 @@
                                       <label for="exampleInputText" class="form-label">E-mail Pessoal:</label>
                                       <input type="text" class="form-control border-secondar shadow-none"
                                         id="emailPessoal" aria-describedby="textHelp" required
-                                        placeholder="email pessoal" name="email">
+                                        placeholder="" name="email">
                                       <label class="campo"></label>
                                     </div>
                                     <div class="col">
                                       <label for="exampleInputText" class="form-label">Indicação Premiada:</label>
                                       <input type="text" class="form-control border-secondar shadow-none"
                                         id="indicPremiada" aria-describedby="textHelp" required
-                                        placeholder="indicação premiada" name="indicacaoPremiada">
+                                        placeholder="" name="indicacaoPremiada">
                                       <label class="campo"></label>
                                     </div>
                                   </div>
 
                                   <div class="row mb-4">
                                     <div class="col">
-                                      <label for="exampleInputText" class="form-label">Email Corporativo;</label>
+                                      <label for="exampleInputText" class="form-label">Email Corporativo:</label>
                                       <input type="tel" class="form-control border-secondar shadow-none"
                                         id="emailCorporativo" aria-describedby="textHelp" required
-                                        placeholder="email corporativo" name="emailCorporativo">
+                                        placeholder="" name="emailCorporativo">
                                       <label class="campo"></label>
                                     </div>
                                     <div class="col">
@@ -390,16 +390,16 @@
                     </div>
                     <% } %>
 
-                      <% if (solicitacao.status=='E' ) { %>
+                      <% if (solicitacao.STATUS=='PA' ) { %>
                         <div style="margin-top: 1.5%">
 
                           <div class="row">
                             <div class="col">
                               <div class="mb-3">
                                 <label for="exampleInputText" class="form-label">Nome Completo Do Candidato
-                                  Aprovado</label>
+                                  Aprovado:</label>
                                 <input type="text" class="form-control border-secondar shadow-none" id="nomeCompleto"
-                                  aria-describedby="textHelp" required readonly placeholder="nome completo aprovado"
+                                  aria-describedby="textHelp" required readonly placeholder=""
                                   name="nomeProfissional" value="">
                                 <label class="campo"></label>
                               </div>
@@ -407,7 +407,7 @@
                             <div class="col">
                               <label for="exampleInputText" class="form-label">Tutor Durante o Onboarding:</label>
                               <input type="text" class="form-control border-secondar shadow-none" id="tutor"
-                                aria-describedby="textHelp" readonly required placeholder="tutor"
+                                aria-describedby="textHelp" readonly required placeholder=""
                                 name="tutorOnboarding">
                               <label class="campo"></label>
                             </div>
@@ -417,20 +417,20 @@
                             <div class="col mb-3">
                               <label for="exampleInputText" class="form-label">Telefone Pessoal:</label>
                               <input type="tel" class="form-control border-secondar shadow-none" id="telPessoal"
-                                aria-describedby="textHelp" readonly required placeholder="(99) 99999-9999"
+                                aria-describedby="textHelp" readonly required placeholder=""
                                 onkeyup="mascaraTelefone(event)" maxlength="15" name="Telefone">
                               <label class="campo"></label>
                             </div>
                             <div class="col">
                               <label for="exampleInputText" class="form-label">E-mail Pessoal:</label>
                               <input type="text" class="form-control border-secondar shadow-none" id="emailPessoal"
-                                aria-describedby="textHelp" required readonly placeholder="email pessoal" name="email">
+                                aria-describedby="textHelp" required readonly placeholder="" name="email">
                               <label class="campo"></label>
                             </div>
                             <div class="col">
                               <label for="exampleInputText" class="form-label">Indicação Premiada:</label>
                               <input type="text" class="form-control border-secondar shadow-none" id="indicPremiada"
-                                aria-describedby="textHelp" required readonly placeholder="indicação premiada"
+                                aria-describedby="textHelp" required readonly placeholder=""
                                 name="indicacaoPremiada">
                               <label class="campo"></label>
                             </div>
@@ -438,9 +438,9 @@
 
                           <div class="row mb-4">
                             <div class="col">
-                              <label for="exampleInputText" class="form-label">Email Corporativo;</label>
+                              <label for="exampleInputText" class="form-label">Email Corporativo:</label>
                               <input type="tel" class="form-control border-secondar shadow-none" id="emailCorporativo"
-                                aria-describedby="textHelp" required readonly placeholder="email corporativo"
+                                aria-describedby="textHelp" required readonly placeholder=""
                                 name="emailCorporativo">
                               <label class="campo"></label>
                             </div>
@@ -528,7 +528,7 @@
                         </button>
                         <% } %>
                           <!-- inputs para pegar valores -->
-                          <input type="text" id="codigoSolicitacao" value="<%=solicitacao.Codigo%>" hidden>
+                          <input type="text" id="codigoSolicitacao" value="<%=solicitacao.CODIGO%>" hidden>
                           <!-- ------------------------- -->
 
           </main>
