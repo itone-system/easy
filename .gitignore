@@ -3,5 +3,4 @@
 package-lock.json
 initdb.sh
 dump.sql
-docker-compose.yml
 /storage

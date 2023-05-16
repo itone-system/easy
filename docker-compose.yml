@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "SqlServer2019!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+  cache:
+    image: redis/redis-stack
+    restart: always
+    ports:
+      - 6379:6379
+      - 8001:8001
+    environment:
+      REDIS_ARGS: --requirepass ${SESSION_CACHE_PASSWORD}
+    depends_on:
+      - sqlserver
+  mssqltools:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - sqlserver
+    volumes:
+      - ./dump.sql:/tmp/dump.sql
+      - ./initdb.sh:/tmp/initdb.sh
+    command: /bin/bash ./tmp/initdb.sh
