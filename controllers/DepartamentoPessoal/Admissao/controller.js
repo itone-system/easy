@@ -189,7 +189,7 @@ module.exports = {
         const candidato = {}
 
         if (solicitacao.STATUS == 'PA') {
-            
+
         }
 
         const momentoAprovacaoPesquisa = await solicitacaoService.verifyAprovador(user.codigo, solicitacao.CODIGO)
@@ -203,7 +203,7 @@ module.exports = {
 
         if (momentoAprovacaoPesquisa == 0) {
             console.log('não é sua vez')
-            
+
         }
 
         return renderView('homeVagas/Admissao/Detail', { solicitacao, nome: user.nome, candidato, dadosUser: user, momentoAprovacao: momentoAprovacao });
@@ -227,20 +227,24 @@ module.exports = {
         } = request
 
         const conexao = await sql.connect(db);
-        await conexao.request().query(`INSERT INTO Profissionais (
-            nomeProfissional,
-            tutorOnboarding,
-            Telefone,
-            email,
-            indicacaoPremiada,
-            emailCorporativo,
-            pcd,
-            dataInicio,
-            modalidade,
-            escala,
-            treinamentos,
-            observacoes
-          ) VALUES (
+
+        const user = request.session.get('user')
+
+        await conexao.request().query(`INSERT INTO PROFISIONAIS (
+            NOME_PROFISSIONAL,
+            TUTOR_ONBOARDING,
+            TELEFONE,
+            EMAIL,
+            INDICACAO_PREMIADA,
+            EMAIL_CORPORATIVO,
+            PCD,
+            DATAINICIO,
+            MODALIDADE,
+            ESCALA,
+            TREINAMENTOS,
+            OBSERVACOES,
+            RESPONSÁVEL_PELO_RETORNO
+        ) VALUES (
             '${nomeProfissional}',
             '${tutorOnboarding}',
             '${Telefone}',
@@ -252,13 +256,14 @@ module.exports = {
             '${modalidade}',
             '${escala}',
             '${treinamentos}',
-            '${observacoes}'
+            '${observacoes}',
+            ${user.codigo}
           )`)
 
         await conexao
             .request()
             .query(
-                `UPDATE solicitacaoAdmissao SET status = 'E' WHERE Codigo = ${codigo}`
+                `UPDATE SOLICITACAO_ADMISSAO SET STATUS = 'PA' WHERE CODIGO = ${codigo}`
             );
 
         const corpo =
@@ -281,7 +286,7 @@ module.exports = {
             .query(
                 `UPDATE Aprovacoes SET Status = 'Y' WHERE Codigo_Aprovador = ${user.codigo} and Codigo_Solicitacao = ${codigoSolicitacao} and MODULO = ${modulo}`
             );
-        
+
 
         const buscarProximoAprovador = await solicitacaoService.buscarProximoAprovador(codigoSolicitacao)
 
@@ -295,7 +300,7 @@ module.exports = {
                 id: buscarProximoAprovador.COD_USUARIO,
                 router: `/vagas/${codigoSolicitacao}/detail`
             });
-            
+
             const link = `${domain}/vagas/${codigoSolicitacao}/detail?token=${token}`
 
             const emailOptions = {
