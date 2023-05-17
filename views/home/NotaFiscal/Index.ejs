@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../partials/head', { title: 'Home' } ) %>
+    <script src="/public/home/Home.js"></script>
+    <link rel="stylesheet" href="../../public/global.css">
+    <link rel="stylesheet" href="../../public/home/Home.css">
+    <body>
+
+        <%- include('../../components/menuNF') %>
+
+        <section class="home">
+          <%- include('../../components/navbar') %>
+              <div class="text">
+                  <h1 style="margin-bottom: 3%;" class="textoBody"></h1>
+
+                  <div  class="jumbotron">
+                    <div class="container">
+                      <h3 class="display-">Olá, <%= nome%>!</h3>
+                      <p style="font-size: 15px; margin-top: 5%;" >Solicite e acompanhe os status das suas requisições.</p>
+                      <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p> -->
+                    </div>
+                  </div>
+
+                  <div class="container">
+                    <!-- Example row of columns -->
+                    <div class="row">
+
+                      <div style="font-size: 11px;" class="col-md-4">
+                        <h6>Envio de Documentos</h6>
+                        <br>
+                        <p Align="justify">Os documentos enviados deverão ser revisados pelo setor contábil após o envio.</p>
+                        <p Align="justify"> Após a validação, o Contábil realizará o envio dos documentos para pagamento. Você também pode acompanhar as mudanças de status pelo e-mail.  </p>
+                        <p Align="justify"><a style="font-size: 12px; margin-top: 4%"  class="btn btn-secondary" onclick="formDesligamento()"  role="button">Solicitar »</a></p>
+                      </div>
+
+                    </div>
+
+                    <hr>
+
+                  </div>
+              </div>
+
+      </section>
+    </body>
+
+</html>

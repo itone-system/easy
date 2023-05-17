@@ -439,5 +439,33 @@ module.exports = {
 
   async downloadNF(request, response) {
     response.download(`${pathNf}` + request.params.path);
-  }
+  },
+
+  async criarHome (request) {
+    // Controller destinado apenas para abrir a página de inserir uma nova solicitação
+    const user = request.session.get('user');
+
+    console.log(user);
+
+    const message = await request.session.message();
+    const dados = {};
+
+    if (!user.tipoAcessos.NOTA_FISCAL) {
+      return redirect('/menu');
+    } else {
+      return renderView('home/NotaFiscal/Index.ejs', {
+        nome: user.nome,
+        codigo: user.codigo,
+        departamento: user.departamento,
+        nomeCompleto: user.nomeCompleto,
+        acesso: user.tipoAcessos,
+        tipoRegime: user.tipoRegime,
+        permissoes: user.permissoes,
+        message,
+        dados
+      });
+    }
+    //   return renderView('home/NotaFiscal/CreateNF', { nome: user.nome, message });
+  },
 };
+
