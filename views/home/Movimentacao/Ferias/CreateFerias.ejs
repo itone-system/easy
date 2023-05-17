@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../../partials/head', { title: 'Férias' } ) %>
+
+  <script src="../../../../public/Ferias/ferias.js"></script>
+  <script src="https://momentjs.com/downloads/moment.js"></script>
+
+  <link rel="stylesheet" href="../../../../public/Ferias/ferias.css">
+  <link rel="stylesheet" href="../../../../public/global.css">
+
+
+  <body>
+
+    <%- include('../../../components/menuForms', { } ) %>
+
+      <section class="home">
+        <%- include('../../../components/navbar', { usuario: 'Gustavo' } ) %>
+
+
+
+          <main class="text">
+            <% if(tipoRegime == 'E'){%>
+            <h4 id="tituloFerias" style="border-bottom: 1px solid #120947; margin-bottom: 20px; margin-top: 20px; padding: 13px 0">
+              Movimentação De Pessoal - Recesso</h4>
+          <% } else {%>
+            <h4 id="tituloFerias" style="border-bottom: 1px solid #120947; margin-bottom: 20px; margin-top: 20px; padding: 13px 0">
+              Movimentação De Pessoal - Férias</h4>
+            <% } %>
+            <p> </p>
+
+
+            <form id="form">
+              <div class="row g-3">
+                <div class="col-lg-6 NOME">
+                  <label>Nome Completo:</label>
+                  <input style="font-size: 12px;" name="NOME" type="text"
+                    class="form-control border-secondar shadow-none" id="NOME" value="<%= nomeCompleto%>" readonly>
+
+                  <div class="error NOME"></div>
+
+
+                </div>
+
+
+                <p> </p>
+
+              </div>
+
+
+
+
+
+              <div class="row g-3" style="margin-top: 1.5%">
+                <p> </p>
+                <p> </p>
+                <div class="col-lg-2  DATA_INICIO">
+                  <label>Data de Início:</label>
+                  <input style="font-size: 12px;" name="DATA_INICIO" onblur="calculaDataFinal()" id="DATA_INICIO"
+                    min="13-02-2023" type="date" class="form-control">
+                  <div class="error DATA_INICIO"></div>
+
+                </div>
+
+
+
+                <p> </p>
+
+
+
+                <div class="col-lg-2 NUM_DIAS">
+                  <div class="form-group">
+                    <label for="for label">Números de Dias:</label>
+                    <input style="font-size: 12px;" min="5" name="NUM_DIAS" onchange="calculaDataFinal()" type="number"
+                      class="form-control border-secondar shadow-none" id="NUM_DIAS" style="width: 60%;">
+                    <div class="error NUM_DIAS"></div>
+                  </div>
+                </div>
+
+                <div class="col-lg-2 DATA_FIM">
+                  <div class="form-group">
+                    <label for="for label">Data fim:</label>
+                    <input style="font-size: 12px;" name="DATA_FIM" type="date"
+                      class="form-control border-secondar shadow-none" id="DATA_FIM" style="width: 60%;" disabled>
+                    <div class="error DATA_FIM"></div>
+                  </div>
+                </div>
+
+              </div>
+
+
+
+
+
+              <p> </p>
+              <% if(tipoRegime == 'E'){%>
+                <div class="row g-3" style="display: none;">
+                <% } else {%>
+                  <div class="row g-3">
+                  <% }%>
+
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label for="for label">Abono de Férias (Vender 10 dias)</label>
+                    <br>
+                    <div class="form-check form-check-inline mt-2" style="align-items: center;">
+                      <input type="radio" name="ABONO_FERIAS" id="radioNaoAbono" value="Não" checked>
+                      <label class="form-check-label" for="exampleRadios1">Não</label>
+                    </div>
+                    <div class="form-check form-check-inline" style="margin-left: 7%;">
+                      <input type="radio" name="ABONO_FERIAS" id="radioSimAbono" value="Sim" required>
+                      <label class="form-check-label" for="exampleRadios1">Sim</label>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label for="for label">Adiantamento de 13°:</label>
+                    <br>
+                    <div class="form-check form-check-inline mt-2" style="align-items: center;">
+                      <input type="radio" name="ADIANTAMENTO" id="radio01" value="Não" checked>
+                      <label class="form-check-label" for="exampleRadios1">Não</label>
+                    </div>
+                    <div class="form-check form-check-inline" style="margin-left: %;">
+                      <input type="radio" name="ADIANTAMENTO" id="radioSim13" value="Sim" required>
+                      <label class="form-check-label" for="exampleRadios1">Sim</label>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <h6 style="border-bottom: 1px solid #120947; margin-top: 1%;
+                margin-bottom: 2%;"><strong>*OBSERVAÇÕES</strong></h6>
+             <% if(tipoRegime == 'E'){%>
+              <table class="table table-bordered mt-3" style="font-size: 12px;">
+                <tbody>
+                  <tr>
+                    <th scope="row">-</th>
+                    <td>
+                      O recesso pode ser concedido de forma fracionada, desde que haja concordância entre o estagiário e a empresa. <br> Nesse caso, o período mínimo de cada parcela deve ser de 10 dias corridos.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">-</th>
+                    <td>
+                      	O recesso deve ser concedido preferencialmente durante as férias escolares do estagiário, de acordo com o calendário escolar.                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">-</th>
+                    <td>
+
+                  	Caso o estagiário tenha período de férias escolares diferente do calendário escolar, o recesso poderá ser concedido em outro período, desde que seja acordado entre o estagiário e a empresa.
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">-</th>
+                    <td>
+                      	O recesso é remunerado no mesmo valor da bolsa-auxílio conforme os dias de gozo;                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+              <% } else {%>
+              <table class="table table-bordered mt-3" style="font-size: 12px;">
+                <tbody>
+                  <tr>
+                    <th scope="row">-</th>
+                    <td>
+                      	As datas de gozo de férias devem primeiramente ser alinhadas com o gestor imediato.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">-</th>
+                    <td>
+                      As férias podem ser concedidas em até 3 períodos, sendo que um deles não poderá ser inferior a 14 dias corridos e os demais não poderão ser inferiores a 5 dias corridos, cada um.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">-</th>
+                    <td>
+                      	O início para gozo de férias deve ser 3 dias que antecede o sábado, domingo ou feriado. Os dias cabíveis são de segunda a quarta-feira (verifique se há feriados durante a semana de início).
+                      <br>* Nos casos de colaboradores que atuam em jornada 12x36 a regra descrita acima não se aplica, devendo as férias ser iniciadas em dia de trabalho conforme a escala;
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">-</th>
+                    <td>
+                      É possível converter 1/3 em abono pecuniário, ou seja, vender 10 dias.
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">-</th>
+                    <td>
+                      	O colaborador tem direito a receber o adiantamento da primeira parcela do décimo terceiro salário nas férias, salvo nos meses de Janeiro e Dezembro.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <% } %>
+
+
+              </div>
+            </form>
+            <button id="solicitarFerias" value="save" type="submit" class="btn btn-success"
+              style="margin-top: 1%;">Solicitar</button>
+            <div style="display: none;"><a class="nav-link" id="nomeUser" style="text-decoration: none; color: white"><%=nome%></a></div>
+            <a class="nav-link" id="codigoUser" style="display: none"><%=codigo%></a>
+            <a class="nav-link" id="departamentoUser" style="display: none"><%=departamento%></a>
+
+
+
+          </main>
+          </section>
+
+
+
+  </body>
+
+</html>

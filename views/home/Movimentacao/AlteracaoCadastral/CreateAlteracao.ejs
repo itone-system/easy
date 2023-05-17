@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../../partials/head', { title: 'Alteração Cadastral' } ) %>
+
+    <script src="../../../../public/alteracaoCadastral/alteracaoCadastral.js"></script>
+
+    <link rel="stylesheet" href="../../../../public/alteracaoCadastral/alteracaoCadastral.css">
+    <link rel="stylesheet" href="../../../../public/global.css">
+
+
+    <body>
+
+        <%- include('../../../components/menuForms', { } ) %>
+
+            <section class="home">
+                <%- include('../../../components/navbar', { usuario: 'Gustavo' } ) %>
+
+
+
+                <main class="text">
+
+                    <h4 style="border-bottom: 1px solid #120947; margin-bottom: 20px; margin-top: 20px; padding: 13px 0">Movimentação De Pessoal - Alteração Cadastral</h4>
+                    <p> </p>
+                    <form id="form">
+                      <div class="row g-3">
+                        <div class="col-lg-4 NOME">
+                          <label>Nome Completo:</label>
+                          <select name="NOME" id="NOME" class="form-control">
+                            <option value=""></option>
+                          </select>
+                          <div class="error NOME"></div>
+
+
+                        </div>
+                      </div>
+                    <div class="row">
+                      <div class="col">
+                          <div class="form-group">
+                              <label for="for label">Data de Movimentação:</label>
+                              <input type="date" name="DATA_MOVIMENTACAO" class="form-control border-secondar shadow-none w-25" id="inputData" style="font-size: 12px;">
+                              <div class="error DATA_MOVIMENTACAO"></div>
+                          </div>
+                      </div>
+                  </div>
+
+                    <h6 style="border-bottom:1px solid #120947; margin-bottom: 3%;">*Deve ser preenchido apenas
+                        os campos em que houver alteração
+                    </h6>
+                    <input type="checkbox" id="FILIAL" class="input-titulo" onclick="buscarChecked()">
+                    <label for="faq-titulo-6" class="faq-titulo">
+                        <strong>Filial</strong></label>
+
+                    <input type="checkbox" id="DEPARTAMENTO" class="input-titulo" onclick="buscarChecked()">
+                    <label for="faq-titulo-1" class="faq-titulo">
+                        <strong>Departamento</strong></label>
+
+                    <input type="checkbox" id="CC" class="input-titulo" onclick="buscarChecked()">
+                    <label for="faq-titulo-2" class="faq-titulo">
+                        <strong>Centro de Custo</strong></label>
+
+                    <input type="checkbox" id="CARGO" class="input-titulo" onclick="buscarChecked()">
+                    <label for="faq-titulo-3" class="faq-titulo">
+                        <strong>Cargo</strong></label>
+
+                    <input type="checkbox" id="SALARIO" class="input-titulo" onclick="buscarChecked()">
+                    <label for="faq-titulo-4" class="faq-titulo">
+                        <strong>Salário</strong></label>
+
+                    <input type="checkbox" id="GESTOR" class="input-titulo" onclick="buscarChecked()">
+                    <label for="faq-titulo-5" class="faq-titulo">
+                        <strong>Gestor</strong></label>
+
+
+                        <div class="wapper-0">
+                          <div class="row">
+                              <div class="col">
+                                  <div class="form-group">
+                                      <label for="for label">Filial Atual:</label>
+                                      <select name="FILIAL_ATUAL" id="FILIAL_ATUAL" class="form-control">
+                                        <option value=""></option>
+                                      </select>
+                                      <div class="error FILIAL_ATUAL"></div>
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <div class="form-group">
+                                      <label for="for label">Nova Filial:</label>
+                                      <select name="FILIAL_NOVO" id="FILIAL_NOVO" class="form-control">
+                                        <option value=""></option>
+                                      </select>
+                                      <div class="error FILIAL_NOVO"></div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                    <div class="wapper-1">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="for label">Departamento Atual:</label>
+                                    <select name="DEPARTAMENTO_ATUAL" id="DEPARTAMENTO_ATUAL" class="form-control">
+                                      <option value=""></option>
+                                    </select>
+                                    <div class="error DEPARTAMENTO_ATUAL"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="for label">Novo Departamento:</label>
+                                    <select name="DEPARTAMENTO_NOVO" id="DEPARTAMENTO_NOVO" class="form-control">
+                                      <option value=""></option>
+                                    </select>
+                                    <div class="error DEPARTAMENTO_NOVO"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wapper-2">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="for label">Centro de Custo Atual:</label>
+                                    <select name="CC_ATUAL" id="CC_ATUAL" class="form-control">
+                                      <option value=""></option>
+                                    </select>
+                                    <div class="error CC_ATUAL"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="for label">Novo Centro de Custo:</label>
+                                    <select name="CC_NOVO" id="CC_NOVO" class="form-control">
+                                      <option value=""></option>
+                                    </select>
+                                    <div class="error CC_NOVO"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wapper-3">
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <label for="for label">Cargo Atual:</label>
+                                          <input type="text" name="CARGO_ATUAL" id="CARGO_ATUAL" class="form-control" id="inputData" style="font-size: 14px;">
+
+                                        <div class="error CARGO_ATUAL"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="for label">Novo Cargo:</label>
+                                    <input type="text" name="CARGO_NOVO" id="CARGO_NOVO" class="form-control" id="inputData" style="font-size: 14px;">
+
+                                    <div class="error CARGO_NOVO"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wapper-4">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="for label">Salário/Fixo Atual:</label>
+                                    <input name="SALARIO_ATUAL" maxlength="9" onkeyup="formatarMoeda()" style="font-size: 12px" name="SALARIO_ATUAL" id="SALARIO_ATUAL" type="text" class="form-control" placeholder="R$">
+                                    <div class="error SALARIO_ATUAL"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="for label">Novo Salário/Fixo:</label>
+                                    <input name="SALARIO_NOVO" maxlength="9" onkeyup="formatarMoeda()" style="font-size: 12px"  name="SALARIO_NOVO" id="SALARIO_NOVO" type="text" class="form-control" placeholder="R$">
+
+                                    <div class="error SALARIO_NOVO" ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="wapper-5">
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <label for="for label">Gestor Atual:</label>
+                                        <input type="text" name="GESTOR_ATUAL" id="GESTOR_ATUAL" class="form-control" id="inputData" style="font-size: 14px;">
+
+                                        <div class="error GESTOR_ATUAL" ></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <label for="for label">Novo Gestor:</label>
+                                        <input type="text" name="GESTOR_NOVO" id="GESTOR_NOVO"  class="form-control" id="inputData" style="font-size: 14px;">
+
+                                        <div class="error GESTOR_NOVO"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="for label">Justificativa:</label>
+                                <input name="JUSTIFICATIVA" type="text" class="form-control border-secondar shadow-none" id="inputJustificativa"
+                                    placeholder="">
+                                <div class="error JUSTIFICATIVA"></div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </form>
+                <div style="display: none;"><a class="nav-link"  id="nomeUser" style="text-decoration: none; color: white"><%=nome%></a></div>
+                <a class="nav-link"  id="codigoUser" style="display: none"><%=codigo%></a>
+                <a class="nav-link"  id="departamentoUser" style="display: none"><%=departamento%></a>
+            <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+                integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+                crossorigin="anonymous"></script>
+                      </form>
+
+
+                  </main> -->
+                  <button id="solicitarAlteracao"  value="save" type="submit" class="btn btn-success"  style="margin-top: 1%;">Solicitar</button>
+                </main>
+
+            </section>
+
+
+
+    </body>
+
+</html>

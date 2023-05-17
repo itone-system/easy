@@ -27,7 +27,15 @@ module.exports = async (app) => {
       insertNF: '/notafiscal/insertnotafiscal',
       aprovarAdmissao: '/vagas/aprovar',
       insertVaga: '/vagas/insert',
-      insertCandidato: '/vagas/insertCandidato'
+      insertCandidato: '/vagas/insertCandidato',
+      incluirFerias: '/formularios/insertFerias',
+      insertDesligamento: '/formularios/insertDesligamento',
+      insertAlteracao: '/formularios/insertAlteracao',
+      formUnico: '/formularios/formUnico',
+      aprovacaoForms: '/formularios/statusForms',
+      aprovacaoDP: '/formularios/validacaoFormDP',
+      histAprovacoesForms: '/formularios/histAprovacoes'
+
     }
   };
 };

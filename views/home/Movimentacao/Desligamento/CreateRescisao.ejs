@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../../partials/head', { title: 'Desligamento' } ) %>
+
+    <script src="../../../../public/desligamento/desligamento.js"></script>
+
+    <link rel="stylesheet" href="../../../../public/desligamento/desligamento.css">
+    <link rel="stylesheet" href="../../../../public/global.css">
+
+
+    <body>
+
+        <%- include('../../../components/menuForms', { } ) %>
+
+            <section class="home">
+                <%- include('../../../components/navbar', { usuario: 'Gustavo' } ) %>
+
+
+
+                <main class="text">
+
+                    <h4 style="border-bottom: 1px solid #120947; margin-bottom: 20px; margin-top: 20px; padding: 13px 0">Movimentação de Pessoal - Desligamento | Encerramento de Contrato</h4>
+                    <p> </p>
+                    <form id="form">
+                    <div class="row g-3">
+                      <div class="col-lg-6 NOME">
+                        <label>Nome Completo:</label>
+                        <select name="NOME" id="NOME" class="form-control">
+                          <option value=""></option>
+                        </select>
+                        <div class="error NOME"></div>
+
+
+                      </div>
+
+
+                      <p> </p>
+
+                    </div>
+
+
+
+
+
+                    <div class="row g-3" style="margin-top: 1.5%" >
+                                        <p> </p>
+                      <p> </p>
+                      <div class="col-lg-3  DATA_AVISO" >
+                        <label>Data do Aviso:</label>
+                        <input style="font-size: 13px;"  name="DATA_AVISO"  id="DATA_AVISO" min="13-02-2023" type="date" class="form-control">
+                        <div class="error DATA_AVISO"></div>
+
+                      </div>
+
+
+
+                    <p> </p>
+
+
+                      <div class="col-lg-3 ULTIMO_DIA">
+                        <div class="form-group">
+                            <label for="for label">Data do Último Dia Trabalhado:</label>
+                            <input style="font-size: 13px;" name="ULTIMO_DIA" type="date" class="form-control border-secondar shadow-none" id="ULTIMO_DIA"
+                             style="width: 60%;">
+                                <div class="error ULTIMO_DIA"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+                  <p> </p>
+
+                  <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="for label">Regime de Contratação:</label>
+                            <br>
+                            <div class="form-check form-check-inline mt-2" style="align-items: center;">
+                                <input type="radio" name="TIPO_REGIME" id="radiodesligamento" value="CLT" checked onclick="ShowAndHidenCLT()">
+                                <label class="form-check-label" for="exampleRadios1">CLT | Aprendiz</label>
+                            </div>
+                            <div class="form-check form-check-inline" style="margin-left: 7%;">
+                                <input type="radio" name="TIPO_REGIME" id="radiodesligamento" value="PJ" required onclick="ShowAndHidenPJ()">
+                                <label class="form-check-label" for="exampleRadios1">Pessoa Jurídica</label>
+                            </div>
+                            <div class="form-check form-check-inline" style="margin-left: 7%;">
+                              <input type="radio" name="TIPO_REGIME" id="radiodesligamento" value="Estag" required onclick="ShowAndHidenEstag()">
+                              <label class="form-check-label" for="exampleRadios1">Estágiario</label>
+                          </div>
+
+                    </div>
+                  </div>
+              </div>
+
+
+
+<div class="show1">
+
+
+                <h6 class="mt-2">CLT | Aprendiz</h6>
+                <label class="form-check-label" for="exampleRadios1">Tipo de Desligamento:</label>
+
+                <div class="row">
+                  <div class="col">
+                      <div class="form-group">
+
+
+                          <div class="form-check form-check-inline mt-2" style="align-items: center;">
+                              <input type="radio" name="TIPO_DESLIGAMENTOCLT" id="radioTipoDesligamento1" value="1" checked onclick="ocultarLinhas()">
+                              <label class="form-check-label" for="exampleRadios1">Por parte da Empresa</label>
+                          </div>
+                          <div class="form-check form-check-inline" style="margin-left: 7%;">
+                              <input type="radio" name="TIPO_DESLIGAMENTOCLT" id="radioTipoDesligamento2" value="2" required onclick="ocultarLinhas()">
+                              <label class="form-check-label" for="exampleRadios1">Pedido de Demissão</label>
+                          </div>
+                          <div class="form-check form-check-inline" style="margin-left: 7%;">
+                            <input type="radio" name="TIPO_DESLIGAMENTOCLT" id="radioTipoDesligamento3" value="3" required onclick="ocultarLinhas()">
+                            <label class="form-check-label" for="exampleRadios1">Término de Contrato</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left: 7%;">
+                          <input type="radio" name="TIPO_DESLIGAMENTOCLT" id="radioTipoDesligamento4" value="4" required onclick="ocultarLinhas()">
+                          <label class="form-check-label" for="exampleRadios1">Acordo de Trabalho Entre as Partes</label>
+                      </div>
+
+                  </div>
+                </div>
+            </div>
+
+                <table class="table table-bordered mt-2">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <!-- <th scope="col">Opção</th> -->
+                            <th scope="col">Tipo de Desligamento</th>
+                            <th scope="col">Tipo de Aviso</th>
+                            <th scope="col">Desconto de aviso</th>
+                            <th scope="col">Motivo Desligamento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="linha1CLT" style="display: table-row  ;">
+                            <!-- <td class="col-1" class="col-1" style="text-align: center;"><input class="checkMotivos" type="checkbox"
+                                    name="escolha" id="checkbox1" ></td> -->
+                            <td class="col-3" value="1">Por parte da Empresa </td>
+                            <td><select style="font-size: 12px;" id="tipoDeAviso" class="form-control border-secondar shadow-none"
+                              aria-label="Default select example" required>
+                              <option selected value="">Selecione...</option>
+                              <option value="1">Sem Justa Causa - Aviso
+                                  Trabalhado
+                              </option>
+                              <option value="2">Sem Justa Causa - Aviso
+                                  Indenizado
+                              </option>
+                              <option value="3">Com Justa Causa</option>
+                          </select>
+                          <!-- <div class="error"></div> -->
+                      </td>
+                            <td style="background: #c7c7c7"  value="" ></td>
+                            <td >
+                              <select style="font-size: 12px;" id="motivoDesligamento" class="form-control border-secondar shadow-none"
+                                    aria-label="Default select example" required>
+                                    <option selected value="">Selecione...</option>
+                                    <option value="1 ">Baixa Performance </option>
+                                    <option value="2">Comportamento/Atitudes
+                                        incompatíveis</option>
+                                    <option
+                                        value="14">
+                                        Problemas de relacionamentos com pares e/ou lideres, e/ou liderados </option>
+                                    <option value="10">Mudança de estrutura</option>
+                                    <option value="20">Redução de custo</option>
+                                    <option value="11">Mudança de Perfil </option>
+                                    <option value="12">Outros (especificar no
+                                        campo
+                                        observação)</option>
+                                </select></td>
+                        </tr>
+
+                        <tr class="linha2CLT" style="display: none;">
+                            <!-- <td style="text-align: center;"><input class="checkMotivos" id="checkbox2" type="checkbox" name="escolha"></td> -->
+                            <td>Pedido de Demisão</td>
+                            <td ><select onchange="ocultarDescontoPJ()" style="font-size: 12px;"  id="tipoDeAvisoDemissao" class="form-control border-secondar shadow-none"
+                              aria-label="Default select example" required>
+                              <option selected value="">Selecione...</option>
+                              <option value="4">Sem cumprimento do aviso
+                              </option>
+                              <option value="5">Com cumprimento parcial do aviso
+                              </option>
+                              <option value="6">Com cumprimento integral do aviso
+                              </option>
+                          </select></td>
+                            <td id="ocultarDescontoCLT" >
+                              <select style="font-size: 12px;"  id="descontoDeAviso" class="form-control border-secondar shadow-none"
+                              aria-label="Default select example" required>
+                              <option selected value="">Selecione...</option>
+                              <option value="1">Descontar os dias
+                              </option>
+                              <option value="2">Não descontar os dias
+                              </option>
+                          </select>
+                            </td>
+                            <td >
+                              <select style="font-size: 12px;"  id="motivoDesligDemissao" class="form-control border-secondar shadow-nones"
+                              aria-label="Default select example" required>
+                              <option selected value="">Selecione...</option>
+                              <option value="19 ">Proposta salarial mais atrativa
+                              </option>
+                              <option value="18">Proposta para contrato CLT
+                              </option>
+                              <option value="2">Benefícios mais atrativos
+                              </option>
+                              <option value="17">
+                                  Proposta com maior visibilidade de carreira
+                              </option>
+                              <option value="8">
+                                  Melhores investimentos em treinamento e capacitações
+                              </option>
+                              <option value="6">
+                                  Incompatibilidade com liderança imediata
+                              </option>
+                              <option value="7">
+                                  Insatisfação com o clima organizacional
+                              </option>
+                              <option value="4">
+                                  Falta de feedback e apoio por parte da liderança
+                              </option>
+                              <option value="16">
+                                  Projetos Pessoais
+                              </option>f
+                              <option value="13">
+                                  Problema de Saúde
+                              </option>
+                              <option value="9">
+                                  Mudança de Cidade/Estado ou País
+                              </option>
+                              <option value="5">
+                                  Falta de perspectiva profissional
+                              </option>
+                              <option value="12">
+                                  Outros (especificar no campo observação)
+                              </option>
+                          </select>
+                            </td>
+                        </tr>
+
+                        <tr class="linha3CLT" style="display: none;">
+                            <!-- <td style="text-align: center;"><input class="checkMotivos" id="checkbox3" type="checkbox" name="escolha"></td> -->
+                            <td>Termino de Contrato </td>
+                            <td><select style="font-size: 12px;"  id="tipoDeAvisoContrato" class="form-control border-secondar shadow-none"
+                              aria-label="Default select example" required onchange="mudarListaCLTTerminoDeContrato()">
+                              <option selected value="">Selecione...</option>
+                              <option value="7">
+                                  Por parte da empresa - antecipado
+                              </option>
+                              <option value="8">
+                                  Por parte da empresa - sem antecipação
+                              </option>
+                              <option value="9">
+                                  Por parte do colaborador - antecipado
+                              </option>
+                              <option value="10">
+                                  Por parte do colaborador - sem antecipação
+                              </option>
+                          </select>
+                            </td>
+                            <td style="background: #c7c7c7;"></td>
+                            <td  id="mudarListaCLT" >
+                              <select style="font-size: 12px;"  id="motivoDesligContrato" class="form-control border-secondar shadow-none"
+                              aria-label="Default select example" required>
+                              <option selected value="">Selecione...</option>
+                          </select>
+                            </td>
+                        </tr>
+
+                        <tr class="linha4CLT" style="display: none;">
+                            <!-- <td style="text-align: center;"><input class="checkMotivos" id="checkbox4" type="checkbox" name="escolha"></td> -->
+                            <td>Acordo de Trabalho entre as Partes </td>
+                            <td style="background: #c7c7c7;"></td>
+                            <td style="background: #c7c7c7;"></td>
+                            <td><select style="font-size: 12px;"  id="motivoDesligAcordo" class="form-control border-secondar shadow-none"
+                              aria-label="Default select example" required>
+                              <option selected value="">Selecione...</option>
+                              <option value="15">Profissional irá para a
+                                  modalidade
+                                  PJ </option>
+                              <option value="12">
+                                  Outros (especificar no campo observação)</option>
+                          </select>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <div class="error TABELACLT"></div>
+            </div>
+
+            <div class="show2">
+
+              <h6 class="mt-2">Pessoa Jurídica</h6>
+
+              <div class="row">
+                <div class="col">
+                    <div class="form-group">
+
+
+                        <div class="form-check form-check-inline mt-2" style="align-items: center;">
+                            <input type="radio" name="TIPO_DESLIGAMENTOPJ" id="radioTipoDesligamento1" value="1" checked onclick="ocultarLinhas()">
+                            <label class="form-check-label" for="exampleRadios1">Por parte da Empresa</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left: 7%;">
+                            <input type="radio" name="TIPO_DESLIGAMENTOPJ" id="radioTipoDesligamento2" value="2" required onclick="ocultarLinhas()">
+                            <label class="form-check-label" for="exampleRadios1">Por parte do parceiro</label>
+                        </div>
+                </div>
+              </div>
+          </div>
+
+              <table class="table table-bordered mt-4">
+                  <thead>
+                      <tr style="text-align: center;">
+                          <th scope="col">Tipo de Desligamento</th>
+                          <th scope="col">Multa Contratual </th>
+                          <th scope="col">Motivo Desligamento</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr class="linha1PJ">
+                          <td class="col-3">Por parte da Empresa </td>
+                          <td><select style="font-size: 12px;"  id="descontoAvisoPJ-E" class="form-control border-secondar shadow-none"
+                            aria-label="Default select example" required>
+                            <option selected value="">Selecione...</option>
+                            <option value="3">
+                                Pagar - a parceria será encerrada imediatamente
+                            </option>
+                            <option value="4">
+                                Não pagar - o parceiro irá cumprir 30 dias de aviso
+                            </option>
+                        </select>
+                          </td>
+                          <td><select style="font-size: 12px;"  id="motivoDesligamentoPJ" class="form-control border-secondar shadow-none"
+                            aria-label="Default select example" required>
+                            <option selected value="">Selecione...</option>
+                            <option value="1 ">Baixa Performance </option>
+                            <option value="3">Comportamento/Atitudes
+                                incompatíveis</option>
+                            <option
+                                value="14">
+                                Problemas de relacionamentos com pares e/ou lideres, e/ou liderados </option>
+                            <option value="10">Mudança de estrutura</option>
+                            <option value="20">Redução de custo</option>
+                            <option value="11">Mudança de Perfil </option>
+                            <option value="12">Outros (especificar no
+                                campo
+                                observação)</option>
+                        </select>
+                          </td>
+                      </tr>
+
+                      <tr class="linha2PJ" style="display: none;">
+                         <td>Por parte do parceiro</td>
+                          <td>
+                            <select style="font-size: 12px;"  id="descontoAvisoPJ-P" class="form-control border-secondar shadow-none"
+                            aria-label="Default select example" required>
+                            <option selected value="">Selecione...</option>
+                            <option value="5">
+                                Descontar - a parceria será encerrada imediatamente
+                            </option>
+                            <option value="6">
+                                Não descontar - o parceiro irá cumprir 30 dias de avisos
+                            </option>
+                        </select>
+                          </td>
+                          <td>
+                            <select style="font-size: 12px;"  id="motivoDesligoPJ" class="form-control border-secondar shadow-nones"
+                            aria-label="Default select example" required>
+                            <option selected value="">Selecione...</option>
+                            <option value="19 ">Proposta salarial mais atrativa
+                            </option>
+                            <option value="18">Proposta para contrato CLT
+                            </option>
+                            <option value="2">Benefícios mais atrativos
+                            </option>
+                            <option value="17">
+                                Proposta com maior visibilidade de carreira
+                            </option>
+                            <option value="8">
+                                Melhores investimentos em treinamento e capacitações
+                            </option>
+                            <option value="6">
+                                Incompatibilidade com liderança imediata
+                            </option>
+                            <option value="7">
+                                Insatisfação com o clima organizacional
+                            </option>
+                            <option value="4">
+                                Falta de feedback e apoio por parte da liderança
+                            </option>
+                            <option value="16">
+                                Projetos Pessoais
+                            </option>
+                            <option value="13">
+                                Problema de Saúde
+                            </option>
+                            <option value="9">
+                                Mudança de Cidade/Estado ou País
+                            </option>
+                            <option value="5">
+                                Falta de perspectiva profissional
+                            </option>
+                            <option value="12">
+                                Outros (especificar no campo observação)
+                            </option>
+                        </select>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+              <div class="error TABELAPJ"></div>
+
+          </div>
+
+          <div class="show3">
+
+              <h6 class="mt-2">Estagiário </h6>
+
+              <div class="row">
+                <div class="col">
+                    <div class="form-group">
+
+
+                        <div class="form-check form-check-inline mt-2" style="align-items: center;">
+                            <input type="radio" name="TIPO_DESLIGAMENTOEstag" id="radioTipoDesligamento1" value="1" checked onclick="ocultarLinhas()">
+                            <label class="form-check-label" for="exampleRadios1">Por parte da Empresa</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left: 7%;">
+                            <input type="radio" name="TIPO_DESLIGAMENTOEstag" id="radioTipoDesligamento2" value="2" required onclick="ocultarLinhas()">
+                            <label class="form-check-label" for="exampleRadios1">Por parte do Estagiário </label>
+                        </div>
+                </div>
+              </div>
+          </div>
+
+              <table class="table table-bordered mt-4">
+                  <thead>
+                      <tr style="text-align: center;">
+                          <th scope="col">Tipo de Desligamento</th>
+                          <th scope="col">Motivo Desligamento</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="linha1Estag">
+                       <td class="col-3">Por parte da Empresa </td>
+                          <td>
+                            <select style="font-size: 12px;"  id="motivoDesligamentoEstagio-Emp"
+                            class="form-control border-secondar shadow-none" aria-label="Default select example"
+                            required>
+                            <option selected value="">Selecione...</option>
+                            <option value="1 ">Baixa Performance </option>
+                            <option value="3">Comportamento/Atitudes
+                                incompatíveis</option>
+                            <option
+                                value="14">
+                                Problemas de relacionamentos com pares e/ou lideres, e/ou liderados </option>
+                            <option value="10">Mudança de estrutura</option>
+                            <option value="20">Redução de custo</option>
+                            <option value="11">Mudança de Perfil </option>
+                            <option value="12">Outros (especificar no
+                                campo observação)</option>
+                        </select>
+                          </td>
+                      </tr>
+
+                      <tr class="linha2Estag" style="display: none;">
+                          <td>Por parte do Estagiário / Jovem Aprendiz</td>
+                          <td>
+                            <select style="font-size: 12px;"  id="motivoDesligamentoEstagio-Est"
+                            class="form-control border-secondar shadow-nones"
+                            aria-label="Default select example" required>
+                            <option selected value="">Selecione...</option>
+                            <option value="19">Proposta salarial mais atrativa
+                            </option>
+                            <option value="18">Proposta para contrato CLT
+                            </option>
+                            <option value="2">Benefícios mais atrativos
+                            </option>
+                            <option value="17">
+                                Proposta com maior visibilidade de carreira
+                            </option>
+                            <option value="8">
+                                Melhores investimentos em treinamento e capacitações
+                            </option>
+                            <option value="6">
+                                Incompatibilidade com liderança imediata
+                            </option>
+                            <option value="7">
+                                Insatisfação com o clima organizacional
+                            </option>
+                            <option value="4">
+                                Falta de feedback e apoio por parte da liderança
+                            </option>
+                            <option value="16">
+                                Projetos Pessoais
+                            </option>
+                            <option value="13">
+                                Problema de Saúde
+                            </option>
+                            <option value="9">
+                                Mudança de Cidade/Estado ou País
+                            </option>
+                            <option value="5">
+                                Falta de perspectiva profissional
+                            </option>
+                            <option value="12">
+                                Outros (especificar no campo observação)
+                            </option>
+                        </select>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+              <div class="error TABELAEstag"></div>
+
+          </div>
+
+
+          <label>Observação:</label>
+          <div class="row">
+              <div class="col">
+                  <div class="mb-3">
+                      <textarea name="OBSERVACAO" class="form-control border-secondar shadow-none" rows="3" id="textareaOBS" required></textarea>
+                  </div>
+              </div>
+          </div>
+          <div class="error OBSERVACAO"></div>
+
+
+          <h6 class="mt-2 mb-3">Substituição</h6>
+
+
+
+          <div class="row">
+              <div class="col">
+                  <div class="form-group">
+
+                      <a style="font-size: 13.5px;">*Importante: Caso haja substituição deve-se preencher o formulário de Admissão</a>
+
+                      <br>
+                      <div class="form-check form-check-inline mt-2" style="align-items: center;">
+                          <input type="radio" name="radio01" id="radio0" value="Sim" >
+                          <label class="form-check-label">Sim</label>
+                      </div>
+                      <div class="form-check form-check-inline" style="margin-left: 3%;">
+                          <input type="radio" name="radio01" id="radio0" value="Não" checked>
+                          <label class="form-check-label">Não</label>
+                      </div>
+                    </div>
+              </div>
+          </div>
+
+
+
+                </div>
+              </form>
+              <div style="display: none;"><a class="nav-link"  id="nomeUser" style="text-decoration: none; color: white"><%=nome%></a></div>
+
+              <button id="solicitarDesligamento"  value="save" type="submit" class="btn btn-success"  style="margin-top: 1%;">Solicitar</button>
+              <a class="nav-link"  id="codigoUser" style="display: none"><%=codigo%></a>
+              <a class="nav-link"  id="departamentoUser" style="display: none"><%=departamento%></a>
+                  </main>
+            </section>
+
+
+
+    </body>
+
+</html>

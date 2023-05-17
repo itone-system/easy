@@ -12,6 +12,7 @@ const {
   PORT,
   DOMAIN,
   EMAIL,
+  EMAILDP,
   PATHNF,
   PATHCMP,
   SESSION_CACHE_HOST,
@@ -23,10 +24,10 @@ const port = parseInt(PORT || 3000)
 const isProd = ENVIRONMENT !== 'dev'
 
 if (isProd && !DOMAIN) {
-  throw new Error('O domínio deve ser informado!')
+  throw new Error('O domínio deve ser informado!');
 }
 
-const domain = DOMAIN || (port !== 80 ? `http://localhost:${port}` : 'http://localhost')
+const domain = DOMAIN || (port !== 80 ? `http://localhost:${port}` : 'http://localhost');
 
 const oneDaySession = 24 * 60 * 60 * 1000
 const oneWeekSession = 7 * oneDaySession
@@ -35,6 +36,7 @@ module.exports = {
   enviroment: ENVIRONMENT,
   isProd,
   port,
+  emailDP: EMAILDP,
   pathNf: PATHNF,
   pathCmP: PATHCMP,
   domain,

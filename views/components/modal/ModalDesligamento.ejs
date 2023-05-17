@@ -1,0 +1,165 @@
+<div class="modal fade" id="myModalDesligamento" style="font-size:14px">
+
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Desligamento</h4>
+        <div id="statusModalDeslig">
+        </div>
+      </div>
+
+      <!-- Modal body -->
+      <div id="modalBody" class="modal-body">
+        <div>
+
+          <!-- GAMBIARRA MODAL -->
+          <label id="CodigoNF" style="color: #ffffff; display: none; ">
+            <%= codigoToken %>
+          </label>
+          <label id="retornarNFUser" style="color: #ffffff; display: none; ">
+            <%= retornoUser.RETORNAR %>
+          </label>
+
+          <div class="dados-modal">
+            <div class="row g-3">
+              <div class="col Solicitacao">
+                <label>N° Solicitação: </label>
+                <input id="NumeroSolicitacaoModalDeslig" type="text" name="NumeroSolicitacaoModalDeslig"
+                  for="NumeroSolicitacaoModalDeslig" style="margin-bottom: 10%; font-size:13px" type="text"
+                  class="form-control " readonly>
+
+              </div>
+              <div class="col DataSolcitacao">
+                <label>Data da Solicitação:</label>
+                <input id="ModDataSolcitacaoDeslig" name="ModDataSolcitacaoDeslig" for="ModDataSolcitacaoDeslig"
+                  style="margin-bottom: 10%; font-size:13px" type="text" class="form-control" readonly>
+
+              </div>
+
+            </div>
+            <div class="row g-3">
+              <div class="col Solicitante">
+                <label>Solicitante: </label>
+                <input id="ModSolicitanteDeslig" type="text" name="ModSolicitanteDeslig" for="ModSolicitanteDeslig"
+                  style="margin-bottom: 6%; font-size:13px" type="text" class="form-control" readonly>
+              </div>
+            </div>
+            <div class="row g-3">
+              <div class="col Colaborador">
+                <label>Colaborador:</label>
+                <input id="ModColaboradorDeslig" for="ModColaboradorDeslig" style="margin-bottom: 6%; font-size:13px"
+                  type="text" class="form-control" readonly>
+
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <div class="col DataAviso">
+                <label>Data do Aviso:</label>
+                <input id="ModDataAvisoDeslig" for="ModDataAvisoDeslig" style="margin-bottom: 10%; font-size:13px"
+                  type="text" class="form-control" readonly>
+
+              </div>
+
+              <div class="col UltimoDia">
+                <label>Último Dia:</label>
+                <input id="ModUltimoDiaDeslig" for="ModUltimoDiaDeslig" style="margin-bottom: 10%; font-size:13px"
+                  type="text" class="form-control" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3">
+
+            <div class="col tipoRegime">
+              <label>Regime de Contratação:</label>
+              <input id="ModtipoRegimeDeslig" for="ModtipoRegimeDeslig" style="margin-bottom: 10%; font-size:13px"
+                type="text" class="form-control" readonly>
+            </div>
+
+            <div class="col TipoDeslig">
+              <label>Tipo Desligamento:</label>
+              <input id="ModTipoDeslig" for="ModTipoDeslig" style="margin-bottom: 5%; font-size:13px" type="text"
+                class="form-control" readonly>
+
+            </div>
+          </div>
+
+
+          <div class="row g-3">
+
+            <div class="col tipoAviso">
+              <label>Tipo do Aviso:</label>
+              <input id="ModtipoAvisoDeslig" for="ModtipoAvisoDeslig" style="margin-bottom: 10%; font-size:13px"
+                type="text" class="form-control" readonly>
+            </div>
+
+            <div class="col Desconto">
+              <label>Desconto:</label>
+              <input id="ModDescontoDeslig" for="ModDescontoDeslig" style="margin-bottom: 5%; font-size:13px"
+                type="text" class="form-control" readonly>
+
+            </div>
+          </div>
+
+          <div class="row g-3">
+
+            <div class="col Motivos">
+              <label>Motivos:</label>
+              <input id="ModMotivosDeslig" for="ModMotivosDeslig" style="margin-bottom: 6%; font-size:13px" type="text"
+                class="form-control" readonly>
+            </div>
+          </div>
+
+          <div class="row g-3">
+
+            <div class="col Observacao">
+              <label>Observação:</label>
+              <input id="ModObservacaoDeslig" for="ModObservacaoDeslig" style="margin-bottom: 6%; font-size:13px"
+                type="text" class="form-control" readonly>
+            </div>
+          </div>
+          <div class="row g-3">
+
+            <div class="col-lg-6 Substituicao">
+              <label>Substituição:</label>
+              <input id="ModSubstituicaoDeslig" for="ModSubstituicaoDeslig" style="margin-bottom: 0%; font-size:13px"
+                type="text" class="form-control" readonly>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+
+
+      <div class="camposStatusDeslig">
+      </div>
+
+      <div id="camposHistorico-R">
+
+      </div>
+
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+
+        <div class="camposButtonDeslig">
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+</div>
+</div>

@@ -7,6 +7,7 @@ const LoginRouter = require('../controllers/Login/router');
 const { auth } = require('../middlewares/auth-middleware');
 const AdmissaoRouter = require('../controllers/DepartamentoPessoal/Admissao/router')
 const MenuRouter = require('../controllers/MenuPrincipal/router');
+const FormularioRouter = require('../controllers/DepartamentoPessoal/Formularios/router');
 
 module.exports = async (app) => {
   app.use(LoginRouter);
@@ -17,4 +18,5 @@ module.exports = async (app) => {
   app.use('/notafiscal', auth, NotasRouter);
   app.use('/vagas', auth, AdmissaoRouter);
   app.use('/menu', auth, MenuRouter)
+  app.use('/formularios', auth, FormularioRouter);
 };
