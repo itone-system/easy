@@ -79,21 +79,7 @@ const incluirNota = () => {
 const buscarNotas = () => {
     window.location.assign(`/notafiscal/buscarNotas`)
 }
-const formFerias = () => {
-  window.location.assign(`/formularios/ferias`)
-}
 
-const formDesligamento = () => {
-  window.location.assign(`/formularios/desligamento`)
-}
-
-const formAlteracao = () => {
-  window.location.assign(`/formularios/alteracaoCadastral`)
-}
-
-const consultarFormularios = () => {
-  window.location.assign(`/formularios/consultar`)
-}
 const sair = () => {
     window.location.assign(`/sair`)
 }
