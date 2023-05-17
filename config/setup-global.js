@@ -24,7 +24,15 @@ module.exports = (app) => {
       uploadNF: '/notafiscal/uploadNF/',
       downloadItem: '/solicitacoes/downloadItem/',
       uploadItem: '/solicitacoes/uploadItem/',
-      insertNF: '/notafiscal/insertnotafiscal'
+      insertNF: '/notafiscal/insertnotafiscal',
+      incluirFerias: '/formularios/insertFerias',
+      insertDesligamento: '/formularios/insertDesligamento',
+      insertAlteracao: '/formularios/insertAlteracao',
+      formUnico: '/formularios/formUnico',
+      aprovacaoForms: '/formularios/statusForms',
+      aprovacaoDP: '/formularios/validacaoFormDP',
+      histAprovacoesForms: '/formularios/histAprovacoes'
+
     }
   };
 };

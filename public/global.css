@@ -10,7 +10,7 @@
   /* ===== Colors ===== */
   --body-color: #ffff;
   /* --body-color: #E4E9F7; */
-  --barraLateral-color: #27417b;
+  --barraLateral-color: #10253f;
   --primary-color: #ffffff;
   --primary-color-light: #f6f5ff;
   --toggle-color: #ddd;
@@ -290,6 +290,14 @@ body.dark .switch::before {
   left: 20px;
 }
 
+.dark a:hover{
+  color: white;
+}
+
+body.dark .jumbotron {
+  background-color: rgb(37, 41, 41);
+}
+
 .home {
   position: absolute;
   top: 0;
@@ -321,8 +329,8 @@ body.dark .home .text {
 
 .topnav {
   overflow: hidden;
-  background-color: #27417b;
-  border-radius: 30px;
+  background-color: #10253f;
+  border-radius: 10px;
   position: relative;
   width: 96%;
   right: -30px;
@@ -426,10 +434,7 @@ body.dark .home .text {
 }
 
 .dropdown-toggle{
-
   color: white;
-
-
 }
 
 .sub-menu2 {
@@ -448,6 +453,51 @@ body.dark .home .text {
   margin-top: 130px;
 }
 
-.dark a:hover{
+
+/* Menu Formulários */
+.sub-menuForm {
+  display: none;
+}
+
+.sub-menuForm.show {
+  display: block;
+  width: 95%;
+  margin-left: 4%;
+  margin-bottom: 150px;
+}
+
+.relativeForm1.teste {
+  margin-top: 245px;
+  transition: 0.5s;
+}
+
+.relativeForm1.teste2 {
+  margin-top: 125px;
+  transition: 0.5s;
+}
+
+.dropdown-toggleForm{
   color: white;
 }
+
+/* Menu Formulários - Manuais*/
+.sub-menuForm1 {
+  display: none;
+}
+
+.sub-menuForm1.show {
+  display: block;
+  width: 95%;
+  margin-left: 4%;
+  margin-bottom: 150px;
+  transition: 0.5s;
+
+}
+
+
+.dropdown-toggleForm1{
+  color: white;
+}
+
+
+

@@ -1,0 +1,99 @@
+.navbar {
+    overflow: hidden;
+    background-color: #27417B;
+    border-radius: 30px;
+    position: relative;
+    width: 96%;
+    right: -20px;
+    top: 10px;
+}
+
+.navbar a {
+    float: right;
+    display: block;
+    color: #ffffff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.navbar>img {
+    width: 100px;
+    position: relative;
+    top: 4px;
+    right: -30px;
+}
+
+body.dark {
+  --body-color: #18191a;
+  --barraLateral-color: #242526;
+  --primary-color: #3a3b3c;
+  --primary-color-light: #3a3b3c;
+  --toggle-color: #fff;
+  --text-color: #ccc;
+}
+
+body.dark .home .text {
+  color: var(--text-color);
+}
+
+body.dark .form-control {
+  /* color: #ccc; */
+  background-color: #242526;
+  color: rgb(255, 255, 255);
+  border-color: black;
+}
+
+body.dark .table-line {
+  background-color: #ccc;
+  color: rgb(0, 0, 0);
+}
+
+
+
+h3, h4, h6 {
+    border-bottom: 1px solid #120947;
+}
+
+.form-check-label {
+    margin-left: 3px;
+}
+
+
+.wapper {
+    padding-top: 10px;
+    font-size: 18px;
+}
+
+.faq-tipo-1, #faq-CLT, #faq-PJ, #faq-Estagio {
+    cursor: pointer;
+}
+
+.show1, .show2, .show3 {
+    display: none;
+}
+
+Label{
+  font-size: 12px;
+
+}
+Option{
+  font-size: 12px;
+
+}
+
+
+td, th{
+  font-size: 12px;
+
+}
+
+#obrigatorio{
+  color: rgb(253, 0, 0);
+  font-size: 10px;
+
+}
+
+
+

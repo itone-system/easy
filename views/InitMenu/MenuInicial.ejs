@@ -17,7 +17,7 @@
         <img src="../../public/Fotos/logoOriginal.png" class="logo" alt="">
         <ul>
             <li class="menu-option">
-                <a class="menu-link" href="/home">
+                <a class="menu-link" href="http://itonepbi/reports/browse">
                     <ion-icon name="grid"></ion-icon>
                     <h3>Dashboard</h3>
                 </a>
@@ -33,12 +33,12 @@
                     </a>
                 </li>
                 <% } %>
-                    <li class="menu-option">
+                    <!-- <li class="menu-option">
                         <a class="menu-link" href="/home">
                             <ion-icon name="calendar"></ion-icon>
                             <h3>Calendário</h3>
                         </a>
-                    </li>
+                    </li> -->
 
                     <% if (dadosUser.permissoes.NOTA_FISCAL) { %>
 
@@ -53,7 +53,7 @@
                             <% if (dadosUser.permissoes.FERIAS || dadosUser.permissoes.ALTERACAO || dadosUser.permissoes.RESCISAO) { %>
 
                                 <li class="menu-option">
-                                    <a class="menu-link" href="/home">
+                                    <a class="menu-link" href="/formularios">
                                         <ion-icon name="newspaper"></ion-icon>
                                         <h3>Movimentação</h3>
                                     </a>

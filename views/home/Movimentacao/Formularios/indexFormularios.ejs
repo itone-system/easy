@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../../partials/head', { title: 'Buscar Notas' } ) %>
+
+  <script src="../../../public/buscarFormularios/buscarFormularios.js"></script>
+  <link rel="stylesheet" href="../../../public/buscarFormularios/buscarFormularios.css">
+  <link rel="stylesheet" href="../../../../public/global.css">
+
+
+  <body>
+
+    <%- include('../../../components/menuForms' ) %>
+
+      <section class="home">
+        <%- include('../../../components/navbar', { usuario: 'Gustavo' } ) %>
+
+          <main class="text">
+            <!-- <div class="container">
+              <div class="steps">
+
+                <span class="circle">1</span>
+
+                <span class="circle">2</span>
+
+                <span class="circle">3</span>
+
+                <span class="circle">4</span>
+
+            </div>
+            </div> -->
+
+
+            <div class="altera-titulo">
+              <h2 style="border-bottom: 1px solid #120947; margin-bottom: 25px; margin-top: 25px; padding: 13px 0">
+                Consultar Formulários </h2>
+            </div>
+
+            <p> </p>
+
+            <form action="/formularios/consultar" method="GET">
+
+              <div class="row g-3">
+                <div class="col">
+                  <% if(TipoSalva){ %>
+                    <select class="form-control is-valid" id="Tipo" name="Tipo" style="font-size: 13px">
+                      <option selected readonly value="<%=TipoSalva%>">
+                        <%=TipoSalva%>
+                      </option>
+                      <option value="">Tipo Formulário</option>
+                      <option value="Alteração Cadastral">Alteração Cadastral</option>
+                      <option value="Desligamento">Desligamento</option>
+                      <option value="Férias">Férias</option>
+                    </select>
+                    <% } else { %>
+
+                      <select class="form-control" id="Tipo" name="Tipo" style="font-size: 13px">
+                        <option selected readonly value="">Tipo Formulário</option>
+                        <option value="Alteração Cadastral">Alteração Cadastral</option>
+                        <option value="Desligamento">Desligamento</option>
+                        <option value="Férias">Férias</option>
+
+
+                      </select>
+                      <% } %>
+                </div>
+
+                <div class="col">
+                  <% if(nomeColaboradorSalva){ %>
+
+                    <select class="form-control is-valid" id="nomeColaborador" name="nomeColaborador"
+                      style="font-size: 13px">
+                      <option selected readonly value="">
+                        <%=nomeColaboradorSalva%>
+                      </option>
+                      <option value="">Colaborador</option>
+
+                    </select>
+                    <% } else { %>
+                      <select class="form-control" id="nomeColaborador" name="nomeColaborador" style="font-size: 13px">
+                        <option selected readonly value="">Colaborador</option>
+                      </select>
+                      <% } %>
+
+                </div>
+
+              </div>
+              <p> </p>
+              <div class="row g-3">
+
+                <div class="col">
+                  <% if(StatusSalva){ %>
+                    <select class="form-control is-valid" id="Status" name="Status" style="font-size: 13px">
+                      <option selected readonly value="<%=StatusSalva%>">
+                        <%=StatusSalva%>
+                      </option>
+                      <option value="">Status</option>
+                      <option value="Aguardando Aprovação">Aguardando Aprovação</option>
+                      <option value="Aprovado">Aprovado</option>
+                      <option value="Reprovado">Reprovado</option>
+                      <option value="Deferido">Deferido</option>
+                      <option value="Indeferido">Indeferido</option>
+                    </select>
+
+                    <% } else { %>
+                      <select class="form-control" id="Status" name="Status" style="font-size: 13px">
+                        <option selected readonly value="">Status</option>
+                        <option value="Aguardando Aprovação">Aguardando Aprovação</option>
+                        <option value="Aprovado">Aprovado</option>
+                        <option value="Reprovado">Reprovado</option>
+                        <option value="Deferido">Deferido</option>
+                        <option value="Indeferido">Indeferido</option>
+                      </select>
+                      <% } %>
+
+
+
+
+                </div>
+                <div class="col">
+                  <% if(centroCustoExtensoSalva){ %>
+
+                    <select class="form-control is-valid" id="CentroCusto" name="CentroCusto" style="font-size: 13px">
+                      <option selected readonly value="<%=centroCustoExtensoSalva%>">
+                        <%=centroCustoExtensoSalva%>
+                      </option>
+                      <option value="">Departamento</option>
+
+                    </select>
+                    <% }else { %>
+                      <select class="form-control" id="CentroCusto" name="CentroCusto" style="font-size: 13px">
+                        <option selected readonly value="">Departamento</option>
+                      </select>
+                      <% } %>
+                </div>
+              </div>
+              <p></p>
+
+              <button class="button" name="buscar" value="buscar" type="submit" role="button"
+                style="margin-left: 93%">🔍 Buscar</button>
+              <p></p>
+
+              <div class="table-responsive">
+
+                <table class="table table-sm table-hover" id="myTable">
+
+                  <thead
+                    style="background-color: #cbcbce; color: rgb(36, 26, 9);   font-size: 13px; text-align: center">
+
+                    <th class="center"> ID do Envio</th>
+                    <th> Solicitante</th>
+                    <th> Departamento</th>
+                    <th> Tipo Formulário</th>
+                    <th> Data da Solicitação</th>
+                    <th> Colaborador</th>
+                    <th> Status</th>
+
+
+                  </thead>
+
+                  <tbody style="font-size: 13px; " class="table-line" id="tbody">
+                    <% dados.forEach(formulario=> { %>
+                      <tr id="tabelaNF" style="text-align: center;">
+                        <td>
+                          <%=formulario.ID%>
+                        </td>
+                        <td>
+                          <%=formulario.SOLICITANTE%>
+                        </td>
+                        <td>
+                          <%=formulario.DESCRICAO%>
+                        </td>
+                        <td>
+                          <% if (formulario.TIPO=='Férias' ){ %>
+                            <a class="btn btn-outline-primary  rounded"
+                              style=" height: 27px; width: 168px; font-size: 11px">Férias</a>
+                            <% } else if(formulario.TIPO=='Desligamento' ){%>
+                              <a class="btn btn-outline-success rounded"
+                                style=" height: 27px; width: 168px; font-size: 11px">Desligamento</a>
+
+                              <% } else if(formulario.TIPO=='Alteração Cadastral' ){%>
+                                <a class="btn btn-outline-warning  rounded"
+                                  style=" height: 27px; width: 168px; font-size: 11px">Alteração Cadastral</a>
+
+                                <%} %>
+                        </td>
+                        <td>
+                          <%=formulario.DT_SOLICITACAO%>
+                        </td>
+
+                        <td>
+                          <%=formulario.NOME%>
+                        </td>
+                        <td>
+                          <% if (formulario.STATUS=='Aprovado' ){ %>
+                            <a class="btn btn-primary text-white  rounded"
+                              style="  height: 27px;  width: 168px; font-size: 11px">Aprovado</a>
+                            <% } else if(formulario.STATUS=='Aguardando Aprovação' ){%>
+                              <a class="btn btn-secondary text-white  rounded"
+                                style=" height: 27px; width: 168px; font-size: 11px">Aguardando Aprovação</a>
+
+                              <% } else if(formulario.STATUS=='Indeferido' ){%>
+                                <a class="btn btn-danger text-white  rounded"
+                                  style=" height: 27px; width: 168px; font-size: 11px">Indeferido</a>
+
+                                <%} else if(formulario.STATUS=='Deferido' ){%>
+                                  <a class="btn btn-success text-white  rounded"
+                                    style=" height: 27px; width: 168px; font-size: 11px">Deferido</a>
+
+                                  <% } else if(formulario.STATUS=='Reprovado' ){%>
+                                    <a class="btn btn-danger text-white  rounded"
+                                      style=" height: 27px; width: 168px; font-size: 11px">Reprovado</a>
+                                    <% } %>
+                        </td>
+
+                      </tr>
+                      <% }) %>
+
+
+                  </tbody>
+
+                </table>
+              </div>
+              <div class="row g-2" style="margin-top: 1.5%">
+
+                <div style="margin-left: 76%">
+                  <div style="display: none;"><a id="codigoUsuario" value="<%=codigoUsuario%>" name="codigoUsuario" style="text-decoration: none; color: rgb(172, 5, 5)"><%=codigoUsuario%></a></div>
+
+                  <% if (dados.paginate <=1){ %>
+                    <button name="paginate" id="prev" value="prev" class=" button2" disabled>Anterior</button>
+                    <% } else {%>
+                      <button name="paginate" id="prev" value="prev" class=" button2">Anterior</button>
+                      <% } %>
+                </div>
+                <div>
+                  <% if (dados.paginate==dados.totalPaginas){ %>
+                    <button id="prox" name="paginate" value="prox" class=" button2"
+                      style="margin-left: 5%">Próxima</button>
+                    <% } else {%>
+                      <button id="prox" name="paginate" value="prox" class=" button2" style="margin-left: 5%"
+                        disable>Próxima</button>
+                      <% } %>
+                </div>
+              </div>
+
+              </div>
+
+            </form>
+
+
+            <button id="openModalDesligamento" data-toggle="modal" data-target="#myModalDesligamento"
+              style="color: #061675; display: none; "></button>
+            <button id="openModalFerias" data-toggle="modal" data-target="#myModalFerias"
+              style="color: #061675; display: none; "></button>
+            <button id="openModalAlteracao" data-toggle="modal" data-target="#myModalAlteracao"
+              style="color: #061675; display: none; "></button>
+
+            <a style=" display: none;" id="permissaoDeslig"><%=permissoes.RESCISAO.RETORNAR%></a>
+            <a style=" display: none;" id="permissaoAlter"><%=permissoes.ALTERACAO_CADASTRAL.RETORNAR%></a>
+            <a style=" display: none;" id="permissaoFerias"><%=permissoes.FERIAS.RETORNAR%></a>
+
+
+
+
+            </div>
+
+
+          </main>
+
+
+
+
+
+          <%- include('../../../components/modal/ModalDesligamento' ) %>
+
+            <%- include('../../../components/modal/ModalAlteracao' ) %>
+
+              <%- include('../../../components/modal/ModalFerias' ) %>
+
+
+      </section>
+  </body>
+
+</html>

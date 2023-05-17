@@ -64,21 +64,8 @@ const paginaHome = () => {
     window.location.assign(`/home`)
 }
 
-const paginaAcompanhar = () => {
-    window.location.assign(`/solicitacoes/listar`)
-}
 
-const paginaNovaSolicitacao = () => {
-    window.location.assign(`/criar`)
-}
 
-const incluirNota = () => {
-    window.location.assign(`/notafiscal/incluirNota`)
-}
-
-const buscarNotas = () => {
-    window.location.assign(`/notafiscal/buscarNotas`)
-}
 const formFerias = () => {
   window.location.assign(`/formularios/ferias`)
 }
@@ -98,24 +85,30 @@ const sair = () => {
     window.location.assign(`/sair`)
 }
 
-const dropdownToggle = document.querySelector('.dropdown-toggle');
-const subMenu = document.querySelector('.sub-menu');
-const acompanhar2 = document.querySelector('acompanhar2')
-const relative = document.getElementById('relative')
+const dropdownToggle = document.querySelector('.dropdown-toggleForm');
+const subMenu = document.querySelector('.sub-menuForm');
+const relative = document.getElementById('relativeForm1')
 
 dropdownToggle.addEventListener('click', () => {
-  subMenu.classList.toggle('show');
-  relative.classList.toggle('teste');
-  // acompanhar2.style.marginTop = "20px";
+  permissaoFerias = document.getElementById('feriasPermissao').innerText
+  desligPermissao = document.getElementById('desligPermissao').innerText
+  alterPermissao = document.getElementById('alterPermissao').innerText
+
+  if(permissaoFerias && desligPermissao && desligPermissao){
+    subMenu.classList.toggle('show');
+    relative.classList.toggle('teste');
+  }else {
+    subMenu.classList.toggle('show');
+    relative.classList.toggle('teste2');
+  }
 });
 
-const dropdownToggle2 = document.querySelector('.dropdown-toggle2');
-const subMenu2 = document.querySelector('.sub-menu2');
-const acompanhar3 = document.querySelector('acompanhar3')
-const relatives = document.getElementById('relatives2')
 
-dropdownToggle2.addEventListener('click', () => {
-  subMenu2.classList.toggle('show');
-  relatives.classList.toggle('teste2');
-  // acompanhar2.style.marginTop = "20px";
+const dropdownToggle3 = document.querySelector('.dropdown-toggleForm1');
+const subMenu3 = document.querySelector('.sub-menuForm1');
+// const relatives3 = document.getElementById('relatives3')
+
+dropdownToggle3.addEventListener('click', () => {
+  subMenu3.classList.toggle('show');
+  // relatives3.classList.toggle('teste3');
 });
