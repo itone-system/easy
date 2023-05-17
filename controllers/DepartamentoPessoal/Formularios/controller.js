@@ -501,6 +501,7 @@ module.exports = {
         nomeCompleto: user.nomeCompleto,
         acesso: user.tipoAcessos,
         tipoRegime: user.tipoRegime,
+        permissoes: user.permissoes,
         message,
         dados
       });
@@ -578,12 +579,13 @@ module.exports = {
     const message = await request.session.message();
     const dados = {};
     if (!user.tipoAcessos.ALTERACAO_CADASTRAL) {
-      return redirect('/home');
+      return redirect('/formularios');
     } else {
       return renderView('home/Movimentacao/alteracaoCadastral/CreateAlteracao', {
         nome: user.nome,
         acesso: user.tipoAcessos,
         codigo: user.codigo,
+        permissoes: user.permissoes,
         departamento: user.departamento,
         message,
         dados
@@ -653,13 +655,14 @@ module.exports = {
     const message = await request.session.message();
     const dados = {};
     if (!user.tipoAcessos.RESCISAO) {
-      return redirect('/home');
+      return redirect('/formularios');
     } else {
       return renderView('home/Movimentacao/Desligamento/CreateRescisao', {
         nome: user.nome,
         codigo: user.codigo,
         departamento: user.departamento,
         acesso: user.tipoAcessos,
+        permissoes: user.permissoes,
         message,
         dados
       });
