@@ -28,7 +28,11 @@
                           <div class="row">
                             <% if(acesso.FERIAS) {%>
                             <div style="font-size: 11px;" class="col-md-4">
-                              <h5>Férias</h5>
+                              <% if(tipoRegime == 'C') {%>
+                              <h6>Férias</h6>
+                              <% } else {%>
+                                <h6>Recesso</h6>
+                                <% }%>
                               <br>
                               <p Align="justify" style="font-size: 11px;">A solicitação de férias deverá ser aprovada pela chefia imediata no sistema após o envio. </p>
                               <p Align="justify">  Após a aprovação, o Departamento Pessoal realizará a validação da informações e retornará se houve deferimento. Você também pode acompanhar as mudanças de status pelo e-mail.   </p>
@@ -38,7 +42,7 @@
                             <% if(acesso.RESCISAO) {%>
 
                             <div style="font-size: 11px;" class="col-md-4">
-                              <h5>Desligamento</h5>
+                              <h6>Desligamento | Encerramento de contrato</h6>
                               <br>
                               <p Align="justify">A solicitação de desligamento deverá ser aprovada pelo diretor(a) da área e diretor(a) de Recursos Humanos no sistema após o envio. </p>
                               <p Align="justify"> Após a aprovação, o Departamento Pessoal realizará a validação da informações e retornará se houve deferimento. Você também pode acompanhar as mudanças de status pelo e-mail.  </p>
@@ -48,7 +52,7 @@
                             <% if(acesso.ALTERACAO_CADASTRAL) {%>
 
                             <div style="font-size: 11px;" class="col-md-4">
-                              <h5>Alteração Cadastral</h5>
+                              <h6>Alteração Cadastral</h6>
                               <br>
                               <p  Align="justify">A solicitação de alteração cadastral deverá ser aprovada pelo diretor(a) da área e diretor(a) de Recursos Humanos no sistema após o envio. </p>
                               <p Align="justify"> Após a aprovação, o Departamento Pessoal realizará a validação da informações e retornará se houve deferimento. Você também pode acompanhar as mudanças de status pelo e-mail. </p>

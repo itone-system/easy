@@ -205,6 +205,7 @@ module.exports = {
         nome: user.nome,
         acesso: user.tipoAcessos,
         permissoes: user.permissoes,
+        tipoRegime: user.tipoRegime,
         codigoUsuario: user.codigo,
         codigoToken,
         nomeColaboradorSalva,
@@ -662,6 +663,7 @@ module.exports = {
         codigo: user.codigo,
         departamento: user.departamento,
         acesso: user.tipoAcessos,
+        tipoRegime: user.tipoRegime,
         permissoes: user.permissoes,
         message,
         dados
@@ -684,6 +686,7 @@ module.exports = {
         codigo: user.codigo,
         departamento: user.departamento,
         nomeCompleto: user.nomeCompleto,
+        tipoRegime: user.tipoRegime,
         acesso: user.tipoAcessos,
         message,
         dados

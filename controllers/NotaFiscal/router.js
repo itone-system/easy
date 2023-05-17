@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-
+notasFiscalRouter.get('/', expressAdapter(notas.criarHome));
 notasFiscalRouter.post('/insertnotafiscal', notas.insertNotas);
 notasFiscalRouter.post('/listarnotas', notas.listarNotas);
 notasFiscalRouter.post('/atualizarStatusNota', expressAdapter(notas.atualizarStatusNota));

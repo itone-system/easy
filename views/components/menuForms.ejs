@@ -47,7 +47,7 @@
 
               <% if(acesso.FERIAS) {%>
             <li class="central"><a class=" text nav-text" onclick="formFerias()" href="#"
-                  style="font-size:11px;"> <i class='bx bx-archive icon'></i>Férias</a></li>
+                  style="font-size:11px;"> <i class='bx bx-archive icon'></i> <% if(tipoRegime == 'C'){%> Férias <%} else {%> Recesso  <%}%> </a></li>
                  <% }%>
 
            <li class="central"><a class=" text nav-text" onclick="consultarFormularios()" href="#"
@@ -75,10 +75,13 @@
                 style="font-size:11px;"> <i class='bx bx-archive icon'></i>Encerramento – PJ </a></li>
                 <% }%>
                 <% if(acesso.FERIAS) {%>
+                  <% if(tipoRegime == 'C') {%>
               <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1qPpm0YBznboiEiX7jiR1gWWZKbz_1N9q/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
                 style="font-size:11px;"> <i class='bx bx-archive icon'></i>Férias  </a></li>
+                <% } else {%>
                 <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1pzcX5eI6SfZkDpQvxSiP1DESuqzjM2ZB/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
                   style="font-size:11px;"> <i class='bx bx-archive icon'></i>Recesso  </a></li>
+                  <% }%>
                   <% }%>
             </ul>
           </li>

@@ -22,6 +22,28 @@
                     <h4 style="border-bottom: 1px solid #120947; margin-bottom: 20px; margin-top: 20px; padding: 13px 0">Movimentação de Pessoal - Desligamento | Encerramento de Contrato</h4>
                     <p> </p>
                     <form id="form">
+                      <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="for label">Regime de Contratação:</label>
+                                <br>
+                                <div class="form-check form-check-inline mt-2" style="align-items: center;">
+                                    <input type="radio" name="TIPO_REGIME" id="radiodesligamento" value="CLT" checked onclick="ShowAndHidenCLT()">
+                                    <label class="form-check-label" for="exampleRadios1">CLT | Aprendiz</label>
+                                </div>
+                                <div class="form-check form-check-inline" style="margin-left: 7%;">
+                                    <input type="radio" name="TIPO_REGIME" id="radiodesligamento" value="PJ" required onclick="ShowAndHidenPJ()">
+                                    <label class="form-check-label" for="exampleRadios1">Pessoa Jurídica</label>
+                                </div>
+                                <div class="form-check form-check-inline" style="margin-left: 7%;">
+                                  <input type="radio" name="TIPO_REGIME" id="radiodesligamento" value="Estag" required onclick="ShowAndHidenEstag()">
+                                  <label class="form-check-label" for="exampleRadios1">Estagiário</label>
+                              </div>
+
+                        </div>
+                      </div>
+                  </div>
+
                     <div class="row g-3">
                       <div class="col-lg-6 NOME">
                         <label>Nome Completo:</label>
@@ -74,27 +96,6 @@
 
                   <p> </p>
 
-                  <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="for label">Regime de Contratação:</label>
-                            <br>
-                            <div class="form-check form-check-inline mt-2" style="align-items: center;">
-                                <input type="radio" name="TIPO_REGIME" id="radiodesligamento" value="CLT" checked onclick="ShowAndHidenCLT()">
-                                <label class="form-check-label" for="exampleRadios1">CLT | Aprendiz</label>
-                            </div>
-                            <div class="form-check form-check-inline" style="margin-left: 7%;">
-                                <input type="radio" name="TIPO_REGIME" id="radiodesligamento" value="PJ" required onclick="ShowAndHidenPJ()">
-                                <label class="form-check-label" for="exampleRadios1">Pessoa Jurídica</label>
-                            </div>
-                            <div class="form-check form-check-inline" style="margin-left: 7%;">
-                              <input type="radio" name="TIPO_REGIME" id="radiodesligamento" value="Estag" required onclick="ShowAndHidenEstag()">
-                              <label class="form-check-label" for="exampleRadios1">Estágiario</label>
-                          </div>
-
-                    </div>
-                  </div>
-              </div>
 
 
 
