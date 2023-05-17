@@ -586,6 +586,7 @@ module.exports = {
         nome: user.nome,
         acesso: user.tipoAcessos,
         codigo: user.codigo,
+        tipoRegime: user.tipoRegime,
         permissoes: user.permissoes,
         departamento: user.departamento,
         message,
