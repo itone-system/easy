@@ -383,6 +383,9 @@ const conveniaColaborares = () => {
 };
 
 function ShowAndHidenCLT() {
+  campoDataPJ = document.querySelector("#DataPJEncerramento")
+
+  campoDataPJ.innerText = 'Data do Último Dia Trabalhado:'
 
   conteudoCLT.style.display = "block";
   conteudoPJ.style.display = 'none';
@@ -392,6 +395,11 @@ function ShowAndHidenCLT() {
 
 }
 function ShowAndHidenPJ() {
+
+  campoDataPJ = document.querySelector("#DataPJEncerramento")
+
+  campoDataPJ.innerText = 'Data de Encerramento do Contrato:'
+
 conteudoCLT.style.display = "none";
 conteudoPJ.style.display = 'block';
 conteudoEstag.style.display = 'none';
@@ -400,6 +408,10 @@ regime = "PJ";
 
 }
 function ShowAndHidenEstag() {
+  campoDataPJ = document.querySelector("#DataPJEncerramento")
+
+  campoDataPJ.innerText = 'Data do Último Dia Trabalhado:'
+
 conteudoCLT.style.display = "none";
 conteudoPJ.style.display = 'none';
 conteudoEstag.style.display = 'block';
@@ -409,12 +421,16 @@ regime = "Estag";
 }
 
 function ocultarDescontoPJ(){
+
+
+
   campostabelaDesconto = document.querySelector("#ocultarDescontoCLT")
   tabela = document.querySelectorAll(".linha2CLT")
 
   var celulas = tabela[0].children
 
   var selecaoValor = celulas[1].children
+
 
   if(selecaoValor[0].value == '6'){
   campostabelaDesconto.innerHTML =  ` <select style="font-size: 12px;"  id="descontoDeAviso" class="form-control border-secondar shadow-none"
