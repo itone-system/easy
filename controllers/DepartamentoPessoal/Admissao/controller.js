@@ -98,6 +98,29 @@ module.exports = {
 
                 await conexao.request().query(`update SOLICITACAO_ADMISSAO set STATUS = 'PS' where CODIGO = ${codigoInsert}`)
 
+                const linkRH = `${domain}/vagas/${codigoInsert}/detail`
+
+                const emailRH = 'gustavo@gustavo'
+
+                const emailOptionsRH = {
+                    to: emailRH,
+                    subject: 'Processo Seletivo',
+                    content: processoSeletivo({
+                        link: linkRH,
+                        codigoSolicitacao: codigoInsert,
+                        cargo: cargo,
+                        unidade: unidade,
+                        departamento: departamento,
+                        gestorImediato: gestorImediato
+        
+                    }),
+                    isHtlm: true
+                };
+        
+        
+                
+                enviarEmail(emailOptionsRH)
+
             }
 
 
@@ -414,8 +437,9 @@ module.exports = {
         return renderView('homeVagas/Admissao/Create', { nome: user.nome, dadosUser: user })
     },
 
-    async conferencia() {
+    async conferencia(request) {
 
+        
     }
 
 }

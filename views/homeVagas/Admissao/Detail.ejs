@@ -20,7 +20,7 @@
             <p> </p>
 
             <%- include('../../components/Vagas/statusVagas.ejs') %>
-            
+
               <div class="row g-3">
                 <div class="col Descricao">
                   <label>Tipo de Admissão:</label>
@@ -166,7 +166,7 @@
               </div>
               <br>
               <div class="row g-3">
-              
+
                 <div class="col">
 
                   <label>Acessos Específicos:</label>
@@ -210,7 +210,7 @@
                 </div>
               </div>
               <br>
-              <% if (solicitacao.STATUS=='A' && dadosUser.permissoes.ADMISSAO.APROVAR && momentoAprovacao == 'Y') { %>
+              <% if (solicitacao.STATUS=='A' && dadosUser.permissoes.ADMISSAO.APROVAR && momentoAprovacao=='Y' ) { %>
 
                 <button class="btn btn-success text-white" onclick="aprovarSolicitacao()">Aprovar</button>
                 <button class="btn btn-danger text-white" data-target="#modalDesaprovar"
@@ -222,6 +222,10 @@
                       <!-- Button to Open the Modal -->
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                         Incluir dados do novo Profissional
+                      </button>
+
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">
+                        Solicitar Conferência
                       </button>
 
                       <!-- The Modal -->
@@ -246,8 +250,8 @@
                                         <label for="exampleInputText" class="form-label">Nome Completo Do Candidato
                                           Aprovado:</label>
                                         <input type="text" class="form-control border-secondar shadow-none"
-                                          id="nomeCompleto" aria-describedby="textHelp" required
-                                          placeholder="" name="nomeProfissional">
+                                          id="nomeCompleto" aria-describedby="textHelp" required placeholder=""
+                                          name="nomeProfissional">
                                         <label class="campo"></label>
                                       </div>
                                     </div>
@@ -271,15 +275,15 @@
                                     <div class="col">
                                       <label for="exampleInputText" class="form-label">E-mail Pessoal:</label>
                                       <input type="text" class="form-control border-secondar shadow-none"
-                                        id="emailPessoal" aria-describedby="textHelp" required
-                                        placeholder="" name="email">
+                                        id="emailPessoal" aria-describedby="textHelp" required placeholder=""
+                                        name="email">
                                       <label class="campo"></label>
                                     </div>
                                     <div class="col">
                                       <label for="exampleInputText" class="form-label">Indicação Premiada:</label>
                                       <input type="text" class="form-control border-secondar shadow-none"
-                                        id="indicPremiada" aria-describedby="textHelp" required
-                                        placeholder="" name="indicacaoPremiada">
+                                        id="indicPremiada" aria-describedby="textHelp" required placeholder=""
+                                        name="indicacaoPremiada">
                                       <label class="campo"></label>
                                     </div>
                                   </div>
@@ -288,8 +292,8 @@
                                     <div class="col">
                                       <label for="exampleInputText" class="form-label">Email Corporativo:</label>
                                       <input type="tel" class="form-control border-secondar shadow-none"
-                                        id="emailCorporativo" aria-describedby="textHelp" required
-                                        placeholder="" name="emailCorporativo">
+                                        id="emailCorporativo" aria-describedby="textHelp" required placeholder=""
+                                        name="emailCorporativo">
                                       <label class="campo"></label>
                                     </div>
                                     <div class="col">
@@ -399,16 +403,15 @@
                                 <label for="exampleInputText" class="form-label">Nome Completo Do Candidato
                                   Aprovado:</label>
                                 <input type="text" class="form-control border-secondar shadow-none" id="nomeCompleto"
-                                  aria-describedby="textHelp" required readonly placeholder=""
-                                  name="nomeProfissional" value="">
+                                  aria-describedby="textHelp" required readonly placeholder="" name="nomeProfissional"
+                                  value="">
                                 <label class="campo"></label>
                               </div>
                             </div>
                             <div class="col">
                               <label for="exampleInputText" class="form-label">Tutor Durante o Onboarding:</label>
                               <input type="text" class="form-control border-secondar shadow-none" id="tutor"
-                                aria-describedby="textHelp" readonly required placeholder=""
-                                name="tutorOnboarding">
+                                aria-describedby="textHelp" readonly required placeholder="" name="tutorOnboarding">
                               <label class="campo"></label>
                             </div>
                           </div>
@@ -430,8 +433,7 @@
                             <div class="col">
                               <label for="exampleInputText" class="form-label">Indicação Premiada:</label>
                               <input type="text" class="form-control border-secondar shadow-none" id="indicPremiada"
-                                aria-describedby="textHelp" required readonly placeholder=""
-                                name="indicacaoPremiada">
+                                aria-describedby="textHelp" required readonly placeholder="" name="indicacaoPremiada">
                               <label class="campo"></label>
                             </div>
                           </div>
@@ -440,8 +442,7 @@
                             <div class="col">
                               <label for="exampleInputText" class="form-label">Email Corporativo:</label>
                               <input type="tel" class="form-control border-secondar shadow-none" id="emailCorporativo"
-                                aria-describedby="textHelp" required readonly placeholder=""
-                                name="emailCorporativo">
+                                aria-describedby="textHelp" required readonly placeholder="" name="emailCorporativo">
                               <label class="campo"></label>
                             </div>
                             <div class="col">
@@ -531,9 +532,93 @@
                           <input type="text" id="codigoSolicitacao" value="<%=solicitacao.CODIGO%>" hidden>
                           <!-- ------------------------- -->
 
+                          <% if (solicitacao.STATUS=='CO' ) { %>
+                            <button type="button" class="btn btn-primary">
+                              Realizar Conferência
+                            </button>
+                            <% } %>
+
           </main>
       </section>
 
   </body>
+
+
+
+
+  <!-- The Modal -->
+  <div class="modal" id="myModal2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Itens Para Revisão:</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="row" style="margin: 10px 0;">
+            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;">
+              Salário
+            </label>
+          </div>
+
+          <div class="row" style="margin: 10px 0;">
+            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;">
+              Unidade de Contratação
+            </label>
+          </div>
+
+          <div class="row" style="margin: 10px 0;">
+            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;">
+              Horário de Trabalho
+            </label>
+          </div>
+
+          <div class="row" style="margin: 10px 0;">
+            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;">
+              Tipo de Admissão
+            </label>
+          </div>
+
+          <div class="row" style="margin: 10px 0;">
+            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;">
+              Cargo
+            </label>
+          </div>
+
+          <div class="row" style="margin: 10px 0;">
+            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;">
+              Vaga esclusiva para PCD.
+            </label>
+          </div>
+
+          <label for="exampleInputTextArea" class="form-label" style="
+                                              font-size: 15px;">Motivo:</label>
+          <input type="text" class="form-control" required name="observacoes">
+        </div>
+
+
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
 
 </html>
