@@ -1,0 +1,189 @@
+<div class="modal fade" id="myModalAlteracao" style="font-size:14px">
+
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Alteração Cadastral</h4>
+        <div id="statusModalAlter">
+        </div>
+      </div>
+
+      <!-- Modal body -->
+      <div id="modalBody" class="modal-body">
+
+        <!-- GAMBIARRA MODAL -->
+        <label id="CodigoNF" style="color: #ffffff; display: none; ">
+          <%= codigoToken %>
+        </label>
+        <label id="retornarNFUser" style="color: #ffffff; display: none; ">
+          <%= retornoUser.RETORNAR %>
+        </label>
+
+        <div class="dados-modal">
+          <div class="row g-3">
+            <div class="col Solicitacao">
+              <label>N° Solicitação: </label>
+              <input id="NumeroSolicitacaoModalAlter" type="text" name="NumeroSolicitacaoModalAlter"
+                for="NumeroSolicitacaoModalAlter" style="margin-bottom: 10%; font-size:13px" type="text"
+                class="form-control" readonly>
+
+            </div>
+
+            <div class="col Solicitante">
+              <label>Solicitante: </label>
+              <input id="ModSolicitanteAlter" type="text" name="ModSolicitanteAlter" for="ModSolicitanteAlter"
+                style="margin-bottom: 10%; font-size:13px" type="text" class="form-control" readonly>
+            </div>
+          </div>
+          <div class="row g-3">
+            <div class="col DataSolcitacao">
+              <label>Data da Solicitação:</label>
+              <input id="ModDataSolcitacaoAlter" name="ModDataSolcitacaoAlter" for="ModDataSolcitacaoAlter"
+                style="margin-bottom: 10%; font-size:13px" type="text" class="form-control" readonly>
+
+            </div>
+
+            <div class="col DataMovimentacao">
+              <label>Data da Movimentação:</label>
+              <input id="ModDataMovimentacaoAlter" name="ModDataMovimentacaoAlter" for="Descricao"
+                style="margin-bottom: 10%; font-size:13px" type="text" class="form-control" readonly>
+            </div>
+          </div>
+          <div class="row g-3">
+            <div class="col Colaborador">
+              <label>Colaborador:</label>
+              <input id="ModColaboradorAlter" for="ModColaboradorAlter" style="margin-bottom: 6%; font-size:13px"
+                type="text" class="form-control" readonly>
+
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col FilialAtual">
+              <label>Filial Atual:</label>
+              <input id="ModFilialAtualAlter" for="ModFilialAtualAlter" style="margin-bottom: 10%; font-size:13px"
+                type="text" class="form-control" readonly>
+
+            </div>
+
+            <div class="col FilialNovo">
+              <label>Filial Nova:</label>
+              <input id="ModFilialNovoAlter" for="ModFilialNovoAlter" style="margin-bottom: 10%; font-size:13px"
+                type="text" class="form-control" readonly>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3">
+
+          <div class="col DPAtual">
+            <label>Departamento Atual:</label>
+            <input id="ModDPAtualAlter" for="ModDPAtualAlter" style="margin-bottom: 10%; font-size:13px" type="text"
+              class="form-control" readonly>
+          </div>
+
+          <div class="col DPNovo">
+            <label>Departamento Novo:</label>
+            <input id="ModDPNovoAlter" for="ModDPNovoAlter" style="margin-bottom: 5%; font-size:13px" type="text"
+              class="form-control" readonly>
+
+          </div>
+        </div>
+
+
+        <div class="row g-3">
+
+          <div class="col CCAtual">
+            <label>Centro de Custo Atual:</label>
+            <input id="ModCCAtualAlter" for="ModCCAtualAlter" style="margin-bottom: 10%; font-size:13px" type="text"
+              class="form-control" readonly>
+          </div>
+
+          <div class="col CCNovo">
+            <label>Centro de Custo Novo:</label>
+            <input id="ModCCNovoAlter" for="ModCCNovoAlter" style="margin-bottom: 5%; font-size:13px" type="text"
+              class="form-control" readonly>
+
+          </div>
+        </div>
+
+        <div class="row g-3">
+
+          <div class="col CargoAtual">
+            <label>Cargo Atual:</label>
+            <input id="ModCargoAtualAlter" for="ModCargoAtualAlter" style="margin-bottom: 10%; font-size:13px"
+              type="text" class="form-control" readonly>
+          </div>
+
+          <div class="col CargoNovo">
+            <label>Cargo Novo:</label>
+            <input id="ModCargoNovoAlter" for="ModCargoNovoAlter" style="margin-bottom: 5%; font-size:13px" type="text"
+              class="form-control" readonly>
+
+          </div>
+        </div>
+
+        <div class="row g-3">
+
+          <div class="col SalarioAtual">
+            <label>Salário Atual:</label>
+            <input id="ModSalarioAtualAlter" for="ModSalarioAtualAlter" style="margin-bottom: 10%; font-size:13px"
+              type="text" class="form-control" readonly>
+          </div>
+
+          <div class="col SalarioNovo">
+            <label>Salário Novo:</label>
+            <input id="ModSalarioNovoAlter" for="ModSalarioNovoAlter" style="margin-bottom: 5%; font-size:13px"
+              type="text" class="form-control" readonly>
+
+          </div>
+        </div>
+        <div class="row g-3">
+
+          <div class="col GestorAtual">
+            <label>Gestor Atual:</label>
+            <input id="ModGestorAtualAlter" for="ModGestorAtualAlter" style="margin-bottom: 10%; font-size:13px"
+              type="text" class="form-control" readonly>
+          </div>
+
+          <div class="col GestorNovo">
+            <label>Gestor Novo:</label>
+            <input id="ModGestorNovoAlter" for="ModGestorNovoAlter" style="margin-bottom: 5%; font-size:13px"
+              type="text" class="form-control" readonly>
+
+          </div>
+        </div>
+
+        <label>Justificativa:</label>
+        <input id="Justificativa" for="Justificativa" style="margin-bottom: 0%; font-size:13px" type="text"
+          class="form-control" readonly>
+
+
+      </div>
+
+      <div class="camposStatusAlter">
+      </div>
+
+      <div id="camposHistorico-A">
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+
+        <div class="camposButtonAlter">
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+</div>
+</div>

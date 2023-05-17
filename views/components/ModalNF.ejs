@@ -14,7 +14,7 @@
 
      <!-- GAMBIARRA MODAL -->
      <label id="CodigoNF" style="color: #ffffff; display: none; "><%= codigoToken %></label>
-     <label id="retornarNFUser" style="color: #ffffff; display: none; "><%= retornoUser.RETORNAR %></label>
+     <label id="retornarNFUser" style="color: #ffffff; display: none; "><%= retornoUser %></label>
 
      <div class="dados-modal">
           <div class="row g-3">
@@ -102,7 +102,7 @@
     <div class="col">
       <div id="RetornoStatusNF" style=" margin-right: 12%; font-size:13px" >
 
-      <!-- <% if (retornoUser.RETORNAR){%>
+      <!-- <% if (retornoUser){%>
       <select type="submit" id="StatusNF" name="StatusNF"  class="form-control"  style="font-size:13px"  >
         <option selected>Aguardando envio para pagamento</option>
         <option>Enviado para pagamento</option>
@@ -127,7 +127,7 @@
         <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button> -->
 
           <div class="col">
-            <% if(retornoUser.RETORNAR) {%>
+            <% if(retornoUser) {%>
               <button id="salvarCompra" onclick="atualizarStatusNF()" value="Salvar" type="submit" class="btn btn-success" style="margin-right: 100%; ">Salvar</button>
               <% } %>
 
