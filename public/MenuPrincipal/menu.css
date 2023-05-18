@@ -40,7 +40,7 @@ body {
 .menu-option {
     text-align: center;
     border-radius: 1rem;
-    width: 5rem;
+    width: 6.5rem;
     height: 5rem;
     display: flex;
     align-items: center;
@@ -67,4 +67,6 @@ body {
 
 .menu-link h3 {
    font-size: .6rem;
+   width: 7rem;
+
 }

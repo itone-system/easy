@@ -272,6 +272,12 @@ module.exports = {
       `select COUNT(ID) as TOTAL from Aprovacoes_FORMS WHERE STATUS = 'S' AND COD_SOLICITACAO ='${codigo}' AND TIPO = '${tipo}'`
     );
 
+    const buscaremailDP = await conexao.query('select * from Emails where ID = 2');
+    const buscaremailRH = await conexao.query('select * from Emails where ID = 3');
+
+    emailDP = [buscaremailDP.recordset[0].EMAIL];
+    emailRH = [buscaremailRH.recordset[0].EMAIL];
+
     console.log(numAprovadas.recordset[0].TOTAL);
     console.log(numAprovavoes.recordset[0].TOTAL);
 
@@ -312,18 +318,19 @@ module.exports = {
       );
 
       console.log('finalizou as aprovações');
+
       if (tipo === 'F') {
         const buscarCodGestor = await conexao.query(
           `select top 1 GESTOR from Usuarios WHERE NOME_USUARIO = '${solicitanteNome}'`
         );
         if (buscarCodGestor.recordset[0].GESTOR) {
           const buscarEmailGestor = await conexao.query(`select top 1 email_usuario from Usuarios WHERE COD_USUARIO = '${buscarCodGestor.recordset[0].GESTOR}'`);
-          proxEmail = [buscarEmailSolicitante.recordset[0].email_usuario, buscarEmailGestor.recordset[0].email_usuario, 'wesley.silva@itone.com.br', 'wesley.silva@itone.com.br'];
+          proxEmail = [buscarEmailSolicitante.recordset[0].email_usuario, buscarEmailGestor.recordset[0].email_usuario, emailDP];
         } else {
-          proxEmail = [buscarEmailSolicitante.recordset[0].email_usuario, 'wesley.silva@itone.com.br', 'wesley.silva@itone.com.br'];
+          proxEmail = [buscarEmailSolicitante.recordset[0].email_usuario, emailDP];
         }
       } else {
-        proxEmail = [buscarEmailSolicitante.recordset[0].email_usuario, 'wesley.silva@itone.com.br', 'wesley.silva@itone.com.br'];
+        proxEmail = [buscarEmailSolicitante.recordset[0].email_usuario, emailDP, emailRH];
       }
       statusAprov = 'Aprovada';
 
