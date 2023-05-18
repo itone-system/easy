@@ -32,8 +32,8 @@ function buscarChecked(){
 
 
     if(faqTitulo[i].checked){
-      console.log(faqTitulo[i].id)
-      console.log(listaNObrigatorio.indexOf(faqTitulo[i].id))
+      // console.log(faqTitulo[i].id)
+      // console.log(listaNObrigatorio.indexOf(faqTitulo[i].id))
 
       if(listaNObrigatorio.indexOf(faqTitulo[i].id) >= 0 ){
       listaNObrigatorio.splice(listaNObrigatorio.indexOf(faqTitulo[i].id), 1);
@@ -52,7 +52,7 @@ function buscarChecked(){
 
     mostrarEocultar(faqTitulo[i].id, i)
   }
-  console.log("Não obrigatórios " + listaNObrigatorio)
+  // console.log("Não obrigatórios " + listaNObrigatorio)
 
   // console.log("Lista Obr: "+ listaChecked)
   // console.log("Lista N Obr: "+ listaNObrigatorio)
@@ -69,7 +69,7 @@ function validarCamposTeste(formData) {
 
     if (value == '' && !busca && validarObrigacaoPreenchimento(key)==true){
       adicionarCampoErro(key)
-      console.log(key + ' ' + value)
+      // console.log(key + ' ' + value)
     }
 
     else if(camposObr && value != '')  {
@@ -106,7 +106,7 @@ function getValores() {
   const formData = new FormData(form);
 
   if (validarCamposTeste(formData) == false){
-      console.log("Campos não foram preenchidos!")
+      // console.log("Campos não foram preenchidos!")
       alert("Favor verificar, os campos novamente!");
       return;
   } else {
@@ -148,10 +148,10 @@ function getValores() {
       dadosAlteracao.GESTOR_NOVO = valorCampo[13]
       dadosAlteracao.JUSTIFICATIVA = valorCampo[14]
 
-      console.log(dadosAlteracao)
+      // console.log(dadosAlteracao)
 
       jsonAlteracao = JSON.stringify(dadosAlteracao);
-      console.log(jsonAlteracao)
+      // console.log(jsonAlteracao)
       enviaDados(jsonAlteracao)
   }
 }
@@ -265,6 +265,7 @@ const conveniaCentroCusto = () => {
       var dados = result.data;
       let listaCC = [];
       let listaFilial = [];
+      console.log(dados)
 
       dados.forEach((element) => {
         if (element.name.substr(0, 1) <= 9) {
@@ -272,7 +273,7 @@ const conveniaCentroCusto = () => {
           listaCC.sort();
         }
 
-        if (element.name.substr(0, 3) > 99) {
+        if (element.name.substr(0, 3) > 99 || element.name == 'ITPS') {
           listaFilial.push(element.name);
           listaFilial.sort();
         }
@@ -377,7 +378,6 @@ const conveniaDepartamento = () => {
     .then((result) => {
       var dados = result.data;
       let listaDP = [];
-
       dados.forEach((element) => {
         if (element) {
           if(element.name == "GENTE E CULTURA"){
