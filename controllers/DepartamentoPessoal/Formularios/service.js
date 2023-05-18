@@ -118,6 +118,12 @@ exports.insertAprovadores = async (codigo, aprovacaoes, eColaboradorComum, solic
   let statusAprov = '';
   const conexao = await sql.connect(db);
 
+  const buscaremailDP = await conexao.query('select * from Emails where ID = 2');
+  const buscaremailRH = await conexao.query('select * from Emails where ID = 3');
+
+  emailDP = [buscaremailDP.recordset[0].EMAIL];
+  emailRH = [buscaremailRH.recordset[0].EMAIL];
+
   if (aprovacaoes) {
     const obterEmailPrimeiroAprovador = await conexao.query(
     `select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${aprovacaoes[0]} `
@@ -150,10 +156,17 @@ exports.insertAprovadores = async (codigo, aprovacaoes, eColaboradorComum, solic
       const obterEmailGestor = await conexao.query(
         `select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${buscarAprovador.recordset[0].GESTOR} `
       );
-
-      proxEmail = [obterEmailGestor.recordset[0].email_usuario, buscarEmailSolicitante.recordset[0].email_usuario, 'wesley.silva@itone.com.br', 'wesley.silva@itone.com.br'];
+      if (tipo === 'F') {
+        proxEmail = [obterEmailGestor.recordset[0].email_usuario, buscarEmailSolicitante.recordset[0].email_usuario, emailDP];
+      } else {
+        proxEmail = [obterEmailGestor.recordset[0].email_usuario, buscarEmailSolicitante.recordset[0].email_usuario, emailDP, emailRH];
+      }
     } else {
-      proxEmail = [buscarEmailSolicitante.recordset[0].email_usuario, 'wesley.silva@itone.com.br', 'wesley.silva@itone.com.br'];
+      if (tipo === 'F') {
+        proxEmail = [buscarEmailSolicitante.recordset[0].email_usuario, emailDP];
+      } else {
+        proxEmail = [buscarEmailSolicitante.recordset[0].email_usuario, emailDP, emailRH];
+      }
     }
     statusAprov = 'Aprovada';
   }
