@@ -493,7 +493,7 @@ module.exports = {
     const dados = {};
 
     if (!user.tipoAcessos.FERIAS) {
-      return redirect('/home');
+      return redirect('/formularios');
     } else {
       return renderView('home/Movimentacao/Ferias/CreateFerias', {
         nome: user.nome,
@@ -574,26 +574,28 @@ module.exports = {
   },
 
   async CriarAlteracao (request) {
-    // Controller destinado apenas para abrir a página de inserir uma nova solicitação
     const user = request.session.get('user');
     console.log(user);
+
     const message = await request.session.message();
     const dados = {};
+
     if (!user.tipoAcessos.ALTERACAO_CADASTRAL) {
       return redirect('/formularios');
     } else {
-      return renderView('home/Movimentacao/alteracaoCadastral/CreateAlteracao', {
+      return renderView('home/Movimentacao/AlteracaoCadastral/CreateAlteracao', {
         nome: user.nome,
-        acesso: user.tipoAcessos,
         codigo: user.codigo,
+        departamento: user.departamento,
+        nomeCompleto: user.nomeCompleto,
+        acesso: user.tipoAcessos,
         tipoRegime: user.tipoRegime,
         permissoes: user.permissoes,
-        departamento: user.departamento,
         message,
         dados
       });
-    //   return renderView('home/NotaFiscal/CreateNF', { nome: user.nome, message });
     }
+    //   return renderView('home/NotaFiscal/CreateNF', { nome: user.nome, message });
   },
 
   // Desligamento
