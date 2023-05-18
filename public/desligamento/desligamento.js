@@ -410,7 +410,7 @@ regime = "PJ";
 function ShowAndHidenEstag() {
   campoDataPJ = document.querySelector("#DataPJEncerramento")
 
-  campoDataPJ.innerText = 'Data do Último Dia Trabalhado:'
+  campoDataPJ.innerText = 'Data de Encerramento do Contrato:'
 
 conteudoCLT.style.display = "none";
 conteudoPJ.style.display = 'none';
