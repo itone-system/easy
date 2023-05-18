@@ -219,15 +219,29 @@ body.dark .barraLateral li a:hover .text {
 }
 
 .barraLateral .menu-bar {
-  height: calc(100% - 55px);
+  height: calc(100% - 50px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow-y: scroll;
 }
+
+.barraLateral .menu-barForm {
+  height: calc(100% - 160px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: scroll;
+}
+
 .menu-bar::-webkit-scrollbar {
   display: none;
 }
+
+.menu-barForm::-webkit-scrollbar {
+  display: none;
+}
+
 .barraLateral .menu-bar .mode {
   border-radius: 6px;
   background-color: var(--primary-color-light);
@@ -238,6 +252,30 @@ body.dark .barraLateral li a:hover .text {
 .menu-bar .mode .sun-moon {
   height: 50px;
   width: 60px;
+}
+
+.mode {
+  border-radius: 6px;
+  background-color: var(--primary-color-light);
+  position: relative;
+  transition: var(--tran-05);
+}
+
+.mode .sun-moon {
+  height: 50px;
+  width: 60px;
+}
+
+.toggle-switch {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  min-width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .mode .sun-moon i {
@@ -454,7 +492,8 @@ body.dark .home .text {
 }
 
 
-/* Menu Formulários */
+/* Menu Formulários /////////////////////////////*/
+
 .sub-menuForm {
   display: none;
 }
@@ -480,7 +519,7 @@ body.dark .home .text {
   color: white;
 }
 
-/* Menu Formulários - Manuais*/
+/* Menu Formulários - Manuais////////////////////*/
 .sub-menuForm1 {
   display: none;
 }
