@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu</title>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <link rel="shortcut icon" type="imagex/png" href="../../public/Fotos/logo-it-one-novo-1.ico">
+
 </head>
 
 <body>
@@ -18,10 +20,17 @@
         <ul>
             <li class="menu-option">
                 <a class="menu-link" href="http://itonepbi/reports/browse" target="_blank" rel="noopener noreferrer">
-                    <ion-icon name="grid"></ion-icon>
-                    <h3>Dashboards</h3>
+                  <ion-icon name="bar-chart-outline"></ion-icon>
+                                                        <h3>Dashboards</h3>
                 </a>
             </li>
+
+            <li class="menu-option">
+              <a class="menu-link" href="https://www.argoit.com.br/maactravel/default.aspx?cliente=itone" target="_blank" rel="noopener noreferrer">
+                <ion-icon name="airplane-outline"></ion-icon>
+                                  <h3>MAAC Travel</h3>
+              </a>
+          </li>
 
             <% if (dadosUser.permissoes.COMPRAS) { %>
 
@@ -45,7 +54,7 @@
                         <li class="menu-option">
                             <a class="menu-link" href="/notafiscal">
                                 <ion-icon name="document"></ion-icon>
-                                <h3>Notas</h3>
+                                <h3>Nota Fiscal</h3>
                             </a>
                         </li>
                         <% } %>
@@ -55,7 +64,9 @@
                                 <li class="menu-option">
                                     <a class="menu-link" href="/formularios">
                                         <ion-icon name="newspaper"></ion-icon>
+                                        <h3>Formulários de</h3>
                                         <h3>Movimentação</h3>
+
                                     </a>
                                 </li>
                                 <% } %>

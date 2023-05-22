@@ -31,23 +31,23 @@
         <% if(acesso.FERIAS || acesso.RESCISAO || acesso.ALTERACAO_CADASTRAL ) {%>
         <li class="navbar-link dropdown">
           <a href="#" class="dropdown-toggle dropdown-toggleForm">
-            <i class='bx bx-cart icon'></i>
+            <i class='bx bxs-copy-alt icon'></i>
             <span class="text nav-text"    style="font-size:12px;">Formulários</span>
           </a>
           <ul class="sub-menuForm" style="position:absolute;top:100%;left:0;">
             <% if(acesso.ALTERACAO_CADASTRAL) {%>
             <li class="central"><a class=" text nav-text" onclick="formAlteracao()" href="#"
-              style="font-size:11px;"> <i class='bx bx-archive icon'></i>Alteração de Cadastro</a></li>
+              style="font-size:11px;"> <i class='bx bx-file icon'></i>Alteração de Cadastro</a></li>
               <% }%>
 
               <% if(acesso.RESCISAO) {%>
               <li class="central"><a class=" text nav-text" onclick="formDesligamento()" href="#"
-                style="font-size:11px;"> <i class='bx bx-archive icon'></i>Desligamento</a></li>
+                style="font-size:11px;"> <i class='bx bx-file icon'></i>Desligamento</a></li>
                 <% }%>
 
               <% if(acesso.FERIAS) {%>
             <li class="central"><a class=" text nav-text" onclick="formFerias()" href="#"
-                  style="font-size:11px;"> <i class='bx bx-archive icon'></i> <% if(tipoRegime == 'C'){%> Férias <%} else {%> Recesso  <%}%> </a></li>
+                  style="font-size:11px;"> <i class='bx bx-file icon'></i> <% if(tipoRegime == 'C'){%> Férias <%} else {%> Recesso  <%}%> </a></li>
                  <% }%>
 
            <li class="central"><a class=" text nav-text" onclick="consultarFormularios()" href="#"
@@ -58,29 +58,29 @@
         <div class="relativeForm1" id="relativeForm1">
           <li class="navbar-link dropdown">
             <a href="#" class="dropdown-toggle dropdown-toggleForm1">
-              <i class='bx bx-briefcase icon'></i>
-              <span  style="font-size:12px;"  class="text nav-text">Instruções</span>
+              <i class='bx bx-info-circle icon'></i>
+                            <span  style="font-size:12px;"  class="text nav-text">Instruções</span>
             </a>
             <ul class="sub-menuForm1" style="position:absolute;top:100%;left:0;">
               <% if(acesso.ALTERACAO_CADASTRAL) {%>
               <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1aF39R4CMlUTd_W1cWT3D2QUfeQ5KXJQe/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
-                  style="font-size:11px;"> <i class='bx bx-archive icon'></i>Alteração Cadastral </a></li>
+                  style="font-size:11px;"> <i class='bx bx-file icon'></i>Alteração Cadastral </a></li>
                   <% }%>
                   <% if(acesso.RESCISAO) {%>
               <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1ghYgwciOlKLTM4-j0XwtMhvn5hLTPiZv/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
-                  style="font-size:11px;"> <i class='bx bx-archive icon'></i>Desligamento (CLT e Aprendiz)  </a></li>
+                  style="font-size:11px;"> <i class='bx bx-file icon'></i>Desligamento (CLT e Aprendiz)  </a></li>
               <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1Jxaq0Ba0THMh59kPUz_MmrpWVY22xrY3/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
-                style="font-size:11px;"> <i class='bx bx-archive icon'></i>Encerramento – Estagiário  </a></li>
+                style="font-size:11px;"> <i class='bx bx-file icon'></i>Encerramento – Estagiário  </a></li>
               <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1px69EIa_ZpL8CWECBCzrrd8MrInHPv5O/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
-                style="font-size:11px;"> <i class='bx bx-archive icon'></i>Encerramento – PJ </a></li>
+                style="font-size:11px;"> <i class='bx bx-file icon'></i>Encerramento – PJ </a></li>
                 <% }%>
                 <% if(acesso.FERIAS) {%>
                   <% if(tipoRegime == 'C') {%>
               <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1qPpm0YBznboiEiX7jiR1gWWZKbz_1N9q/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
-                style="font-size:11px;"> <i class='bx bx-archive icon'></i>Férias  </a></li>
+                style="font-size:11px;"> <i class='bx bx-file icon'></i>Férias  </a></li>
                 <% } else {%>
                 <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1pzcX5eI6SfZkDpQvxSiP1DESuqzjM2ZB/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
-                  style="font-size:11px;"> <i class='bx bx-archive icon'></i>Recesso  </a></li>
+                  style="font-size:11px;"> <i class='bx bx-file icon'></i>Recesso  </a></li>
                   <% }%>
                   <% }%>
             </ul>
