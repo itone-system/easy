@@ -17,4 +17,8 @@ AdmissaoRouter.get('/:codigo/detail', expressAdapter(admissaoController.detail))
 AdmissaoRouter.post('/aprovar', expressAdapter(admissaoController.aprovar))
 
 AdmissaoRouter.post('/insertCandidato', expressAdapter(admissaoController.insertCandidato))
+
+AdmissaoRouter.post('/solicitarConferencia', expressAdapter(admissaoController.conferencia))
+
+AdmissaoRouter.post('/insertConferencia', expressAdapter(admissaoController.insertCandidato))
 module.exports = AdmissaoRouter;

@@ -252,7 +252,7 @@ exports.buscarProximoAprovador = async (codigoSolicitacao) => {
         };
 
 
-        
+
         enviarEmail(emailOptions);
         enviarEmail(emailOptionsRH)
     }
@@ -313,6 +313,89 @@ exports.buscarCargoUsuario = async (codigoUsuario, codigoSolicitacao) => {
 
     const result = await conexao.request().query(`select CARGO from Usuarios where COD_USUARIO = ${codigoUsuario}`)
 
-    
+
     return result.recordset[0].CARGO
 }
+
+exports.alterarStatusCO = async (codigo) => {
+
+    const conexao = await sql.connect(db);
+
+    await conexao.request().query(`update SOLICITACAO_ADMISSAO set STATUS = 'CO' where CODIGO = ${codigo}`)
+
+    await conexao.request().query(`update Aprovacoes set Status = 'N' where Codigo_Solicitacao = ${codigo}`)
+
+
+}
+
+exports.insertPedidoConferencia = async (dados, motivo, userCodigo, codigoSolicitacao) => {
+
+    const conexao = await sql.connect(db);
+    const data = new Date()
+
+    const dataFormatada = data.toISOString().slice(0, 10);
+
+
+    const codigo = await conexao.request().query(`insert into CONFERENCIA (CODIGO_SOLICITACAO, CAMPOS, MOTIVO, SOLICITANTE_CONFERENCIA, DATA_DE_INSERCAO
+        ) OUTPUT Inserted.ID values (${codigoSolicitacao},' ${dados}', '${motivo}', ${userCodigo}, '${dataFormatada}' )`)
+
+    console.log('maldito maskceico', codigo)
+
+    await conexao.request().query(`update SOLICITACAO_ADMISSAO set ATUAL_CONFERENCIA = ${codigo.recordset[0].ID} where CODIGO = ${codigoSolicitacao}`)
+}
+
+exports.buscarCamposConferencia = async (codigoConferencia) => {
+
+    const conexao = await sql.connect(db);
+
+    const dados = await conexao.request().query(`select CAMPOS, MOTIVO from CONFERENCIA where ID = ${codigoConferencia}`)
+
+    const campos = dados.recordset[0].CAMPOS.split(',').map(campo => campo.trim());
+    const motivo = dados.recordset[0].MOTIVO
+    const result = {};
+
+    for (const campo of campos) {
+        result[campo] = campo;
+    }
+    result.motivo = motivo
+    return result;
+}
+
+
+exports.criarQueryUpdate = async (codigoSolicitacao, { salario, unidade, horario, tipoAdmissao, cargo, pcd }) => {
+    
+    const conexao = await sql.connect(db)
+
+    const dados = {
+        salario: salario,
+        unidade: unidade,
+        horario: horario,
+        tipoAdmissao:tipoAdmissao ,
+        cargo: cargo,
+        pcd: pcd,
+    };
+
+    const colunas = {
+        salario: 'SALARIO',
+        unidade: 'UNIDADE',
+        horario: 'HORARIO',
+        tipoAdmissao: 'TIPO_DE_ADMISSAO',
+        cargo: 'CARGO',
+        pcd: 'PCD'
+    };
+
+    const atualizacoes = Object.entries(dados)
+    .filter(([chave, valor]) => valor !== '')
+    .map(([chave, valor]) => {
+      const valorFormatado = (chave === 'salario' && !isNaN(valor)) ? valor : `'${valor}'`;
+      return `${colunas[chave]} = ${valorFormatado}`;
+    })
+    .join(', '); 
+
+    const query = `UPDATE SOLICITACAO_ADMISSAO SET ${atualizacoes} WHERE CODIGO = ${codigoSolicitacao}`;
+
+    await conexao.request().query(query)
+
+    return query
+}
+

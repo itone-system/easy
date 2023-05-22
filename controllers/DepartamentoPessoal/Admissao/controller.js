@@ -60,7 +60,7 @@ module.exports = {
             }
 
             const cargoUser = await solicitacaoService.buscarCargoUsuario(user.codigo)
-            console.log('teste 2 ',cargoUser)
+            console.log('teste 2 ', cargoUser)
             if (cargoUser != 'DIRETOR(a) ADMINISTRATIVO') {
                 console.log('entrou')
                 const token = tokenAdapter({
@@ -69,11 +69,11 @@ module.exports = {
                     id: buscaAprovadores[0].COD_USUARIO,
                     router: `/vagas/${codigoInsert}/detail`
                 });
-    
+
                 const link = `${domain}/vagas/${codigoInsert}/detail?token=${token}`
-    
+
                 const firstEmail = await conexao.request().query(`select EMAIL_USUARIO from Usuarios where COD_USUARIO = ${buscaAprovadores[0].COD_USUARIO}`)
-    
+
                 const emailOptions = {
                     to: firstEmail.recordset[0].EMAIL_USUARIO,
                     subject: 'Solicitação de Aprovação',
@@ -84,14 +84,14 @@ module.exports = {
                         unidade: unidade,
                         departamento: departamento,
                         gestorImediato: gestorImediato
-    
+
                     }),
                     isHtlm: true
                 };
-    
+
                 enviarEmail(emailOptions)
                 return renderJson(codigoInsert)
-            } 
+            }
 
             if (cargoUser == 'DIRETOR(a) ADMINISTRATIVO') {
                 await conexao.request().query(`update Aprovacoes set Status = 'Y' where Codigo_Aprovador = ${user.codigo} and Codigo_Solicitacao = ${codigoInsert}`)
@@ -112,13 +112,13 @@ module.exports = {
                         unidade: unidade,
                         departamento: departamento,
                         gestorImediato: gestorImediato
-        
+
                     }),
                     isHtlm: true
                 };
-        
-        
-                
+
+
+
                 enviarEmail(emailOptionsRH)
 
             }
@@ -191,6 +191,18 @@ module.exports = {
                 contratado: 'ondone'
             };
         }
+
+        if (solicitacao.STATUS == 'CO') {
+
+            solicitacao.etapas = {
+                'conferencia-vaga': 'done',
+                'aprovacao-vaga': 'ondone',
+                'processo-seletivo': 'ondone',
+                'exame-admissional': 'ondone',
+                contratado: 'ondone'
+            };
+        }
+
         if (solicitacao.STATUS == 'PS') {
 
             solicitacao.etapas = {
@@ -225,6 +237,13 @@ module.exports = {
 
         const candidato = {}
 
+        let dadosParaConferencia = null
+
+        if (solicitacao.STATUS == 'CO') {
+            console.log('parou aqui ')
+            dadosParaConferencia = await solicitacaoService.buscarCamposConferencia(solicitacao.ATUAL_CONFERENCIA)
+        }
+        console.log('eitaaaa', dadosParaConferencia)
         if (solicitacao.STATUS == 'PA') {
 
         }
@@ -243,7 +262,10 @@ module.exports = {
 
         }
 
-        return renderView('homeVagas/Admissao/Detail', { solicitacao, nome: user.nome, candidato, dadosUser: user, momentoAprovacao: momentoAprovacao });
+        return renderView('homeVagas/Admissao/Detail', {
+            solicitacao, nome: user.nome, candidato,
+            dadosUser: user, momentoAprovacao: momentoAprovacao, dadosParaConferencia
+        });
     },
 
     async insertCandidato(request) {
@@ -439,7 +461,45 @@ module.exports = {
 
     async conferencia(request) {
 
-        
+        try {
+
+            const body = { salario, unidade, horario, tipoAdmissao, pcd, cargo, motivo, codigo } = request
+            const user = request.session.get('user')
+
+            let variaveisComS = "";
+
+            for (const key in body) {
+                if (key === "motivo") continue;
+                if (body.hasOwnProperty(key) && body[key] === 's') {
+                    variaveisComS += variaveisComS === "" ? key : "," + key;
+                }
+            }
+            console.log(variaveisComS)
+
+            await solicitacaoService.alterarStatusCO(codigo)
+
+            await solicitacaoService.insertPedidoConferencia(variaveisComS, motivo, user.codigo, codigo)
+
+            return renderJson('Conferência Solicitada com Suscesso')
+
+
+        } catch (error) {
+            console.log('error ', error);
+            request.session.message({
+                title: 'Ops!',
+                text: error.message,
+                type: 'danger'
+            });
+        }
+    },
+
+    async insertConferencia(request) {
+        const { salario = '', unidade = '', horario = '', tipoAdmissao = '', cargo = '', pcd = '', codigoSolicitacao } = request
+
+        const query = await solicitacaoService.criarQueryUpdate(codigoSolicitacao, { salario, unidade, horario, tipoAdmissao, cargo, pcd });
+
+        return renderJson('Conferência Finalizada')
+
     }
 
 }

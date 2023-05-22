@@ -5,6 +5,16 @@
 <body>
     <div class="timeline-container">
         <ul class="timeline">
+            <% if (solicitacao.STATUS == 'CO') { %>
+                <li>
+                    <div class="timeline-box">
+                        <div class="timeline-line timeline-line-<%=solicitacao.etapas['conferencia-vaga']%>"></div>
+                        <div class="timeline-options timeline-options-<%=solicitacao.etapas['conferencia-vaga']%>">
+                            <span>Em Conferência</span>
+                        </div>
+                    </div>
+                </li>
+            <% } %>
             <li>
                 <div class="timeline-box">
                     <div class="timeline-line timeline-line-<%=solicitacao.etapas['aprovacao-vaga']%>"></div>

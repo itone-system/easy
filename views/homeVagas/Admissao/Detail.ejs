@@ -225,7 +225,7 @@
                       </button>
 
                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">
-                        Solicitar Conferência
+                        Solicitar Revisão
                       </button>
 
                       <!-- The Modal -->
@@ -533,89 +533,238 @@
                           <!-- ------------------------- -->
 
                           <% if (solicitacao.STATUS=='CO' ) { %>
-                            <button type="button" class="btn btn-primary">
-                              Realizar Conferência
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal3">
+                              Realizar Revisão
                             </button>
                             <% } %>
 
           </main>
       </section>
 
+      <!-- The Modal -->
+      <div class="modal" id="myModal2">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Itens Para Revisão:</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="row" style="margin: 10px 0;">
+                <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+                  <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
+                    class="custom-checkbox" data-name="salario">
+                  Salário
+                </label>
+              </div>
+
+              <div class="row" style="margin: 10px 0;">
+                <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+                  <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
+                    class="custom-checkbox" data-name="unidade">
+                  Unidade de Contratação
+                </label>
+              </div>
+
+              <div class="row" style="margin: 10px 0;">
+                <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+                  <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
+                    class="custom-checkbox" data-name="horario">
+                  Horário de Trabalho
+                </label>
+              </div>
+
+              <div class="row" style="margin: 10px 0;">
+                <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+                  <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
+                    class="custom-checkbox" data-name="tipoAdmissao">
+                  Tipo de Admissão
+                </label>
+              </div>
+
+              <div class="row" style="margin: 10px 0;">
+                <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+                  <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
+                    class="custom-checkbox" data-name="cargo">
+                  Cargo
+                </label>
+              </div>
+
+              <div class="row" style="margin: 10px 0;">
+                <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+                  <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
+                    class="custom-checkbox" data-name="pcd">
+                  Vaga esclusiva para PCD.
+                </label>
+              </div>
+
+              <div class="row" style="margin: 10px 0;">
+                <label for="motivo" style="display: block; font-size: 16px; margin-bottom: 5px;">Motivo:</label>
+                <textarea id="motivo" name="motivo" rows="4" cols="50" style="font-size: 16px;"></textarea>
+              </div>
+            </div>
+
+
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" id="botaoConfClose" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-success" id="botaoConf"
+                onclick="realizarConferencia()">Solicitar</button>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+
+
+<% if (solicitacao.STATUS=='CO') { %>
+ 
+
+      <div class="modal" id="myModal3">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Itens Para Revisão:</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="row">
+                <div class="col">
+                <% if (dadosParaConferencia.salario) { %>
+
+                    <label for="input1">Salário:</label>
+                    <input type="text" class="form-control" id="valorConf" placeholder="0,00" onkeyup="formatarMoedaConf()">
+                  <% } %>
+
+                    <% if (dadosParaConferencia.horario) { %>
+
+                        <label for="input2">Horário de Trabalho:</label>
+                        <select class="form-control border-secondar shadow-none" aria-label="Default select example"
+                        id="horarioConf" required name="horario">
+                        <option selected value="">Selecione um Horário...</option>
+                        <option value="6:30|12:00|13:00|15:30">6:30 - 12:00 - 13:00 - 15:30</option>
+                        <option value="7:00|12:00|13:00|16:00">7:00 - 12:00 - 13:00 - 16:00</option>
+                        <option value="7:00|12:00|13:00|19:00">7:00 - 12:00 - 13:00 - 19:00</option>
+                        <option value="7:30|12:00|13:00|16:30">7:30 - 12:00 - 13:00 - 16:30</option>
+                        <option value="7:00|12:00|14:00|17:30">7:00 - 12:00 - 14:00 - 17:30</option>
+                        <option value="8:00/12:00">8:00 - 12:00</option>
+                        <option value="8:00|12:00|13:00|17:00">8:00 - 12:00 - 13:00 - 17:00</option>
+                        <option value="8:00|12:00|13:30|17:30">8:00 - 12:00 - 13:30 - 17:30</option>
+                        <option value="8:00|12:00|14:00|18:00">8:00 - 12:00 - 14:00 - 18:00</option>
+                        <option value="8:30|12:00|13:00|17:30">8:30 - 12:00 - 13:00 - 17:30</option>
+                        <option value="8:30|12:00|13:30|18:00">8:30 - 12:00 - 13:30 - 18:00</option>
+                        <option value="8:30|12:30">8:30 - 12:30</option>
+                        <option value="9:00|12:00|13:00|18:00">9:00 - 12:00 - 13:00 - 18:00</option>
+                        <option value="9:00|12:00|13:30|18:30">9:00 - 12:00 - 13:30 - 18:30</option>
+                        <option value="9:00|12:00|14:00|19:00">9:00 - 12:00 - 14:00 - 19:00</option>
+                        <option value="9:00|13:00">9:00 - 13:00</option>
+                        <option value="10:00|12:00|13:00|19:00">10:00 - 12:00 - 13:00 - 19:00</option>
+                        <option value="10:00|14:00">10:00 - 14:00</option>
+                        <option value="11:00|14:00|15:00|20:00">11:00 - 14:00 - 15:00 - 20:00</option>
+                        <option value="13:00|17:00">13:00 - 17:00</option>
+                        <option value="13:00|18:00|19:00|22:00">13:00 - 18:00 - 19:00 - 22:00</option>
+                        <option value="14:00|18:00">14:00 - 18:00</option>
+                        <option value="14:00|19:00|20:00|23:00">14:00 - 19:00 - 20:00 - 23:00</option>
+                        <option value="19:00|1:00|2:00|7:00">19:00 - 1:00 - 2:00 - 7:00</option>
+                        <option value="22:00|2:00|3:00|7:00">22:00 - 2:00 - 3:00 - 7:00</option>
+                        <option value="23:00|3:00|4:00|8:00">23:00 - 3:00 - 4:00 - 8:00</option>
+                      </select>
+                      <% } %>
+                        <% if (dadosParaConferencia.unidade) { %>
+
+                            <label for="input2">Unidade</label>
+                            <select id="unidadeConf" class="form-control border-secondar shadow-none"
+                            aria-label="Default select example" required name="unidade">
+                            <option selected value="">Selecione...</option>
+                            <option value="Belo Horizonte">Belo Horizonte</option>
+                            <option value="Distrito Federal">Distrito Federal</option>
+                            <option value="São Paulo">São Paulo</option>
+                            <option value="Espirito Santo">Espirito Santo</option>
+                            <option value="ITPS">iTPS</option>
+                          </select>
+                            <% } %>
+                          </div>
+                            <div class="col">
+                              <% if (dadosParaConferencia.tipoAdmissao) { %>
+
+                                <label for="input2">Tipo de Admissão:</label>
+                                <select id="tipoAdmissaoConf" class="form-control border-secondar shadow-none"
+                                aria-label="Default select example" required name="tipo">
+                                <option selected value="">Selecione...</option>
+                                <option value="CLT">CLT</option>
+                                <option value="Estagiário">Estagiário</option>
+                                <option value="Jovem Aprendiz">Jovem Aprediz</option>
+                                <option value="PJ">PJ</option>
+                              </select>
+                                <% } %>
+                                  <% if (dadosParaConferencia.cargo) { %>
+
+                                    <label for="input2">Novo Cargo:</label>
+                                    <input type="text" class="form-control" id="cargoConf">
+                                    <% } %>
+                                    
+                                    <% if (dadosParaConferencia.pcd) { %>
+                                      
+                                      <label for="input2">Vaga Exclusiva Para PCD:</label>
+                                      <select id="pcdConf" class="form-control border-secondar shadow-none"
+                                      aria-label="Default select example" required name="tipo">
+                                      <option selected value="">Selecione...</option>
+                                      <option value="S">Sim</option>
+                                      <option value="N">Não</option>
+                                
+                                    </select>
+                                        
+                                        <!-- <input type="text" class="form-control" id="input2"> -->
+                                        <% } %>
+
+                                        
+                            </div>
+                            <div class="text-center" style="width: 100%; display: flex; justify-content: center;">
+                              <div class="" style="margin: 10px 0; max-width: 500px; width: 100%;">
+                                <label for="motivo" style="display: block; font-size: 16px; margin-bottom: 5px;">Motivo:</label>
+                                <textarea id="motivo" readonly name="motivo" rows="4" cols="50" style="font-size: 16px;"><%=dadosParaConferencia.motivo %></textarea>
+                              </div>
+                            </div>
+
+              </div>
+            </div>
+
+
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" id="botaoConfClose" data-dismiss="modal">Fechar</button>
+              <button type="button" class="btn btn-success" id="botaoConf"
+                onclick="inserirConferencia()">Salvar</button>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+
+      <% } %>
+
+
+
+
   </body>
 
 
 
 
-  <!-- The Modal -->
-  <div class="modal" id="myModal2">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Itens Para Revisão:</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-
-        <!-- Modal body -->
-        <div class="modal-body">
-          <div class="row" style="margin: 10px 0;">
-            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
-              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;">
-              Salário
-            </label>
-          </div>
-
-          <div class="row" style="margin: 10px 0;">
-            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
-              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;">
-              Unidade de Contratação
-            </label>
-          </div>
-
-          <div class="row" style="margin: 10px 0;">
-            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
-              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;">
-              Horário de Trabalho
-            </label>
-          </div>
-
-          <div class="row" style="margin: 10px 0;">
-            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
-              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;">
-              Tipo de Admissão
-            </label>
-          </div>
-
-          <div class="row" style="margin: 10px 0;">
-            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
-              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;">
-              Cargo
-            </label>
-          </div>
-
-          <div class="row" style="margin: 10px 0;">
-            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
-              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;">
-              Vaga esclusiva para PCD.
-            </label>
-          </div>
-
-          <label for="exampleInputTextArea" class="form-label" style="
-                                              font-size: 15px;">Motivo:</label>
-          <input type="text" class="form-control" required name="observacoes">
-        </div>
-
-
-
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
 
 
 

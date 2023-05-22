@@ -27,6 +27,8 @@ module.exports = async (app) => {
       insertNF: '/notafiscal/insertnotafiscal',
       aprovarAdmissao: '/vagas/aprovar',
       insertVaga: '/vagas/insert',
+      solicitarConferencia: '/vagas/solicitarConferencia',
+      insertConferencia: '/vagas/insertConferencia',
       insertCandidato: '/vagas/insertCandidato',
       incluirFerias: '/formularios/insertFerias',
       insertDesligamento: '/formularios/insertDesligamento',
