@@ -455,7 +455,8 @@ module.exports = {
       SOLICITANTE,
       NOME_SOLICITANTE,
       DATA_SOLICITACAO,
-      DATA_FIM
+      DATA_FIM,
+      TIPO_REGIME
     } = req.body;
 
     console.log(req.body);
@@ -485,7 +486,9 @@ module.exports = {
 
     proxEmail = [buscaremailDP.recordset[0].EMAIL];
 
-    formsService.enviarEmail(codigo, NOME, NOME_SOLICITANTE, proxEmail, 'Férias');
+    tipoForm = TIPO_REGIME === 'C' ? 'Férias' : 'Recesso';
+
+    formsService.enviarEmail(codigo, NOME, NOME_SOLICITANTE, proxEmail, tipoForm);
 
     return res.json(codigo);
   },

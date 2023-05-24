@@ -542,3 +542,45 @@ function gerarDadosHistAprovacoes(codigo, tipo) {
     }
     });
 }
+
+const conveniaDepartamento = () => {
+  fetch('https://public-api.convenia.com.br/api/v3/companies/departments', {
+    method: 'GET',
+    redirect: 'follow',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      token: '82856aeb-fa11-4918-b2bc-f7a49322f69b'
+    }
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      var dados = result.data;
+      let listaDP = [];
+      dados.forEach((element) => {
+        if (element) {
+          if(element.name == "GENTE E CULTURA"){
+            element.name = "RECURSOS HUMANOS"
+          }
+          let palavras = element.name.split(" ");
+             for (let i = 0; i < palavras.length; i++) {
+                palavras[i] = palavras[i][0].toUpperCase() + palavras[i].substr(1).toLowerCase();
+              }
+          listaDP.push(palavras.join(" ") )
+          listaDP.sort();
+        }
+      });
+
+      listaDP.forEach((element) => {
+
+        if(element != "INOVAÇÃO"){
+        var localCC = document.getElementById('CentroCusto');
+        var option = document.createElement('option');
+        option.textContent = element;
+        localCC.appendChild(option);
+      }
+      });
+    });
+};

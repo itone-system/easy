@@ -36,6 +36,7 @@ function bodyFerias(){
   this.DATA_SOLICITACAO = dataSolicitacao
   this.DATA_FIM = dataFim
   this.NOME_SOLICITANTE = nomeSolicitante
+  this.TIPO_REGIME = tipo_Regime
   }
 
 function validarCamposTeste(formData) {
@@ -98,7 +99,7 @@ function getValores () {
       console.log(document.getElementById('departamentoUser').innerText);
       console.log(document.getElementById('codigoUser').innerText);
 
-      const objetoPrimeiro = new bodyFerias(nome = valorCampo[0], centroCusto = document.getElementById('departamentoUser').innerText, dataInicio = valorCampo[1], numDias = valorCampo[2], abono = valorCampo[3].slice(0,1), adiantamento = valorCampo[4].slice(0,1), solicitante = document.getElementById('codigoUser').innerText, dataSolicitacao = new Date(), dataFim = document.getElementById('DATA_FIM').value, nomeSolicitante = document.getElementById('nomeUser').innerText)
+      const objetoPrimeiro = new bodyFerias(nome = valorCampo[0], centroCusto = document.getElementById('departamentoUser').innerText, dataInicio = valorCampo[1], numDias = valorCampo[2], abono = valorCampo[3].slice(0,1), adiantamento = valorCampo[4].slice(0,1), solicitante = document.getElementById('codigoUser').innerText, dataSolicitacao = new Date(), dataFim = document.getElementById('DATA_FIM').value, nomeSolicitante = document.getElementById('nomeUser').innerText, tipo_Regime = document.getElementById('tipoRegime').innerText)
 
       dadosFerias = JSON.stringify(objetoPrimeiro);
       tipoRegime = document.getElementById('tipoRegime').innerText
