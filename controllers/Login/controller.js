@@ -95,7 +95,7 @@ module.exports = {
 
     const validacao = await SolicitacaoService.validarTokenUsuario(tokenRecebido, codUser);
 
-    if (validacao) {
+    if (tokenRecebido && validacao) {
       const dadosUsuario = await SolicitacaoService.obterDadosUser(
         user.recordset[0].COD_USUARIO);
 
@@ -106,8 +106,20 @@ module.exports = {
       }
 
       return redirect('/menu');
+    } else if (tokenRecebido && !validacao) {
+      return redirect(rotaLogin);
     }
-    return redirect(rotaLogin);
+
+    const dadosUsuario = await SolicitacaoService.obterDadosUser(
+      user.recordset[0].COD_USUARIO);
+
+    request.session.set('user', dadosUsuario.dadosUserSolicitacao);
+
+    if (request.token) {
+      return redirect('/home?token=' + request.token);
+    }
+
+    return redirect('/menu');
   },
 
   async ChangePass (request) {
