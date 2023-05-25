@@ -4,6 +4,7 @@ const solicitacaoAprovada = require('../../../template-email/Vagas/solicitacaoAp
 const { domain } = require('../../../config/env');
 const tokenAdapter = require('../../../infra/tokenAdapter');
 const processoSeletivo = require('../../../template-email/Vagas/processo_seletivo')
+const revisao = require('../../../template-email/Vagas/revisao')
 const enviarEmail = require('../../../infra/emailAdapter');
 const aprovacaoPendente = require('../../../template-email/Vagas/aprovacao_pendente')
 const verifyIndiceAdapter = require('../../../infra/verifyIndiceAdapter');
@@ -230,7 +231,7 @@ exports.buscarProximoAprovador = async (codigoSolicitacao) => {
 
         const email = query.recordset[0].EMAIL_USUARIO;
 
-        const emailRH = 'gustavo@gustavo'
+        const emailRH = 'rh@itone.com.br'
 
         const link = `${domain}/vagas/${codigoSolicitacao}/detail?token=${token}`
 
@@ -376,14 +377,10 @@ exports.insertPedidoConferencia = async (dados, motivo, userCodigo, codigoSolici
     const emailOptions = {
         to: emailSolicitante.recordset[0].EMAIL_USUARIO,
         subject: 'Solicitação de Revisão',
-        content: aprovacaoPendente({
+        content: revisao({
             link,
             codigoSolicitacao: codigoSolicitacao,
-            // cargo: cargoConf,
-            // unidade: unidadeConf,
-            // departamento: departamento,
-            // gestorImediato: gestorImediato
-
+            motivo: motivo
         }),
         isHtlm: true
     };

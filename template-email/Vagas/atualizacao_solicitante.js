@@ -1,4 +1,4 @@
-module.exports = ({ link, codigoSolicitacao, cargo, unidade, departamento, gestorImediato }) => {
+module.exports = ({ link, codigoSolicitacao }) => {
     return `<body style="background-color: #f5f5f5; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0;">
     <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr>
@@ -16,14 +16,10 @@ module.exports = ({ link, codigoSolicitacao, cargo, unidade, departamento, gesto
           <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
             <tr>
               <td bgcolor="#ffffff" style="padding: 30px; color: #313131;">
-                <h1 style="font-size: 24px; font-weight: bold; margin: 0 0 20px 0;">Novo Processo Seletivo</h1>
-                <p style="font-size: 16px; line-height: 1.5em; margin: 0 0 10px 0;">Easy informa que a vaga abaixo está apta para o processo seletivo:</p>
+                <h1 style="font-size: 24px; font-weight: bold; margin: 0 0 20px 0;">Atualização de Vaga</h1>
+                <p style="font-size: 16px; line-height: 1.5em; margin: 0 0 10px 0;">Easy informa que a vaga abaixo teve uma atualização:</p>
                 <ul style="font-size: 16px; line-height: 1.5em; margin: 0;">
                   <li><strong>Solicitação n°:</strong> ${codigoSolicitacao}</li>
-                  <li><strong>Cargo:</strong> ${cargo}</li>
-                  <li><strong>Unidade:</strong> ${unidade}</li>
-                  <li><strong>Departamento:</strong> ${departamento}</li>
-                  <li><strong>Gestor Imediato:</strong> ${gestorImediato}</li>
                 </ul>
               </td>
             </tr>

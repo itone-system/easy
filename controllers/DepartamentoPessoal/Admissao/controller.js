@@ -4,6 +4,11 @@ const tokenAdapter = require('../../../infra/tokenAdapter');
 const verifyIndiceAdapter = require('../../../infra/verifyIndiceAdapter');
 const aprovacaoPendente = require('../../../template-email/Vagas/aprovacao_pendente')
 const processoSeletivo = require('../../../template-email/Vagas/processo_seletivo')
+const atualizacao_aprovador = require('../../../template-email/Vagas/atualizacao_aprovador')
+const atualizacao_solicitante = require('../../../template-email/Vagas/atualizacao_solicitante')
+const processo_administrativo = require('../../../template-email/Vagas/processo_dp')
+const processo_seletivoRec = require('../../../template-email/Vagas/processo_seletivoRec')
+const vaga_reprovada = require('../../../template-email/Vagas/vaga_reprovada')
 const solicitacaoService = require('./service')
 const sql = require('mssql');
 const { domain } = require('../../../config/env');
@@ -98,7 +103,7 @@ module.exports = {
 
                 const linkRH = `${domain}/vagas/${codigoInsert}/detail`
 
-                const emailRH = 'gustavo@gustavo'
+                const emailRH = 'rh@itone.com.br'
 
                 const emailOptionsRH = {
                     to: emailRH,
@@ -265,7 +270,7 @@ module.exports = {
 
             dadosParaConferencia = await solicitacaoService.buscarCamposConferencia(solicitacao.ATUAL_CONFERENCIA)
         }
-        
+
         let candidato = ''
         let candidatoTratado = ''
         let candidatoContratado = ''
@@ -374,6 +379,58 @@ module.exports = {
                 `UPDATE SOLICITACAO_ADMISSAO SET STATUS = 'PA' WHERE CODIGO = ${codigo}`
             );
 
+
+        const buscaEmailAprovadores = await conexao.request().query(`
+                SELECT EMAIL_USUARIO
+            FROM Usuarios
+                WHERE COD_USUARIO IN (SELECT Codigo_Aprovador FROM APROVACOES_VAGAS WHERE Codigo_Solicitacao = ${codigo})
+                `)
+
+        const buscaEmailSolicitante = await conexao.request().query(`SELECT EMAIL_USUARIO
+        FROM Usuarios
+        WHERE COD_USUARIO = (SELECT SOLICITANTE FROM SOLICITACAO_ADMISSAO WHERE CODIGO = ${codigo})`)
+
+
+        const emailsAprovadores = buscaEmailAprovadores.recordset.map(record => record.EMAIL_USUARIO).join(', ');
+        const emailSolicitante = buscaEmailSolicitante.recordset[0].EMAIL_USUARIO
+        const emailDP = 'dp@itone.com.br'
+
+        const link = `${domain}/vagas/${codigo}/detail`
+
+        const emailOptionsAprovadores = {
+            to: emailsAprovadores,
+            subject: 'Atualização Vaga',
+            content: atualizacao_aprovador({
+                link,
+                codigoSolicitacao: codigo,
+            }),
+            isHtlm: true
+        };
+
+        const emailOptionSolicitante = {
+            to: emailSolicitante,
+            subject: 'Atualização Vaga',
+            content: atualizacao_solicitante({
+                link,
+                codigoSolicitacao: codigo,
+            }),
+            isHtlm: true
+        };
+
+        const emailOptionDP = {
+            to: emailDP,
+            subject: 'Processo Admissional',
+            content: processo_administrativo({
+                link,
+                codigoSolicitacao: codigo,
+            }),
+            isHtlm: true
+        };
+
+        enviarEmail(emailOptionsAprovadores)
+        enviarEmail(emailOptionSolicitante)
+        enviarEmail(emailOptionDP)
+
         const corpo =
             'Usuário cadastrado';
 
@@ -454,9 +511,9 @@ module.exports = {
                 `update SOLICITACAO_ADMISSAO set STATUS = 'R' where CODIGO = ${codigoSolicitacao}`
             );
 
-    
 
-      
+
+
 
         const corpo = 'Solicitação N° ' + codigoSolicitacao + ' foi reprovada';
 
@@ -472,20 +529,15 @@ module.exports = {
             codigoSolicitacao
         );
 
-        // const reprovador = await conexao.request().query(`SELECT u.NOME_USUARIO
-        // FROM Usuarios u
-        // INNER JOIN Solicitacao_Item p ON p.Reprovador= u.COD_USUARIO
-        // WHERE p.Codigo = ${codigoSolicitacao} `);
         const reprovador = await conexao.request().query(`select NOME_USUARIO from Usuarios where COD_USUARIO = ${user.codigo}`)
 
         const emailOptions = {
             to: emailSolicitante,
             subject: 'Vaga Reprovada',
-            content: solicitacaoAprovada({
+            content: vaga_reprovada({
                 codigo: codigoSolicitacao,
-                // descricao,
-                // reprovador: reprovador.recordset[0].NOME_USUARIO,
-                // motivo: motivoReprovacao
+                motivo: motivoReprovacao
+                
             }),
             isHtlm: true
         };
@@ -514,9 +566,9 @@ module.exports = {
                 `update SOLICITACAO_ADMISSAO set STATUS = 'CA' where CODIGO = ${codigoSolicitacao}`
             );
 
-       
 
-       
+
+
         const corpo = 'Solicitação N° ' + codigoSolicitacao + ' foi cancelada';
 
         const emailSolicitante = await conexao.request().query(`SELECT EMAIL_USUARIO
@@ -531,20 +583,15 @@ module.exports = {
             codigoSolicitacao
         );
 
-        // const reprovador = await conexao.request().query(`SELECT u.NOME_USUARIO
-        // FROM Usuarios u
-        // INNER JOIN Solicitacao_Item p ON p.Reprovador= u.COD_USUARIO
-        // WHERE p.Codigo = ${codigoSolicitacao} `);
         const reprovador = await conexao.request().query(`select NOME_USUARIO from Usuarios where COD_USUARIO = ${user.codigo}`)
 
         const emailOptions = {
             to: emailSolicitante,
-            subject: 'Vaga Reprovada',
-            content: solicitacaoAprovada({
+            subject: 'Vaga Cancelada',
+            content: vaga_reprovada({
                 codigo: codigoSolicitacao,
-                // descricao,
-                // reprovador: reprovador.recordset[0].NOME_USUARIO,
-                // motivo: motivoReprovacao
+                motivo: motivoReprovacao
+                
             }),
             isHtlm: true
         };
@@ -659,7 +706,7 @@ module.exports = {
 
     async recomecarProcessoSeletivo(request) {
 
-        const { codigo } = request
+        const { codigo, motivo } = request
 
 
         const conexao = await sql.connect(db);
@@ -675,20 +722,21 @@ module.exports = {
 
 
 
-        const emailRH = 'gustavo@gustavo'
+        const emailRH = 'rh@itone.com.br'
 
         const linkRH = `${domain}/vagas/${codigo}/detail`
 
         const emailOptionsRH = {
             to: emailRH,
-            subject: 'Processo Seletivo',
-            content: processoSeletivo({
+            subject: 'Recomeço de Processo Seletivo',
+            content: processo_seletivoRec({
                 link: linkRH,
                 codigoSolicitacao: codigo,
                 cargo: solicitacao.CARGO,
                 unidade: solicitacao.UNIDADE,
                 departamento: solicitacao.DEPARTAMENTO,
-                gestorImediato: solicitacao.GESTOR_IMEDIATO
+                gestorImediato: solicitacao.GESTOR_IMEDIATO,
+                motivo: motivo
 
             }),
             isHtlm: true
@@ -717,28 +765,67 @@ module.exports = {
         const solicitacao = await solicitacaoService.solicitacaoUnica(codigo)
 
 
-        const emailSolicitante = 'gustavo@gustavo'
+        const buscaEmailSolicitante = await conexao.request().query(`SELECT EMAIL_USUARIO
+        FROM Usuarios
+        WHERE COD_USUARIO = (SELECT SOLICITANTE FROM SOLICITACAO_ADMISSAO WHERE CODIGO = ${codigo})`)
+
+        const buscaEmailAprovadores = await conexao.request().query(`
+        SELECT EMAIL_USUARIO
+    FROM Usuarios
+        WHERE COD_USUARIO IN (SELECT Codigo_Aprovador FROM APROVACOES_VAGAS WHERE Codigo_Solicitacao = ${codigo})
+        `)
+
+        const emailsAprovadores = buscaEmailAprovadores.recordset.map(record => record.EMAIL_USUARIO).join(', ');
+        const emailRH = 'rh@itone.com.br'
+        const emailDP = 'dp@itone.com.br'
 
         const link = `${domain}/vagas/${codigo}/detail`
 
-        const emailOptionsRH = {
-            to: emailSolicitante,
+        const emailOptionsSolicitante = {
+            to: buscaEmailSolicitante,
             subject: 'Contratado',
-            content: processoSeletivo({
+            content: atualizacao_solicitante({
                 link: link,
                 codigoSolicitacao: codigo,
-                cargo: solicitacao.CARGO,
-                unidade: solicitacao.UNIDADE,
-                departamento: solicitacao.DEPARTAMENTO,
-                gestorImediato: solicitacao.GESTOR_IMEDIATO
+            }),
+            isHtlm: true
+        };
 
+        const emailOptionsAprovadores = {
+            to: emailsAprovadores,
+            subject: 'Contratado',
+            content: atualizacao_solicitante({
+                link: link,
+                codigoSolicitacao: codigo,
+            }),
+            isHtlm: true
+        };
+
+        const emailOptionsRH = {
+            to: emailRH,
+            subject: 'Contratado',
+            content: atualizacao_solicitante({
+                link: link,
+                codigoSolicitacao: codigo,
+            }),
+            isHtlm: true
+        };
+
+        const emailOptionsDP = {
+            to: emailDP,
+            subject: 'Contratado',
+            content: atualizacao_solicitante({
+                link: link,
+                codigoSolicitacao: codigo,
             }),
             isHtlm: true
         };
 
 
-
+        enviarEmail(emailOptionsSolicitante)
+        enviarEmail(emailOptionsAprovadores)
         enviarEmail(emailOptionsRH)
+        enviarEmail(emailOptionsDP)
 
         return renderJson('Fim de Processo')
 
@@ -746,9 +833,9 @@ module.exports = {
 
     async update(request) {
 
-        const {ColaboradorEdit, acessosEspecificos, cargo, cartaoVisita, celularCorporativo,
-             centroDecusto, cliente, deal, departamento, horarioTrabalho, salario, substituicao, 
-             tipoAdmissao, tipoEquipamento, unidadeContratacao, usuarioSimilar, vagaEspecificaPCD, solicitacao} = request
+        const { ColaboradorEdit, acessosEspecificos, cargo, cartaoVisita, celularCorporativo,
+            centroDecusto, cliente, deal, departamento, horarioTrabalho, salario, substituicao,
+            tipoAdmissao, tipoEquipamento, unidadeContratacao, usuarioSimilar, vagaEspecificaPCD, solicitacao } = request
 
         const conexao = await sql.connect(db);
 

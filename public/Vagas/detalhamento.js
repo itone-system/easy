@@ -198,7 +198,7 @@ function formatarMoeda() {
   valor = valor.replace(/([0-9]{2})$/g, ",$1");
 
   if (valor.length > 6) {
-      valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+    valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
   }
 
   elemento.value = valor;
@@ -215,7 +215,7 @@ function formatarMoedaConf() {
   valor = valor.replace(/([0-9]{2})$/g, ",$1");
 
   if (valor.length > 6) {
-      valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+    valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
   }
 
   elemento.value = valor;
@@ -223,17 +223,17 @@ function formatarMoedaConf() {
 }
 
 function inserirConferencia() {
-  
-  var ids = ['valorConf', 'unidadeConf', 'horarioConf', 'tipoAdmissaoConf', 'cargoConf', 'pcdConf']; 
-  var objeto = {}; 
 
-  ids.forEach(function(id) {
-      var elemento = document.getElementById(id); 
-      if (elemento && elemento.value) { 
-          objeto[id] = elemento.value;
-      }
+  var ids = ['valorConf', 'unidadeConf', 'horarioConf', 'tipoAdmissaoConf', 'cargoConf', 'pcdConf'];
+  var objeto = {};
+
+  ids.forEach(function (id) {
+    var elemento = document.getElementById(id);
+    if (elemento && elemento.value) {
+      objeto[id] = elemento.value;
+    }
   });
-console.log('oioioi',objeto)
+  console.log('oioioi', objeto)
   objeto.codigoSolicitacao = document.getElementById('codigoSolicitacao').value
 
   fetch(endpoints.insertConferencia, {
@@ -253,22 +253,24 @@ console.log('oioioi',objeto)
         alert(dados);
       }
 
-    
+
 
 
       window.location.reload();
     });
 
-  console.log(objeto); 
+  console.log(objeto);
 
 }
 
 function recomecarProcessoSeletivo() {
-  
+
   const codigo = document.getElementById('codigoSolicitacao').value
+  const motivo = document.getElementById('motivoRecomeco').value
 
   const objeto = {
-    codigo
+    codigo,
+    motivo
   }
 
   fetch(endpoints.recomecarProcessoSeletivo, {
@@ -288,18 +290,18 @@ function recomecarProcessoSeletivo() {
         alert(dados);
       }
 
-    
+
 
 
       window.location.reload();
     });
 
-  console.log(objeto); 
+  console.log(objeto);
 
 }
 
 function finalizarProcessoDP() {
-  
+
   const codigo = document.getElementById('codigoSolicitacao').value
 
   const objeto = {
@@ -323,21 +325,21 @@ function finalizarProcessoDP() {
         alert(dados);
       }
 
-    
+
 
 
       window.location.reload();
     });
 
-  console.log(objeto); 
+  console.log(objeto);
 
 }
 
 
 function reprovarAdmissao() {
-  
+
   const codigoSolicitacao = document.getElementById('codigoSolicitacao').value
-  const motivoReprovacao = document.getElementById('motivoReprov').value
+  const motivoReprovacao = document.getElementById('motivoReprovAtual').value
 
   const objeto = {
     codigoSolicitacao,
@@ -361,18 +363,18 @@ function reprovarAdmissao() {
         alert(dados);
       }
 
-    
+
 
 
       window.location.reload();
     });
 
-  console.log(objeto); 
+  console.log(objeto);
 
 }
 
 function cancelarAdmissao() {
-  
+
   const codigoSolicitacao = document.getElementById('codigoSolicitacao').value
   const motivoReprovacao = document.getElementById('motivoCancelVaga').value
 
@@ -398,13 +400,13 @@ function cancelarAdmissao() {
         alert(dados);
       }
 
-    
+
 
 
       window.location.reload();
     });
 
-  console.log(objeto); 
+  console.log(objeto);
 
 }
 
@@ -442,35 +444,35 @@ const conveniaColaborares = () => {
 
 const conveniaCentroCusto = () => {
   fetch('https://public-api.convenia.com.br/api/v3/companies/cost-centers', {
-      method: 'GET',
-      redirect: 'follow',
-      headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          token: '82856aeb-fa11-4918-b2bc-f7a49322f69b'
-      }
+    method: 'GET',
+    redirect: 'follow',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      token: '82856aeb-fa11-4918-b2bc-f7a49322f69b'
+    }
   })
-      .then((response) => {
-          return response.json();
-      })
-      .then((result) => {
-          var dados = result.data;
-          let listaCC = [];
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      var dados = result.data;
+      let listaCC = [];
 
-          dados.forEach((element) => {
-              if (element.name.substr(0, 1) <= 9) {
-                  listaCC.push(element.name);
-                  listaCC.sort();
-              }
-          });
-
-          listaCC.forEach((element) => {
-              var localCC = document.getElementById('centroCustoEdit');
-              var option = document.createElement('option');
-              option.textContent = element;
-              localCC.appendChild(option);
-          });
+      dados.forEach((element) => {
+        if (element.name.substr(0, 1) <= 9) {
+          listaCC.push(element.name);
+          listaCC.sort();
+        }
       });
+
+      listaCC.forEach((element) => {
+        var localCC = document.getElementById('centroCustoEdit');
+        var option = document.createElement('option');
+        option.textContent = element;
+        localCC.appendChild(option);
+      });
+    });
 };
 
 function desabilitarCampoSubstituicao() {
@@ -505,7 +507,7 @@ function collectFormData() {
   formValues['celularCorporativo'] = document.getElementById('celularCorporativo').value;
   formValues['cartaoVisita'] = document.getElementById('cartaoVisita').value;
   formValues['solicitacao'] = document.getElementById('codigoSolicitacao').value;
-  
+
 
   fetch(endpoints.updateVaga, {
     method: 'POST',
@@ -524,7 +526,7 @@ function collectFormData() {
         alert(dados);
       }
 
-    
+
 
 
       window.location.reload();
