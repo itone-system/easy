@@ -5,6 +5,7 @@ window.onload = function () {
 
   conveniaColaborares()
   conveniaCentroCusto()
+  conveniaColaboraresIndic()
 
 
 }
@@ -440,6 +441,38 @@ const conveniaColaborares = () => {
 
     });
   })
+}
+
+const conveniaColaboraresIndic = () => {
+
+  fetch("https://public-api.convenia.com.br/api/v3/employees", {
+    method: 'GET',
+    redirect: 'follow',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      "token": "82856aeb-fa11-4918-b2bc-f7a49322f69b"
+    }
+  }).then(response => {
+    return response.json()
+  }).then(result => {
+    var dados = result.data
+    let listaColab = []
+
+    dados.forEach(element => {
+      listaColab.push(element.name + ' ' + element.last_name)
+      listaColab.sort()
+    });
+
+    listaColab.forEach(element => {
+      var localColab = document.getElementById('indicPremiada')
+      var option = document.createElement('option');
+      option.textContent = element;
+      localColab.appendChild(option);
+
+    });
+  })
+
 }
 
 const conveniaCentroCusto = () => {

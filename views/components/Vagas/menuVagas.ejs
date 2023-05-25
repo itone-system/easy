@@ -31,7 +31,7 @@
   
           <li class="navbar-link dropdown">
             <a href="#" class="dropdown-toggle">
-              <i class='bx bx-cart icon'></i>
+             <i class='bx bxs-group icon'></i>
               <span class="text nav-text">Vagas</span>
             </a>
             <ul class="sub-menu" style="position:absolute;top:100%;left:0;">
@@ -39,15 +39,14 @@
               <% if (dadosUser.permissoes.ADMISSAO.CRIAR) { %>
   
                 <li class="central"><a class=" text nav-text" href="/vagas/create" style="font-size:12.5px;"> <i
-                      class='bx bx-bar-chart-alt-2 icon'></i> Nova Abertura de vaga</a></li>
+                      class='bx bx-user-plus icon'></i>Abertura de vaga</a></li>
                 <% } %>
-  
   
                   <% if (dadosUser.permissoes.ADMISSAO.ACOMPANHAR) { %>
   
                     <li class="central"><a class=" text nav-text" onclick="" href="/vagas/index"
                         style="font-size:12.5px;">
-                        <i class='bx bx-search icon'></i> Acompanhar Vagas</a></li>
+                        <i class='bx bx-search icon'></i> Consultar Vagas</a></li>
                     <% } %>
             </ul>
           </li>

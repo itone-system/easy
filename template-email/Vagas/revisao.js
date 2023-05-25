@@ -20,7 +20,7 @@ module.exports = ({ link, codigoSolicitacao, motivo }) => {
                 <p style="font-size: 16px; line-height: 1.5em; margin: 0 0 10px 0;">Easy informa que a vaga abaixo necessita de revisão:</p>
                 <ul style="font-size: 16px; line-height: 1.5em; margin: 0;">
                   <li><strong>Solicitação n°:</strong> ${codigoSolicitacao}</li>
-                  <li><strong>Solicitação n°:</strong> ${motivo}</li>
+                  <li><strong>Motivo:</strong> ${motivo}</li>
                 </ul>
               </td>
             </tr>
