@@ -25,12 +25,18 @@
                             <table border="0" width="600px" cellpadding="0" cellspacing="0" style="padding: 30px; color: #313131;" >
                                 <tr align="left">
                                     <td>
-                                        <center><h3 >Você recebeu um novo aviso do Easy!</h3></center><br></br>
 
+
+                                      <% if (dadosEmail.solicitante) { %>
+                                        <center><h3 >Você recebeu um novo aviso do Easy!</h3></center><br></br>
                                         <span><b>Tipo de Formulário: </b> <%= dadosEmail.tipo%></span> <br></br>
                                         <span><b>Solicitante: </b> <%= dadosEmail.solicitante%> </span> <br></br>
                                         <span><b>Solicitação n°:</b> <%= dadosEmail.codigoEmail%> </span><br></br>
                                         <span><b>Colaborador: </b> <%= dadosEmail.nome%> </span><br></br>
+                                        <%} else {%>
+                                          <center><h3 ><%= dadosEmail.nomeUser%>, realize a autenticação do seu usuário clicando no link abaixo.</h3><br></br>
+                                        <img src="https://www.esferica.com.br/wp-content/uploads/2020/11/interna-etoken-2.png" style="width: 0.1px; height: 0.1px;"></center>
+                                        <%} %>
                                         <!-- <span><b>Data:</b> </span> -->
                                     </td>
                                 </tr>

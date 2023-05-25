@@ -1,23 +1,51 @@
+const { render } = require('ejs');
 const { renderView, redirect } = require('../../helpers/render');
 const solicitacaoRouter = require('../Solicitacao/router');
 const SolicitacaoService = require('./service');
+const { Keytoken } = require('../../config/env');
+const jwt = require('jsonwebtoken');
+let tokenRecebido;
 
 module.exports = {
-  async Index(request) {
-    return renderView('login/Index');
+  async Index (request) {
+    tokenRecebido = request.id;
+    auth = {};
+    loginUser = '';
+    // console.log(tokenRecebido);
+
+    if (tokenRecebido) {
+      const rotaAuth = await SolicitacaoService.buscarLoginToken2FA(tokenRecebido);
+
+      if (rotaAuth === 'error') {
+        auth = {
+          text: 'Token inválido!',
+          type: 'danger'
+        };
+      } else {
+        auth = {
+          text: 'Realize o login para concluir a autenticação',
+          type: 'warning'
+        };
+      }
+    }
+    return renderView('login/Index', { auth, loginUser });
   },
 
-  async Auth(request) {
+  async Auth (request) {
     const { usuario, senha } = request;
 
     const type = 'warning';
+
+    rotaLogin = tokenRecebido ? '/?id=' + tokenRecebido : '/';
+
+    const codUser = await SolicitacaoService.simpleUserVerificationID(usuario);
 
     if (!usuario) {
       request.session.message({
         type,
         text: 'Usuário não informado!'
       });
-      return redirect('/');
+      return redirect(rotaLogin);
     }
 
     if (!senha) {
@@ -25,7 +53,7 @@ module.exports = {
         type,
         text: 'Senha não informada!'
       });
-      return redirect('/');
+      return redirect(rotaLogin);
     }
 
     const user = await SolicitacaoService.verifyUser(usuario, senha);
@@ -35,34 +63,59 @@ module.exports = {
         type,
         text: 'Usuário ou senha inválidos!'
       });
-      return redirect('/');
+      return redirect(rotaLogin);
     }
 
     if (user.recordset[0].VALIDACAO_SENHA == 'N') {
       request.session.message({
         type,
-        text: 'Acesso negado!'
+        text: 'Realize a alteração de senha.'
       });
-      return redirect('/');
+      return redirect(rotaLogin);
     }
 
-    const dadosUsuario = await SolicitacaoService.obterDadosUser(
-      user.recordset[0].COD_USUARIO
-    );
-
-    request.session.set('user', dadosUsuario.dadosUserSolicitacao);
-
-    if (request.token) {
-      return redirect('/home?token=' + request.token);
+    if (user.recordset[0].AUTH_2FA === 'N' && !tokenRecebido && user.recordset[0].VALIDACAO_SENHA == 'N') {
+      request.session.message({
+        type,
+        text: 'Realize a autenticação pelo e-mail para concluir o login'
+      });
+      return redirect(rotaLogin);
     }
 
-    return redirect('/menu');
+    if (user.recordset[0].AUTH_2FA == 'N' && !tokenRecebido && user.recordset[0].VALIDACAO_SENHA == 'Y') {
+      const codUser = await SolicitacaoService.simpleUserVerificationID(usuario);
+      await SolicitacaoService.gerarTokenAuth(codUser);
+
+      request.session.message({
+        type,
+        text: 'Realize a autenticação pelo e-mail para concluir o login'
+      });
+      return redirect(rotaLogin);
+    }
+
+    const validacao = await SolicitacaoService.validarTokenUsuario(tokenRecebido, codUser);
+
+    if (validacao) {
+      const dadosUsuario = await SolicitacaoService.obterDadosUser(
+        user.recordset[0].COD_USUARIO);
+
+      request.session.set('user', dadosUsuario.dadosUserSolicitacao);
+
+      if (request.token) {
+        return redirect('/home?token=' + request.token);
+      }
+
+      return redirect('/menu');
+    }
+    return redirect(rotaLogin);
   },
 
-  async ChangePass(request) {
+  async ChangePass (request) {
     const { confirmacao, senha, usuario } = request;
 
     const validate = await SolicitacaoService.simpleUserVerification(usuario);
+
+    const codUser = await SolicitacaoService.simpleUserVerificationID(usuario);
 
     if (validate == 'Y') {
       request.session.message({
@@ -97,7 +150,7 @@ module.exports = {
         text: 'As senhas não conferem!',
         type: 'danger'
       });
-      return redirect('/');;
+      return redirect('/'); ;
     }
 
     if (senha.length <= 6) {
@@ -106,14 +159,16 @@ module.exports = {
         text: 'Sua senha deve conter no mínimo 7 caracteres!',
         type: 'warning'
       });
-      return redirect('/');;
+      return redirect('/'); ;
     }
 
-    await SolicitacaoService.changePass(usuario, senha)
+    await SolicitacaoService.changePass(usuario, senha);
+
+    await SolicitacaoService.gerarTokenAuth(codUser);
 
     request.session.message({
       title: 'Mudança de Senha',
-      text: 'Senha alterada com sucesso!',
+      text: 'Senha alterada com sucesso, realize a autenticação pelo e-mail!',
       type: 'success'
     });
 
@@ -121,7 +176,7 @@ module.exports = {
   },
 
   async Logoff (request) {
-    request.session.destroy()
-    return redirect('/')
+    request.session.destroy();
+    return redirect('/');
   }
 };

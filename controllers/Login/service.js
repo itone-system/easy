@@ -1,5 +1,10 @@
 const sql = require('mssql');
-const { db } = require('../../config/env');
+const { db, domain } = require('../../config/env');
+const jwt = require('jsonwebtoken');
+const { Keytoken } = require('../../config/env');
+const enviarEmail = require('../../infra/emailAdapter');
+const ejs = require('ejs');
+const { renderView, redirect } = require('../../helpers/render');
 
 exports.obterDadosUser = async (codigo) => {
   const conexao = await sql.connect(db);
@@ -19,6 +24,8 @@ exports.obterDadosUser = async (codigo) => {
      JOIN  MODULOS MODULOS_ACESSOS on ACESSOS.COD_MODULO = MODULOS_ACESSOS.ID
      RIGHT join PERFIL DADOS on DADOS.ID = ACESSOS.COD_DADOS
        WHERE Usuarios.COD_USUARIO = ${codigo}`);
+
+  await conexao.request().query(`update usuarios set AUTH_2FA = 'Y' where COD_USUARIO = '${codigo}'`);
 
   function set (obj, prop, value) {
     obj[prop] = value;
@@ -193,5 +200,97 @@ exports.simpleUserVerification = async (usuario) => {
     return (result.recordset[0].VALIDACAO_SENHA);
   } else {
     return ('error');
+  }
+};
+
+exports.simpleUserVerificationID = async (usuario) => {
+  const conexao = await sql.connect(db);
+  const result = await conexao.request().query(`select COD_USUARIO from Usuarios where LOGIN_USUARIO = '${usuario}'`);
+  if (result.recordset[0]) {
+    return (result.recordset[0].COD_USUARIO);
+  } else {
+    return ('error');
+  }
+};
+
+exports.gerarTokenAuth = async (usuario) => {
+  try {
+    const token = jwt.sign(
+      {
+        idUser: usuario
+      },
+      Keytoken.secret,
+      {
+        expiresIn: '100d'
+      }
+    );
+
+    const conexao = await sql.connect(db);
+    await conexao.request().query(`UPDATE USUARIOS SET TOKEN = '${token}'  WHERE COD_USUARIO = '${usuario}'`);
+
+    const emailUsuario = await conexao.request().query(`SELECT EMAIL_USUARIO, NOME_USUARIO FROM USUARIOS where COD_USUARIO = '${usuario}'`);
+
+    href = domain + '/?id=' + token;
+
+    const dadosEmail = {
+      nomeUser: emailUsuario.recordset[0].NOME_USUARIO
+    };
+
+    ejs.renderFile(
+      'template-email/retornoEmailForms.ejs',
+      { dadosEmail, href },
+      function (err, data) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(data);
+
+          const emailOptions = {
+            to: emailUsuario.recordset[0].EMAIL_USUARIO,
+            subject: 'Autenticação de Usuário',
+            content: data,
+            isHtlm: true
+          };
+
+          enviarEmail(emailOptions);
+        }
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.buscarLoginToken2FA = async (token) => {
+  const conexao = await sql.connect(db);
+  loginUser = '';
+  try {
+    dadosToken = jwt.verify(token, Keytoken.secret);
+
+    const result = await conexao.request().query(`select LOGIN_USUARIO from usuarios where COD_USUARIO = '${dadosToken.idUser}'`);
+
+    loginUser = result.recordset[0].LOGIN_USUARIO;
+
+    auth = {
+      text: 'Realize o login para concluir a autenticação',
+      type: 'warning'
+    };
+
+    return renderView('login/Index', { auth, loginUser });
+  } catch (err) {
+    console.log(err);
+    return ('error');
+  }
+};
+
+exports.validarTokenUsuario = async (token, usuario) => {
+  const conexao = await sql.connect(db);
+
+  const tokenUsuario = await conexao.request().query(`SELECT TOKEN FROM USUARIOS where COD_USUARIO = '${usuario}'`);
+
+  if (tokenUsuario.recordset[0].TOKEN === token) {
+    return true;
+  } else {
+    return false;
   }
 };

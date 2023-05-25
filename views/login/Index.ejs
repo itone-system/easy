@@ -17,7 +17,7 @@
       <div class="form-container sign-in-container">
         <form id="form" action="<%=locals.endpoints.login%>" method="post">
           <h1>Entrar</h1>
-          <input type="text" placeholder="Usuario" name="usuario" />
+          <input type="text" placeholder="Usuario" name="usuario"  value="<%=loginUser%>"/>
           <input type="password" placeholder="Senha" name="senha" />
           <a href="#" data-toggle="modal" data-target="#myModal" aria-hidden="true">Primeiro Acesso? Clique Aqui.</a>
           <button type="submit">Entrar</button>
