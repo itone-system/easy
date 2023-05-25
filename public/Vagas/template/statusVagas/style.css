@@ -47,7 +47,7 @@
 
 .timeline-options-done {
     color: white;
-    background-color: #27417b;
+    background-color: #10253F
 }
 
 
@@ -63,7 +63,7 @@
 }
 
 .timeline-line-done {
-    background-color: #27417b;
+    background-color: #10253F;
 }
 
 .timeline li:first-child .timeline-line {

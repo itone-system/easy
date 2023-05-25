@@ -1,0 +1,290 @@
+                  <!-- The Modal -->
+                  <div class="modal fade" id="myModalEdit">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h4 class="modal-title">Editar Solicitação</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+
+
+                          <!-- Modal body -->
+                          <div class="modal-body">
+                            <div class="row g-3">
+                              <div class="col Descricao">
+                                <label>Tipo de Admissão:</label>
+                                <select id="tipoAdmissao" class="form-control border-secondar shadow-none"
+                                  aria-label="Default select example" required name="tipo">
+                                  <option selected value="">Selecione...</option>
+                                  <option value="CLT">CLT</option>
+                                  <option value="Estagiário">Estagiário</option>
+                                  <option value="Jovem Aprendiz">Jovem Aprediz</option>
+                                  <option value="PJ">PJ</option>
+                                </select>
+  
+                              </div>
+                              <div class="col">
+  
+                                <label>Unidade de Contratação:</label>
+                                <select id="unidadeContratacao" class="form-control border-secondar shadow-none"
+                                  aria-label="Default select example" required name="unidade">
+                                  <option selected value="">Selecione...</option>
+                                  <option value="Belo Horizonte">Belo Horizonte</option>
+                                  <option value="Distrito Federal">Distrito Federal</option>
+                                  <option value="São Paulo">São Paulo</option>
+                                  <option value="Espirito Santo">Espirito Santo</option>
+                                  <option value="ITPS">ITPS</option>
+                                </select>
+  
+  
+                              </div>
+  
+                              <div class="col">
+                                <div class="mb-3">
+                                  <label for="EscolhadeSubstuição" class="form-label">Substituição:</label>
+                                  <br>
+                                  <div class="form-check form-check-inline mt-2" style="align-items: center;">
+                                    <input class="form-check-input" type="radio" name="substituicao" id="radio01" value="S" required
+                                      onclick="habilitarCampoSubstituicao()" <% if (solicitacao.SUBSTITUICAO === "S") { %> checked <% } %>>
+                                    <label class="form-check-label">Sim</label>
+                                  </div>
+                                  <div class="form-check form-check-inline" style="margin-left: 5%;">
+                                    <input class="form-check-input" type="radio" name="substituicao" id="radio02" value="N" required
+                                      onclick="desabilitarCampoSubstituicao()" <% if (solicitacao.SUBSTITUICAO === "N") { %> checked <% } %>>
+                                    <label class="form-check-label">Não</label>
+                                  </div>
+                                </div>
+                            </div>
+                            
+                              <div class="col">
+                                <div class="mb-3">
+  
+                                    <label>Colaborador Substituído:</label>
+      
+      
+                                    <select name="" id="ColaboradorEdit" class="form-control">
+                                      <option selected value="">Selecione...</option>
+                                    </select>
+      
+      
+                                </div>
+                              </div>
+                            </div>
+                            <br>
+  
+                            <div class="row g-3">
+                              <div class="col">
+  
+                                <label>Cargo:</label>
+  
+  
+                                <input id="cargo" for="Descricao" type="text"
+                                  class="form-control alterar-background inputDetail" value="<%= solicitacao.CARGO %>" placeholder="">
+  
+  
+                              </div>
+                              <div class="col">
+  
+                                <label>Salário:</label>
+  
+  
+                                <input type="text" class="form-control border-secondar shadow-none" id="valor"
+                                  aria-describedby="textHelp" required placeholder="0,00" onkeyup="formatarMoeda()"
+                                  name="salario" value="<%= solicitacao.FormattedSALARIO %>"> 
+  
+  
+                              </div>
+                              <div class="col Descricao">
+                                <label>Usuário Similar Ativo:</label>
+  
+                                <input id="usuarioSimilar" for="Solicitante" type="text"
+                                  class="form-control alterar-background inputDetail" placeholder=""
+                                  aria-label="Last name" style="font-size: 13px" value="<%=solicitacao.USUARIO_SIMILARATIVO %>">
+  
+  
+  
+  
+  
+  
+  
+                              </div>
+  
+                            
+                            </div>
+                            <br>
+  
+                            <div class="row g-3">
+                              <div class="col">
+  
+                                <label>Horário de Trabalho:</label>
+  
+  
+                                <select class="form-control border-secondar shadow-none"
+                                  aria-label="Default select example" id="hrTrabalho" required name="horario">
+                                  <option selected value="<%= solicitacao.HORARIO %>">Selecione um Horário...</option>
+                                  <option value="6:30|12:00|13:00|15:30">6:30 - 12:00 - 13:00 - 15:30</option>
+                                  <option value="7:00|12:00|13:00|16:00">7:00 - 12:00 - 13:00 - 16:00</option>
+                                  <option value="7:00|12:00|13:00|19:00">7:00 - 12:00 - 13:00 - 19:00</option>
+                                  <option value="7:30|12:00|13:00|16:30">7:30 - 12:00 - 13:00 - 16:30</option>
+                                  <option value="7:00|12:00|14:00|17:30">7:00 - 12:00 - 14:00 - 17:30</option>
+                                  <option value="8:00/12:00">8:00 - 12:00</option>
+                                  <option value="8:00|12:00|13:00|17:00">8:00 - 12:00 - 13:00 - 17:00</option>
+                                  <option value="8:00|12:00|13:30|17:30">8:00 - 12:00 - 13:30 - 17:30</option>
+                                  <option value="8:00|12:00|14:00|18:00">8:00 - 12:00 - 14:00 - 18:00</option>
+                                  <option value="8:30|12:00|13:00|17:30">8:30 - 12:00 - 13:00 - 17:30</option>
+                                  <option value="8:30|12:00|13:30|18:00">8:30 - 12:00 - 13:30 - 18:00</option>
+                                  <option value="8:30|12:30">8:30 - 12:30</option>
+                                  <option value="9:00|12:00|13:00|18:00">9:00 - 12:00 - 13:00 - 18:00</option>
+                                  <option value="9:00|12:00|13:30|18:30">9:00 - 12:00 - 13:30 - 18:30</option>
+                                  <option value="9:00|12:00|14:00|19:00">9:00 - 12:00 - 14:00 - 19:00</option>
+                                  <option value="9:00|13:00">9:00 - 13:00</option>
+                                  <option value="10:00|12:00|13:00|19:00">10:00 - 12:00 - 13:00 - 19:00</option>
+                                  <option value="10:00|14:00">10:00 - 14:00</option>
+                                  <option value="11:00|14:00|15:00|20:00">11:00 - 14:00 - 15:00 - 20:00</option>
+                                  <option value="13:00|17:00">13:00 - 17:00</option>
+                                  <option value="13:00|18:00|19:00|22:00">13:00 - 18:00 - 19:00 - 22:00</option>
+                                  <option value="14:00|18:00">14:00 - 18:00</option>
+                                  <option value="14:00|19:00|20:00|23:00">14:00 - 19:00 - 20:00 - 23:00</option>
+                                  <option value="19:00|1:00|2:00|7:00">19:00 - 1:00 - 2:00 - 7:00</option>
+                                  <option value="22:00|2:00|3:00|7:00">22:00 - 2:00 - 3:00 - 7:00</option>
+                                  <option value="23:00|3:00|4:00|8:00">23:00 - 3:00 - 4:00 - 8:00</option>
+                                </select>
+  
+  
+                              </div>
+                              <div class="col">
+  
+                                <label>Departamento:</label>
+  
+  
+                                <select class="form-control border-secondar shadow-none"
+                                  aria-label="Default select example" id="opcaoDepartamento" required name="departamento">
+                                  <option selected value="<%= solicitacao.DEPARTAMENTO %>">Selecione...</option>
+                                  <option value="Administrativo">Administrativo</option>
+                                  <option value="Comercial">Comercial</option>
+                                  <option value="Gente e Cultura">Gente e Cultura</option>
+                                  <option value="Marketing">Marketing</option>
+                                  <option value="Pré Vendas">Pré Vendas</option>
+                                  <option value="Produtos">Produtos</option>
+                                  <option value="Serviços">Serviços</option>
+                                </select>
+  
+  
+                              </div>
+                              <div class="col">
+  
+                                <label>Centro de Custo:</label>
+  
+  
+                                <select class="form-control border-secondar shadow-none"
+                                  aria-label="Default select example" id="centroCustoEdit" required name="centroDecusto">
+                                  <option selected value="">Selecione...</option>
+                                  
+  
+                                </select>
+  
+  
+                              </div>
+  
+                              <div class="col Descricao">
+                                <label>Vaga específica Para PCD:</label>
+  
+                                <select name="" id="vagaEspecificaPCD" class="form-control">
+                                  <option <% if (!solicitacao.SUBSTITUICAO) { %> selected <% } %> value="">Selecione...</option>
+                                  <option <% if (solicitacao.SUBSTITUICAO === "S") { %> selected <% } %> value="S">Sim</option>
+                                  <option <% if (solicitacao.SUBSTITUICAO === "N") { %> selected <% } %> value="N">Não</option>
+                              </select>
+  
+  
+  
+  
+  
+  
+  
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row g-3">
+  
+                              <div class="col">
+  
+                                <label>Acessos Específicos:</label>
+  
+  
+                                <input id="acessosEspecificos" for="Descricao" type="text"
+                                  class="form-control alterar-background inputDetail" value="<%= solicitacao.ACESSOS_ESPECIFICOS %>" placeholder="">
+  
+                              </div>
+  
+                              <div class="col">
+  
+                                <label>Tipo de Equipamento:</label>
+  
+                                <select name="" id="tipoEquipamento" class="form-control">
+                                  <option selected value="">Selecione...</option>
+                                  <option value="Notebook">Notebook</option>
+                                  <option value="Desktop">Desktop</option>
+                                </select>
+  
+                              </div>
+  
+                              <div class="col">
+  
+                                <label>Cliente</label>
+  
+  
+                                <input id="cliente" for="Descricao" type="text"
+                                  class="form-control alterar-background inputDetail" value=""
+                                  placeholder="Caso não tenha, informe 1">
+  
+  
+                              </div>
+  
+                              <div class="col">
+  
+                                <label>Deal:</label>
+  
+  
+                                <input id="deal" for="Descricao" type="text"
+                                  class="form-control alterar-background inputDetail" value=""
+                                  placeholder="Caso não tenha, informe 1">
+  
+  
+                              </div>
+                            </div>
+  
+                            <div class="row">
+                              <div class="col mt-5">
+                                <label for="EscolhadeSubstuição" class="form-label">Celular Corporativo:</label>
+                                <select name="" id="celularCorporativo" class="form-control">
+                                  <option selected value="">Selecione...</option>
+                                  <option value="S">Sim</option>
+                                  <option value="N">Não</option>
+                                </select>
+                              </div>
+                              <div class="col mt-5">
+                                <label for="EscolhadeSubstuição" class="form-label">Cartão de Visita:</label>
+  
+                                <select name="" id="cartaoVisita" class="form-control">
+                                  <option selected value="">Selecione...</option>
+                                  <option value="S">Sim</option>
+                                  <option value="N">Não</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+  
+                          <!-- Modal footer -->
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+  
+                            <button type="button" class="btn btn-success" onclick="collectFormData()">Salvar</button>
+                          </div>
+
+
+                      </div>
+                    </div>
+                  </div>

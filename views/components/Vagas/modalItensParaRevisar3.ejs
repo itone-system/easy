@@ -1,0 +1,149 @@
+<div class="modal" id="myModal3">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Itens Para Revisão:</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+          <% 
+            let counter = 0;
+            let index = 0;
+
+            for (let item in dadosParaConferencia) {
+              if (dadosParaConferencia[item]) counter++;
+            }
+
+            for (let item in dadosParaConferencia) {
+              if (dadosParaConferencia[item]) {
+                let className;
+                if (counter === 1 || index === 2) className = 'col-12';
+                else className = 'col-6';
+                index++;
+
+                switch (item) {
+                  case 'salario':
+                  %>
+                    <div class="<%=className%>">
+                      <label for="input1">Salário:</label>
+                      <input type="text" class="form-control" id="valorConf" placeholder="0,00" onkeyup="formatarMoedaConf()">
+                    </div>
+                  <%
+                    break;
+                  case 'horario':
+                  %>
+                    <div class="<%=className%>">
+                      <label for="input2">Horário de Trabalho:</label>
+                                    <select class="form-control border-secondar shadow-none"
+                                        aria-label="Default select example" id="horarioConf" required name="horario">
+                                        <option selected value="">Selecione um Horário...</option>
+                                        <option value="6:30|12:00|13:00|15:30">6:30 - 12:00 - 13:00 - 15:30</option>
+                                        <option value="7:00|12:00|13:00|16:00">7:00 - 12:00 - 13:00 - 16:00</option>
+                                        <option value="7:00|12:00|13:00|19:00">7:00 - 12:00 - 13:00 - 19:00</option>
+                                        <option value="7:30|12:00|13:00|16:30">7:30 - 12:00 - 13:00 - 16:30</option>
+                                        <option value="7:00|12:00|14:00|17:30">7:00 - 12:00 - 14:00 - 17:30</option>
+                                        <option value="8:00/12:00">8:00 - 12:00</option>
+                                        <option value="8:00|12:00|13:00|17:00">8:00 - 12:00 - 13:00 - 17:00</option>
+                                        <option value="8:00|12:00|13:30|17:30">8:00 - 12:00 - 13:30 - 17:30</option>
+                                        <option value="8:00|12:00|14:00|18:00">8:00 - 12:00 - 14:00 - 18:00</option>
+                                        <option value="8:30|12:00|13:00|17:30">8:30 - 12:00 - 13:00 - 17:30</option>
+                                        <option value="8:30|12:00|13:30|18:00">8:30 - 12:00 - 13:30 - 18:00</option>
+                                        <option value="8:30|12:30">8:30 - 12:30</option>
+                                        <option value="9:00|12:00|13:00|18:00">9:00 - 12:00 - 13:00 - 18:00</option>
+                                        <option value="9:00|12:00|13:30|18:30">9:00 - 12:00 - 13:30 - 18:30</option>
+                                        <option value="9:00|12:00|14:00|19:00">9:00 - 12:00 - 14:00 - 19:00</option>
+                                        <option value="9:00|13:00">9:00 - 13:00</option>
+                                        <option value="10:00|12:00|13:00|19:00">10:00 - 12:00 - 13:00 - 19:00</option>
+                                        <option value="10:00|14:00">10:00 - 14:00</option>
+                                        <option value="11:00|14:00|15:00|20:00">11:00 - 14:00 - 15:00 - 20:00</option>
+                                        <option value="13:00|17:00">13:00 - 17:00</option>
+                                        <option value="13:00|18:00|19:00|22:00">13:00 - 18:00 - 19:00 - 22:00</option>
+                                        <option value="14:00|18:00">14:00 - 18:00</option>
+                                        <option value="14:00|19:00|20:00|23:00">14:00 - 19:00 - 20:00 - 23:00</option>
+                                        <option value="19:00|1:00|2:00|7:00">19:00 - 1:00 - 2:00 - 7:00</option>
+                                        <option value="22:00|2:00|3:00|7:00">22:00 - 2:00 - 3:00 - 7:00</option>
+                                        <option value="23:00|3:00|4:00|8:00">23:00 - 3:00 - 4:00 - 8:00</option>
+                                    </select>
+                    </div>
+                  <%
+                    break;
+                  case 'unidade':
+                  %>
+                    <div class="<%=className%>">
+                      <label for="input2">Unidade</label>
+                                            <select id="unidadeConf" class="form-control border-secondar shadow-none"
+                                                aria-label="Default select example" required name="unidade">
+                                                <option selected value="">Selecione...</option>
+                                                <option value="Belo Horizonte">Belo Horizonte</option>
+                                                <option value="Distrito Federal">Distrito Federal</option>
+                                                <option value="São Paulo">São Paulo</option>
+                                                <option value="Espirito Santo">Espirito Santo</option>
+                                                <option value="ITPS">iTPS</option>
+                                            </select>
+                    </div>
+                  <%
+                    break;
+                  case 'tipoAdmissao':
+                  %>
+                    <div class="<%=className%>">
+                      <label for="input2">Tipo de Admissão:</label>
+                            <select id="tipoAdmissaoConf" class="form-control border-secondar shadow-none"
+                                aria-label="Default select example" required name="tipo">
+                                <option selected value="">Selecione...</option>
+                                <option value="CLT">CLT</option>
+                                <option value="Estagiário">Estagiário</option>
+                                <option value="Jovem Aprendiz">Jovem Aprediz</option>
+                                <option value="PJ">PJ</option>
+                            </select>
+                    </div>
+                  <%
+                    break;
+                  case 'cargo':
+                  %>
+                    <div class="<%=className%>">
+                      <label for="input2">Novo Cargo:</label>
+                       <input type="text" class="form-control" id="cargoConf">
+                    </div>
+                  <%
+                    break;
+                  case 'pcd':
+                  %>
+                    <div class="<%=className%>">
+                      <label for="input2">Vaga Exclusiva Para PCD:</label>
+                                            <select id="pcdConf" class="form-control border-secondar shadow-none"
+                                                aria-label="Default select example" required name="tipo">
+                                                <option selected value="">Selecione...</option>
+                                                <option value="S">Sim</option>
+                                                <option value="N">Não</option>
+
+                                            </select>
+                    </div>
+                  <%
+                    break;
+                }
+              }
+            }
+          %>
+        </div>
+
+        <div class="text-center" style="width: 100%; display: flex; justify-content: center;">
+          <div class="" style="margin: 10px 0; max-width: 500px; width: 100%;">
+            <label for="motivo" style="display: block; font-size: 16px; margin-bottom: 5px;">Motivo:</label>
+            <textarea id="motivo" readonly name="motivo" rows="4" cols="50" style="font-size: 16px;"><%=dadosParaConferencia.motivo %></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="botaoConfClose" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-success" id="botaoConf" onclick="inserirConferencia()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>

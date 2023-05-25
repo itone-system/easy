@@ -3,6 +3,9 @@ window.onload = function () {
   const clickEvent = new MouseEvent('click');
   toggle.dispatchEvent(clickEvent);
 
+  conveniaColaborares()
+  conveniaCentroCusto()
+
 
 }
 
@@ -36,8 +39,9 @@ function aprovarSolicitacao() {
 function validarFormulario(event) {
   let camposVazios = [];
 
+  const form = document.querySelector('#formCandidato');
   // Seleciona todos os campos que são obrigatórios
-  const camposObrigatorios = document.querySelectorAll('[required]');
+  const camposObrigatorios = form.querySelectorAll('[required]');
 
   // Percorre todos os campos obrigatórios
   camposObrigatorios.forEach(campo => {
@@ -229,7 +233,7 @@ function inserirConferencia() {
           objeto[id] = elemento.value;
       }
   });
-
+console.log('oioioi',objeto)
   objeto.codigoSolicitacao = document.getElementById('codigoSolicitacao').value
 
   fetch(endpoints.insertConferencia, {
@@ -256,5 +260,274 @@ function inserirConferencia() {
     });
 
   console.log(objeto); 
+
+}
+
+function recomecarProcessoSeletivo() {
+  
+  const codigo = document.getElementById('codigoSolicitacao').value
+
+  const objeto = {
+    codigo
+  }
+
+  fetch(endpoints.recomecarProcessoSeletivo, {
+    method: 'POST',
+    body: JSON.stringify(objeto),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((dados) => {
+      return dados.json();
+    })
+    .then((dados) => {
+
+      if (dados) {
+        alert(dados);
+      }
+
+    
+
+
+      window.location.reload();
+    });
+
+  console.log(objeto); 
+
+}
+
+function finalizarProcessoDP() {
+  
+  const codigo = document.getElementById('codigoSolicitacao').value
+
+  const objeto = {
+    codigo
+  }
+
+  fetch(endpoints.finalizarProcessoDP, {
+    method: 'POST',
+    body: JSON.stringify(objeto),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((dados) => {
+      return dados.json();
+    })
+    .then((dados) => {
+
+      if (dados) {
+        alert(dados);
+      }
+
+    
+
+
+      window.location.reload();
+    });
+
+  console.log(objeto); 
+
+}
+
+
+function reprovarAdmissao() {
+  
+  const codigoSolicitacao = document.getElementById('codigoSolicitacao').value
+  const motivoReprovacao = document.getElementById('motivoReprov').value
+
+  const objeto = {
+    codigoSolicitacao,
+    motivoReprovacao
+  }
+
+  fetch(endpoints.reprovarAdmissao, {
+    method: 'POST',
+    body: JSON.stringify(objeto),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((dados) => {
+      return dados.json();
+    })
+    .then((dados) => {
+
+      if (dados) {
+        alert(dados);
+      }
+
+    
+
+
+      window.location.reload();
+    });
+
+  console.log(objeto); 
+
+}
+
+function cancelarAdmissao() {
+  
+  const codigoSolicitacao = document.getElementById('codigoSolicitacao').value
+  const motivoReprovacao = document.getElementById('motivoCancelVaga').value
+
+  const objeto = {
+    codigoSolicitacao,
+    motivoReprovacao
+  }
+
+  fetch(endpoints.cancelarAdmissao, {
+    method: 'POST',
+    body: JSON.stringify(objeto),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((dados) => {
+      return dados.json();
+    })
+    .then((dados) => {
+
+      if (dados) {
+        alert(dados);
+      }
+
+    
+
+
+      window.location.reload();
+    });
+
+  console.log(objeto); 
+
+}
+
+
+const conveniaColaborares = () => {
+
+  fetch("https://public-api.convenia.com.br/api/v3/employees", {
+    method: 'GET',
+    redirect: 'follow',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      "token": "82856aeb-fa11-4918-b2bc-f7a49322f69b"
+    }
+  }).then(response => {
+    return response.json()
+  }).then(result => {
+    var dados = result.data
+    let listaColab = []
+
+    dados.forEach(element => {
+      listaColab.push(element.name + ' ' + element.last_name)
+      listaColab.sort()
+    });
+
+    listaColab.forEach(element => {
+      var localColab = document.getElementById('ColaboradorEdit')
+      var option = document.createElement('option');
+      option.textContent = element;
+      localColab.appendChild(option);
+
+    });
+  })
+}
+
+const conveniaCentroCusto = () => {
+  fetch('https://public-api.convenia.com.br/api/v3/companies/cost-centers', {
+      method: 'GET',
+      redirect: 'follow',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          token: '82856aeb-fa11-4918-b2bc-f7a49322f69b'
+      }
+  })
+      .then((response) => {
+          return response.json();
+      })
+      .then((result) => {
+          var dados = result.data;
+          let listaCC = [];
+
+          dados.forEach((element) => {
+              if (element.name.substr(0, 1) <= 9) {
+                  listaCC.push(element.name);
+                  listaCC.sort();
+              }
+          });
+
+          listaCC.forEach((element) => {
+              var localCC = document.getElementById('centroCustoEdit');
+              var option = document.createElement('option');
+              option.textContent = element;
+              localCC.appendChild(option);
+          });
+      });
+};
+
+function desabilitarCampoSubstituicao() {
+  document.getElementById("ColaboradorEdit").disabled = true;
+}
+
+function habilitarCampoSubstituicao() {
+  document.getElementById("ColaboradorEdit").disabled = false;
+  return true;
+}
+
+
+
+
+function collectFormData() {
+  let formValues = {};
+  formValues['tipoAdmissao'] = document.getElementById('tipoAdmissao').value;
+  formValues['unidadeContratacao'] = document.getElementById('unidadeContratacao').value;
+  formValues['substituicao'] = document.querySelector('input[name="substituicao"]:checked').value;
+  formValues['ColaboradorEdit'] = document.getElementById('ColaboradorEdit').value;
+  formValues['cargo'] = document.getElementById('cargo').value;
+  formValues['salario'] = document.getElementById('valor').value;
+  formValues['usuarioSimilar'] = document.getElementById('usuarioSimilar').value;
+  formValues['horarioTrabalho'] = document.getElementById('hrTrabalho').value;
+  formValues['departamento'] = document.getElementById('opcaoDepartamento').value;
+  formValues['centroDecusto'] = document.getElementById('centroCustoEdit').value;
+  formValues['vagaEspecificaPCD'] = document.getElementById('vagaEspecificaPCD').value;
+  formValues['acessosEspecificos'] = document.getElementById('acessosEspecificos').value;
+  formValues['tipoEquipamento'] = document.getElementById('tipoEquipamento').value;
+  formValues['cliente'] = document.getElementById('cliente').value;
+  formValues['deal'] = document.getElementById('deal').value;
+  formValues['celularCorporativo'] = document.getElementById('celularCorporativo').value;
+  formValues['cartaoVisita'] = document.getElementById('cartaoVisita').value;
+  formValues['solicitacao'] = document.getElementById('codigoSolicitacao').value;
+  
+
+  fetch(endpoints.updateVaga, {
+    method: 'POST',
+    body: JSON.stringify(formValues),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  })
+    .then((dados) => {
+      return dados.json();
+    })
+    .then((dados) => {
+
+      if (dados) {
+        alert(dados);
+      }
+
+    
+
+
+      window.location.reload();
+    });
 
 }

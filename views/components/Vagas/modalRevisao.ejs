@@ -1,0 +1,80 @@
+<!-- The Modal -->
+<div class="modal" id="myModal2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Itens Para Revisão:</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="row" style="margin: 10px 0;">
+            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
+                class="custom-checkbox" data-name="salario">
+              Salário
+            </label>
+          </div>
+
+          <div class="row" style="margin: 10px 0;">
+            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
+                class="custom-checkbox" data-name="unidade">
+              Unidade de Contratação
+            </label>
+          </div>
+
+          <div class="row" style="margin: 10px 0;">
+            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
+                class="custom-checkbox" data-name="horario">
+              Horário de Trabalho
+            </label>
+          </div>
+
+          <div class="row" style="margin: 10px 0;">
+            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
+                class="custom-checkbox" data-name="tipoAdmissao">
+              Tipo de Admissão
+            </label>
+          </div>
+
+          <div class="row" style="margin: 10px 0;">
+            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
+                class="custom-checkbox" data-name="cargo">
+              Cargo
+            </label>
+          </div>
+
+          <div class="row" style="margin: 10px 0;">
+            <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
+              <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
+                class="custom-checkbox" data-name="pcd">
+              Vaga exclusiva para PCD.
+            </label>
+          </div>
+
+          <div class="row" style="margin: 10px 0;">
+            <label for="motivo" style="display: block; font-size: 16px; margin-bottom: 5px;">Motivo:</label>
+            <textarea id="motivo" name="motivo" rows="4" cols="50" style="font-size: 16px;"></textarea>
+          </div>
+        </div>
+
+
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="botaoConfClose" data-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-success" id="botaoConf"
+            onclick="realizarConferencia()">Solicitar</button>
+        </div>
+
+
+      </div>
+    </div>
+  </div>

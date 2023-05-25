@@ -20,5 +20,16 @@ AdmissaoRouter.post('/insertCandidato', expressAdapter(admissaoController.insert
 
 AdmissaoRouter.post('/solicitarConferencia', expressAdapter(admissaoController.conferencia))
 
-AdmissaoRouter.post('/insertConferencia', expressAdapter(admissaoController.insertCandidato))
+AdmissaoRouter.post('/insertConferencia', expressAdapter(admissaoController.insertConferencia))
+
+AdmissaoRouter.post('/recomecarProcessoSeletivo', expressAdapter(admissaoController.recomecarProcessoSeletivo))
+
+AdmissaoRouter.post('/finalizarProcessoDP', expressAdapter(admissaoController.finalizarProcessoDP))
+
+AdmissaoRouter.post('/reprovar', expressAdapter(admissaoController.Reprovar))
+
+AdmissaoRouter.post('/cancelarAdmissao', expressAdapter(admissaoController.cancelarVaga)) 
+
+AdmissaoRouter.post('/updateVaga', expressAdapter(admissaoController.update))
+
 module.exports = AdmissaoRouter;

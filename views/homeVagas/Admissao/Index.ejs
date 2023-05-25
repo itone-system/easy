@@ -88,7 +88,7 @@
                     <th style="text-align: center;"> Departamento</th>
                     <th style="text-align: center;"> Cargo</th>
                     <th style="text-align: center;"> Unidade </th>
-                    <th style="text-align: center;"> Data De Aberturaa</th>
+                    <th style="text-align: center;"> Data De Abertura</th>
                     <th style="text-align: center;"> Dias em aberto </th>
                     <th style="text-align: center;"> Status </th>
                   </thead>
@@ -121,32 +121,37 @@
                      
                         <td class="linhas">
                           <% if(socilitacao.STATUS =='A' ) { %>
-                            <a id="pendentes" class="btn btn-warning text-white buttonStatus"
-                            style=" height: 27px; font-size: 11px" data-toggle="tooltip" data-placement="top">Pendente Aprovação</a>
+                            <a id="pendentes" class="btn text-black buttonStatus buttonStatusSmall"
+                            style=" height: 27px; font-size: 11px; background-color: #FFD700;" data-toggle="tooltip" data-placement="top"  data-original-title="<%= socilitacao.Aprovadores_Pendentes %>">Pendente Aprovação</a>
                             <% } %>
                               <% if(socilitacao.STATUS=='PS' ) { %>
-                                <a class="btn btn-primary text-white buttonStatus"
-                                style=" height: 27px; font-size: 11px">Processo Seletivo</a>
+                                <a class="btn text-white buttonStatus buttonStatusSmall"
+                                style=" height: 27px; font-size: 11px; background-color: #27417B;">Processo Seletivo</a>
+
                                 <input id="tooltips" type="text" value="<%=JSON.stringify(socilitacao.aprovadores)%>"
                                   hidden>
 
                                 <% } %>
                                   <% if(socilitacao.STATUS=='PA' ) { %>
-                                    <a class="btn btn-secondary text-white buttonStatus"
+                                    <a class="btn btn-primary text-white buttonStatus buttonStatusSmall"
                                       style=" height: 27px; font-size: 11px">Processo Admissional</a>
                                     <% } %>
                                     <% if(socilitacao.STATUS=='CO' ) { %>
-                                      <a class="btn text-white buttonStatus"
-                                        style=" height: 27px; font-size: 11px; background-color: blueviolet;">Em Revisão</a>
+                                      <a class="btn text-black buttonStatus buttonStatusSmall"
+                                        style=" height: 27px; font-size: 11px; background-color: #D3D3D3;">Em Revisão</a>
                                       <% } %>
                                       <% if(socilitacao.STATUS=='C' ) { %>
-                                        <a class="btn btn-success text-white buttonStatus"
-                                          style=" height: 27px; font-size: 11px">Contratado</a>
+                                        <a class="btn text-white buttonStatus buttonStatusSmall"
+                                          style="height: 27px; font-size: 10px; background-color: #008000;">Contratado</a>
                                         <% } %>
                                           <% if(socilitacao.STATUS=='R' ) { %>
-                                            <a class="btn btn-danger text-white buttonStatus"
-                                              style=" height: 27px; font-size: 10px">Indeferido</a>
+                                            <a class="btn btn-danger text-white buttonStatus buttonStatusSmall"
+                                              style=" height: 27px; font-size: 10px">Reprovado</a>
                                             <% } %>
+                                            <% if(socilitacao.STATUS=='CA' ) { %>
+                                              <a class="btn btn-danger text-white buttonStatus buttonStatusSmall"
+                                              style=" height: 27px; font-size: 10px">Vaga Cancelada</a>
+                                              <% } %>
 
 
                         </td>

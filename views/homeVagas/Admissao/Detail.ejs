@@ -15,7 +15,7 @@
 
           <main class="text">
 
-            <h2 style="border-bottom: 1px solid #27417B; margin-bottom: 25px; margin-top: 25px;  padding: 13px 0">
+            <h2 class="title" style="border-bottom: 1px solid #27417B; margin-bottom: 25px; padding: 13px 0;">
               Detalhamento</h2>
             <p> </p>
 
@@ -24,750 +24,211 @@
               <div class="row g-3">
                 <div class="col Descricao">
                   <label>Tipo de Admissão:</label>
-
                   <input id="Solicitante" for="Solicitante" type="text"
                     class="form-control alterar-background inputDetail" placeholder="Solicitante" aria-label="Last name"
-                    style="font-size: 13px" value="<%=solicitacao.tipoDeAdmissao%>" readonly>
-
-
-
-
-
-
-
+                    style="font-size: 13px" value="<%=solicitacao.TIPO_DE_ADMISSAO%>" readonly>
                 </div>
-                <div class="col">
 
+                <div class="col">
                   <label>Unidade de Contratação:</label>
-
-
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
-                    value="<%=solicitacao.unidade%>" placeholder="Descricao do Item" readonly>
-
-
-
-
-
-
-
-
-
-
+                    value="<%=solicitacao.UNIDADE%>" placeholder="Descricao do Item" readonly>
                 </div>
 
                 <div class="col">
-
                   <label>Gestor Imediato:</label>
-
-
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
-                    value="<%=solicitacao.gestorImediato%>" placeholder="Descricao do Item" readonly>
-
-
+                    value="<%=solicitacao.GESTOR_IMEDIATO%>" placeholder="Descricao do Item" readonly>
                 </div>
               </div>
+
               <br>
 
               <div class="row g-3">
                 <div class="col">
-
                   <label>Cargo:</label>
-
-
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
-                    value="<%=solicitacao.cargo%>" placeholder="Descricao do Item" readonly>
-
-
+                    value="<%=solicitacao.CARGO%>" placeholder="Descricao do Item" readonly>
                 </div>
                 <div class="col">
-
                   <label>Salário:</label>
-
-
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
-                    value="<%=solicitacao.salario%>" placeholder="Descricao do Item" readonly>
-
-
+                    value="<%=solicitacao.FormattedSALARIO%>" placeholder="Descricao do Item" readonly>
                 </div>
                 <div class="col Descricao">
                   <label>Usuário Similar Ativo:</label>
-
                   <input id="Solicitante" for="Solicitante" type="text"
                     class="form-control alterar-background inputDetail" placeholder="Solicitante" aria-label="Last name"
-                    style="font-size: 13px" value="<%=solicitacao.tipoDeAdmissao%>" readonly>
-
-
-
-
-
-
-
+                    style="font-size: 13px" value="<%=solicitacao.USUARIO_SIMILARATIVO%>" readonly>
                 </div>
 
                 <div class="col">
-
                   <label>Colaborador Substituído:</label>
-
-
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
-                    value="<%=solicitacao.gestorImediato%>" placeholder="Não existe." readonly>
-
-
+                    value="<%=solicitacao.SUBSTITUICAO === 'S' ? 'Sim' : 'Não' %>%>" placeholder="Não existe." readonly>
                 </div>
               </div>
               <br>
 
               <div class="row g-3">
                 <div class="col">
-
                   <label>Horário de Trabalho:</label>
-
-
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
-                    value="<%=solicitacao.horario%>" placeholder="Descricao do Item" readonly>
-
-
+                    value="<%=solicitacao.HORARIO%>" placeholder="Descricao do Item" readonly>
                 </div>
                 <div class="col">
-
                   <label>Departamento:</label>
-
-
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
-                    value="<%=solicitacao.departamento%>" placeholder="Descricao do Item" readonly>
-
-
+                    value="<%=solicitacao.DEPARTAMENTO%>" placeholder="Descricao do Item" readonly>
                 </div>
                 <div class="col">
-
                   <label>Centro de Custo:</label>
-
-
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
                     value="<%=solicitacao.CENTRO_DE_CUSTO%>" placeholder="Descricao do Item" readonly>
-
-
                 </div>
 
                 <div class="col Descricao">
                   <label>Vaga Para PCD:</label>
-
                   <input id="Solicitante" for="Solicitante" type="text"
                     class="form-control alterar-background inputDetail" placeholder="Solicitante" aria-label="Last name"
                     style="font-size: 13px" value="<%= solicitacao.PCD === 'S' ? 'Sim' : 'Não' %>" readonly>
-
-
-
-
-
-
-
                 </div>
               </div>
+              
               <br>
+
               <div class="row g-3">
-
                 <div class="col">
-
                   <label>Acessos Específicos:</label>
-
-
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
-                    value="<%=solicitacao.unidade%>" placeholder="Descricao do Item" readonly>
-
+                    value="<%=solicitacao.ACESSOS_ESPECIFICOS%>" placeholder="Descricao do Item" readonly>
                 </div>
 
                 <div class="col">
-
                   <label>Tipo de Equipamento:</label>
-
-
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
-                    value="<%=solicitacao.unidade%>" placeholder="Descricao do Item" readonly>
-
+                    value="<%=solicitacao.EQUIPAMENTO%>" placeholder="Descricao do Item" readonly>
                 </div>
 
                 <div class="col">
-
                   <label>Cliente</label>
-
-
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
                     value="<%=solicitacao.CLIENTE%>" placeholder="Descricao do Item" readonly>
-
-
                 </div>
 
                 <div class="col">
-
                   <label>Deal:</label>
-
-
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
                     value="<%=solicitacao.DEAL%>" placeholder="Descricao do Item" readonly>
-
-
                 </div>
               </div>
-              <br>
-              <% if (solicitacao.STATUS=='A' && dadosUser.permissoes.ADMISSAO.APROVAR && momentoAprovacao=='Y' ) { %>
 
-                <button class="btn btn-success text-white" onclick="aprovarSolicitacao()">Aprovar</button>
-                <button class="btn btn-danger text-white" data-target="#modalDesaprovar"
-                  data-toggle="modal">Reprovar</button>
+              <br>
+
+              <% if (solicitacao.STATUS=='A' && dadosUser.permissoes.ADMISSAO.EDITAR && semAprovacao=='Y' && dadosUser.codigo == solicitacao.SOLICITANTE ) { %>
+                <button class="btn botaoEditar text-white" data-toggle="modal" style="background-color: #10253F;"
+                  data-target="#myModalEdit" onclick="editarSolicitacao()">Editar</button>
+                <button class="btn btn-danger text-white botaoCancelarVaga" style="float: right;"
+                  data-target="#myModalCancelarVaga" data-toggle="modal">Cancelar Vaga</button>
                 <% } %>
 
-                  <% if (solicitacao.STATUS=='PS' ) { %>
-                    <div class="container">
-                      <!-- Button to Open the Modal -->
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                        Incluir dados do novo Profissional
-                      </button>
-
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">
-                        Solicitar Revisão
-                      </button>
-
-                      <!-- The Modal -->
-                      <div class="modal fade" id="myModal">
-                        <div class="modal-dialog modal-lg">
-                          <div class="modal-content">
-
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                              <h4 class="modal-title">Candidato Aprovado</h4>
-                              <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-
-                            <!-- Modal body -->
-                            <form onsubmit="return validarFormulario(event)">
-                              <div class="modal-body">
-                                <div style="margin-top: 1.5%">
-
-                                  <div class="row">
-                                    <div class="col">
-                                      <div class="mb-3">
-                                        <label for="exampleInputText" class="form-label">Nome Completo Do Candidato
-                                          Aprovado:</label>
-                                        <input type="text" class="form-control border-secondar shadow-none"
-                                          id="nomeCompleto" aria-describedby="textHelp" required placeholder=""
-                                          name="nomeProfissional">
-                                        <label class="campo"></label>
-                                      </div>
-                                    </div>
-                                    <div class="col">
-                                      <label for="exampleInputText" class="form-label">Tutor Durante o
-                                        Onboarding:</label>
-                                      <input type="text" class="form-control border-secondar shadow-none" id="tutor"
-                                        aria-describedby="textHelp" required placeholder="" name="tutorOnboarding">
-                                      <label class="campo"></label>
-                                    </div>
-                                  </div>
-
-                                  <div class="row">
-                                    <div class="col mb-3">
-                                      <label for="exampleInputText" class="form-label">Telefone Pessoal:</label>
-                                      <input type="tel" class="form-control border-secondar shadow-none" id="telPessoal"
-                                        aria-describedby="textHelp" required placeholder=""
-                                        onkeyup="mascaraTelefone(event)" maxlength="15" name="Telefone">
-                                      <label class="campo"></label>
-                                    </div>
-                                    <div class="col">
-                                      <label for="exampleInputText" class="form-label">E-mail Pessoal:</label>
-                                      <input type="text" class="form-control border-secondar shadow-none"
-                                        id="emailPessoal" aria-describedby="textHelp" required placeholder=""
-                                        name="email">
-                                      <label class="campo"></label>
-                                    </div>
-                                    <div class="col">
-                                      <label for="exampleInputText" class="form-label">Indicação Premiada:</label>
-                                      <input type="text" class="form-control border-secondar shadow-none"
-                                        id="indicPremiada" aria-describedby="textHelp" required placeholder=""
-                                        name="indicacaoPremiada">
-                                      <label class="campo"></label>
-                                    </div>
-                                  </div>
-
-                                  <div class="row mb-4">
-                                    <div class="col">
-                                      <label for="exampleInputText" class="form-label">Email Corporativo:</label>
-                                      <input type="tel" class="form-control border-secondar shadow-none"
-                                        id="emailCorporativo" aria-describedby="textHelp" required placeholder=""
-                                        name="emailCorporativo">
-                                      <label class="campo"></label>
-                                    </div>
-                                    <div class="col">
-                                      <label for="exampleInputText" class="form-label">PCD:</label>
-                                      <br>
-                                      <div class="form-check form-check-inline mt-2">
-                                        <input class="form-check-input shadow-none" type="radio" name="pcd" id="radio09"
-                                          value="S" required>
-                                        <label class="form-check-label">Sim</label>
-                                      </div>
-                                      <div class="form-check form-check-inline" style="margin-left: 5%;">
-                                        <input class="form-check-input shadow-none" type="radio" name="pcd" id="radio10"
-                                          value="N" required>
-                                        <label class="form-check-label">Não</label>
-                                      </div>
-                                      <label class="campo"></label>
-                                    </div>
-                                    <div class="col">
-                                      <label for="exampleInputText" class="form-label">Data de Inicio:</label>
-                                      <input type="date" class="form-control border-secondar shadow-none"
-                                        id="dateInicio" aria-describedby="textHelp" required
-                                        placeholder="indicação premiada" name="dataInicio">
-                                      <label class="campo"></label>
-                                    </div>
-                                  </div>
-
-                                  <div class="row">
-                                    <div class="col">
-                                      <label for="exampleInputText" class="form-label">Modalidade de Trabalho:</label>
-                                      <select class="form-control border-secondar shadow-none"
-                                        aria-label="Default select example" id="mdtrabalho" required name="modalidade">
-                                        <option value="">Selecione....</option>
-                                        <option value="Presencial">Presencial</option>
-                                        <option value="Híbrido">Híbrido</option>
-                                        <option value="Remoto">Remoto</option>
-                                      </select>
-                                      <label class="campo"></label>
-                                    </div>
-                                    <div class="col">
-                                      <label for="exampleInputText" class="form-label">Escala Sobreaviso:</label>
-                                      <br>
-                                      <div class="form-check form-check-inline mt-2">
-                                        <input class="form-check-input shadow-none" type="radio" name="escala"
-                                          id="radio11" value="S" required>
-                                        <label class="form-check-label">Sim</label>
-                                      </div>
-                                      <div class="form-check form-check-inline" style="margin-left: 5%;">
-                                        <input class="form-check-input shadow-none" type="radio" name="escala"
-                                          id="radio12" value="N" required>
-                                        <label class="form-check-label">Não</label>
-                                      </div>
-                                      <label class="campo"></label>
-                                    </div>
-                                    <div class="col">
-                                      <label for="exampleInputText" class="form-label">Treinamento:</label>
-                                      <select class="form-control border-secondar shadow-none"
-                                        aria-label="Default select example" id="treinamento" required
-                                        name="treinamentos">
-                                        <option value="">Selecione....</option>
-                                        <option value="Presencial">Presencial</option>
-                                        <option value="Online">Online</option>
-                                      </select>
-                                      <label class="campo"></label>
-                                    </div>
-                                  </div>
-
-                                  <h5 style="border-bottom:1px solid #120947; margin-top: 1%;">Observações Gerais</h5>
-                                  <div style="margin-top: 0.5%">
-                                    <div class="row">
-                                      <div class="col">
-                                        <div class="mb-3">
-                                          <label for="exampleInputTextArea" class="form-label" style="border-bottom:1px solid #120947;
-                                                          font-size: 15px;">Negociação Diferenciada que for alinhada
-                                            com o profissional</label>
-                                          <input type="text" class="form-control" required name="observacoes">
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
 
 
-                                </div>
+                <%- include('../../components/Vagas/modalEdicao') %>
 
-                                <!-- Modal footer -->
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                  <button type="submit" class="btn btn-success">Salvar</button>
+                <%- include('../../components/Vagas/modalReprovacao') %>
 
-                                </div>
+                <%- include('../../components/Vagas/ModalRecomecoProcesso') %>
 
+                 <%- include('../../components/Vagas/modalCancelarVaga') %>
 
-                            </form>
+                 <%- include('../../components/Vagas/modalRevisao') %>
 
-                          </div>
-                        </div>
-                      </div>
+                 <%- include('../../components/Vagas/modalCandidato') %>
 
-                    </div>
+                  <% if (solicitacao.STATUS=='A' && dadosUser.permissoes.ADMISSAO.APROVAR && momentoAprovacao=='Y' ) {
+                    %>
+
+                    <button class="btn btn-success text-white" onclick="aprovarSolicitacao()">Aprovar</button>
+                    <button class="btn btn-danger text-white" data-target="#myModalReprov"
+                      data-toggle="modal">Reprovar</button>
+                    <button type="button" class="btn btn-warning" style="float: right;" data-toggle="modal"
+                      data-target="#myModal2">
+                      Solicitar Revisão
+                    </button>
                     <% } %>
 
-                      <% if (solicitacao.STATUS=='PA' ) { %>
-                        <div style="margin-top: 1.5%">
-
-                          <div class="row">
-                            <div class="col">
-                              <div class="mb-3">
-                                <label for="exampleInputText" class="form-label">Nome Completo Do Candidato
-                                  Aprovado:</label>
-                                <input type="text" class="form-control border-secondar shadow-none" id="nomeCompleto"
-                                  aria-describedby="textHelp" required readonly placeholder="" name="nomeProfissional"
-                                  value="">
-                                <label class="campo"></label>
-                              </div>
-                            </div>
-                            <div class="col">
-                              <label for="exampleInputText" class="form-label">Tutor Durante o Onboarding:</label>
-                              <input type="text" class="form-control border-secondar shadow-none" id="tutor"
-                                aria-describedby="textHelp" readonly required placeholder="" name="tutorOnboarding">
-                              <label class="campo"></label>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col mb-3">
-                              <label for="exampleInputText" class="form-label">Telefone Pessoal:</label>
-                              <input type="tel" class="form-control border-secondar shadow-none" id="telPessoal"
-                                aria-describedby="textHelp" readonly required placeholder=""
-                                onkeyup="mascaraTelefone(event)" maxlength="15" name="Telefone">
-                              <label class="campo"></label>
-                            </div>
-                            <div class="col">
-                              <label for="exampleInputText" class="form-label">E-mail Pessoal:</label>
-                              <input type="text" class="form-control border-secondar shadow-none" id="emailPessoal"
-                                aria-describedby="textHelp" required readonly placeholder="" name="email">
-                              <label class="campo"></label>
-                            </div>
-                            <div class="col">
-                              <label for="exampleInputText" class="form-label">Indicação Premiada:</label>
-                              <input type="text" class="form-control border-secondar shadow-none" id="indicPremiada"
-                                aria-describedby="textHelp" required readonly placeholder="" name="indicacaoPremiada">
-                              <label class="campo"></label>
-                            </div>
-                          </div>
-
-                          <div class="row mb-4">
-                            <div class="col">
-                              <label for="exampleInputText" class="form-label">Email Corporativo:</label>
-                              <input type="tel" class="form-control border-secondar shadow-none" id="emailCorporativo"
-                                aria-describedby="textHelp" required readonly placeholder="" name="emailCorporativo">
-                              <label class="campo"></label>
-                            </div>
-                            <div class="col">
-                              <label for="exampleInputText" class="form-label">PCD:</label>
-                              <br>
-                              <div class="form-check form-check-inline mt-2">
-                                <input class="form-check-input shadow-none" readonly type="radio" name="pcd"
-                                  id="radio09" value="S" required>
-                                <label class="form-check-label">Sim</label>
-                              </div>
-                              <div class="form-check form-check-inline" style="margin-left: 5%;">
-                                <input class="form-check-input shadow-none" type="radio" readonly name="pcd"
-                                  id="radio10" value="N" required>
-                                <label class="form-check-label">Não</label>
-                              </div>
-                              <label class="campo"></label>
-                            </div>
-                            <div class="col">
-                              <label for="exampleInputText" class="form-label">Data de Inicio:</label>
-                              <input type="date" class="form-control border-secondar shadow-none" id="dateInicio"
-                                aria-describedby="textHelp" required readonly placeholder="indicação premiada"
-                                name="dataInicio">
-                              <label class="campo"></label>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col">
-                              <label for="exampleInputText" class="form-label">Modalidade de Trabalho:</label>
-                              <select class="form-control border-secondar shadow-none"
-                                aria-label="Default select example" id="mdtrabalho" required name="modalidade" readonly>
-                                <option value="">Selecione....</option>
-                                <option value="Presencial">Presencial</option>
-                                <option value="Híbrido">Híbrido</option>
-                                <option value="Remoto">Remoto</option>
-                              </select>
-                              <label class="campo"></label>
-                            </div>
-                            <div class="col">
-                              <label for="exampleInputText" class="form-label">Escala Sobreaviso:</label>
-                              <br>
-                              <div class="form-check form-check-inline mt-2">
-                                <input class="form-check-input shadow-none" readonly type="radio" name="escala"
-                                  id="radio11" value="S" required>
-                                <label class="form-check-label">Sim</label>
-                              </div>
-                              <div class="form-check form-check-inline" style="margin-left: 5%;">
-                                <input class="form-check-input shadow-none" readonly type="radio" name="escala"
-                                  id="radio12" value="N" required>
-                                <label class="form-check-label">Não</label>
-                              </div>
-                              <label class="campo"></label>
-                            </div>
-                            <div class="col">
-                              <label for="exampleInputText" class="form-label">Treinamento:</label>
-                              <select class="form-control border-secondar shadow-none" readonly
-                                aria-label="Default select example" id="treinamento" required name="treinamentos">
-                                <option value="">Selecione....</option>
-                                <option value="Presencial">Presencial</option>
-                                <option value="Online">Online</option>
-                              </select>
-                              <label class="campo"></label>
-                            </div>
-                          </div>
-
-                          <h5 style="border-bottom:1px solid #120947; margin-top: 1%;">Observações Gerais</h5>
-                          <div style="margin-top: 0.5%">
-                            <div class="row">
-                              <div class="col">
-                                <div class="mb-3">
-                                  <label for="exampleInputTextArea" class="form-label" style="border-bottom:1px solid #120947;
-                                              font-size: 15px;">Negociação Diferenciada que for alinhada com o
-                                    profissional</label>
-                                  <input type="text" class="form-control" required readonly name="observacoes">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
 
 
-                        </div>
-                        <button type="button" class="btn btn-primary">
-                          Finalizar Processo
-                        </button>
+
+
+                      <% if (solicitacao.STATUS=='PS' && dadosUser.permissoes.ADMISSAO.CANDIDATO_PS ) { %>
+
+                          <button type="button" class="btn btn-success novoProfissional" data-toggle="modal"
+                            data-target="#myModal">
+                            Incluir dados do novo Profissional
+                          </button>
+
+                          <button type="button" class="btn btn-warning" style="float: right;" data-toggle="modal"
+                            data-target="#myModal2">
+                            Solicitar Revisão
+                          </button>
+
+                          <button class="btn btn-danger text-white botaoCancelarVaga" data-target="#myModalCancelarVaga"
+                            data-toggle="modal">Cancelar Vaga</button>
+
                         <% } %>
-                          <!-- inputs para pegar valores -->
-                          <input type="text" id="codigoSolicitacao" value="<%=solicitacao.CODIGO%>" hidden>
-                          <!-- ------------------------- -->
 
-                          <% if (solicitacao.STATUS=='CO' ) { %>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal3">
-                              Realizar Revisão
-                            </button>
-                            <% } %>
+
+                        <% if (solicitacao.STATUS=='PA'  ) { %>
+                          <%- include('../../components/Vagas/dadosProfissional') %>
+                         
+                          <% if (dadosUser.permissoes.ADMISSAO.PROCESSO_DP ) { %>
+                           
+                           <%- include('../../components/Vagas/dadosProfissional') %>
+
+                           <button type="button" class="btn btn-success finalizarProcesso"
+                             onclick="finalizarProcessoDP()">
+                             Finalizar Processo
+                           </button>
+                           <button type="button" class="btn btn-warning retomarProcesso" style="float: right;"
+                             data-toggle="modal" data-target="#myModalRecomecoProcesso">
+                             Recomeçar Processo Seletivo
+                           </button>
+                           <button type="button" class="btn btn-danger botaoCancelarVaga" data-toggle="modal"
+                             data-target="#myModalCancelarVaga">
+                             Cancelar Vaga
+                           </button>
+                           <% } %>
+                           <% } %>
+                          
+
+
+
+                              <input type="text" id="codigoSolicitacao" value="<%=solicitacao.CODIGO%>" hidden>
+                             
+
+
+
+                              <% if (solicitacao.STATUS=='CO' && dadosUser.codigo == solicitacao.SOLICITANTE) { %>
+                                <%- include('../../components/Vagas/modalItensParaRevisar3') %>
+                                <button type="button" class="btn btn-warning" style="float: right;" data-toggle="modal"
+                                  data-target="#myModal3">
+                                  Realizar Revisão
+                                </button>
+                                <% } %>
+
+
+
+
+
+                                  <% if (solicitacao.STATUS=='C' ) { %>
+                                    <%- include('../../components/Vagas/dadosContratado') %>
+                                    <% } %>
 
           </main>
       </section>
 
-      <!-- The Modal -->
-      <div class="modal" id="myModal2">
-        <div class="modal-dialog">
-          <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">Itens Para Revisão:</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-              <div class="row" style="margin: 10px 0;">
-                <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
-                  <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
-                    class="custom-checkbox" data-name="salario">
-                  Salário
-                </label>
-              </div>
-
-              <div class="row" style="margin: 10px 0;">
-                <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
-                  <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
-                    class="custom-checkbox" data-name="unidade">
-                  Unidade de Contratação
-                </label>
-              </div>
-
-              <div class="row" style="margin: 10px 0;">
-                <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
-                  <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
-                    class="custom-checkbox" data-name="horario">
-                  Horário de Trabalho
-                </label>
-              </div>
-
-              <div class="row" style="margin: 10px 0;">
-                <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
-                  <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
-                    class="custom-checkbox" data-name="tipoAdmissao">
-                  Tipo de Admissão
-                </label>
-              </div>
-
-              <div class="row" style="margin: 10px 0;">
-                <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
-                  <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
-                    class="custom-checkbox" data-name="cargo">
-                  Cargo
-                </label>
-              </div>
-
-              <div class="row" style="margin: 10px 0;">
-                <label style="font-size: 16px; display: inline-block; vertical-align: middle;">
-                  <input value="sim" type="checkbox" name="" id="" style="margin-right: 5px; vertical-align: middle;"
-                    class="custom-checkbox" data-name="pcd">
-                  Vaga esclusiva para PCD.
-                </label>
-              </div>
-
-              <div class="row" style="margin: 10px 0;">
-                <label for="motivo" style="display: block; font-size: 16px; margin-bottom: 5px;">Motivo:</label>
-                <textarea id="motivo" name="motivo" rows="4" cols="50" style="font-size: 16px;"></textarea>
-              </div>
-            </div>
-
-
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" id="botaoConfClose" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-success" id="botaoConf"
-                onclick="realizarConferencia()">Solicitar</button>
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-
-
-
-<% if (solicitacao.STATUS=='CO') { %>
- 
-
-      <div class="modal" id="myModal3">
-        <div class="modal-dialog">
-          <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">Itens Para Revisão:</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-            <div class="modal-body">
-              <div class="row">
-                <div class="col">
-                <% if (dadosParaConferencia.salario) { %>
-
-                    <label for="input1">Salário:</label>
-                    <input type="text" class="form-control" id="valorConf" placeholder="0,00" onkeyup="formatarMoedaConf()">
-                  <% } %>
-
-                    <% if (dadosParaConferencia.horario) { %>
-
-                        <label for="input2">Horário de Trabalho:</label>
-                        <select class="form-control border-secondar shadow-none" aria-label="Default select example"
-                        id="horarioConf" required name="horario">
-                        <option selected value="">Selecione um Horário...</option>
-                        <option value="6:30|12:00|13:00|15:30">6:30 - 12:00 - 13:00 - 15:30</option>
-                        <option value="7:00|12:00|13:00|16:00">7:00 - 12:00 - 13:00 - 16:00</option>
-                        <option value="7:00|12:00|13:00|19:00">7:00 - 12:00 - 13:00 - 19:00</option>
-                        <option value="7:30|12:00|13:00|16:30">7:30 - 12:00 - 13:00 - 16:30</option>
-                        <option value="7:00|12:00|14:00|17:30">7:00 - 12:00 - 14:00 - 17:30</option>
-                        <option value="8:00/12:00">8:00 - 12:00</option>
-                        <option value="8:00|12:00|13:00|17:00">8:00 - 12:00 - 13:00 - 17:00</option>
-                        <option value="8:00|12:00|13:30|17:30">8:00 - 12:00 - 13:30 - 17:30</option>
-                        <option value="8:00|12:00|14:00|18:00">8:00 - 12:00 - 14:00 - 18:00</option>
-                        <option value="8:30|12:00|13:00|17:30">8:30 - 12:00 - 13:00 - 17:30</option>
-                        <option value="8:30|12:00|13:30|18:00">8:30 - 12:00 - 13:30 - 18:00</option>
-                        <option value="8:30|12:30">8:30 - 12:30</option>
-                        <option value="9:00|12:00|13:00|18:00">9:00 - 12:00 - 13:00 - 18:00</option>
-                        <option value="9:00|12:00|13:30|18:30">9:00 - 12:00 - 13:30 - 18:30</option>
-                        <option value="9:00|12:00|14:00|19:00">9:00 - 12:00 - 14:00 - 19:00</option>
-                        <option value="9:00|13:00">9:00 - 13:00</option>
-                        <option value="10:00|12:00|13:00|19:00">10:00 - 12:00 - 13:00 - 19:00</option>
-                        <option value="10:00|14:00">10:00 - 14:00</option>
-                        <option value="11:00|14:00|15:00|20:00">11:00 - 14:00 - 15:00 - 20:00</option>
-                        <option value="13:00|17:00">13:00 - 17:00</option>
-                        <option value="13:00|18:00|19:00|22:00">13:00 - 18:00 - 19:00 - 22:00</option>
-                        <option value="14:00|18:00">14:00 - 18:00</option>
-                        <option value="14:00|19:00|20:00|23:00">14:00 - 19:00 - 20:00 - 23:00</option>
-                        <option value="19:00|1:00|2:00|7:00">19:00 - 1:00 - 2:00 - 7:00</option>
-                        <option value="22:00|2:00|3:00|7:00">22:00 - 2:00 - 3:00 - 7:00</option>
-                        <option value="23:00|3:00|4:00|8:00">23:00 - 3:00 - 4:00 - 8:00</option>
-                      </select>
-                      <% } %>
-                        <% if (dadosParaConferencia.unidade) { %>
-
-                            <label for="input2">Unidade</label>
-                            <select id="unidadeConf" class="form-control border-secondar shadow-none"
-                            aria-label="Default select example" required name="unidade">
-                            <option selected value="">Selecione...</option>
-                            <option value="Belo Horizonte">Belo Horizonte</option>
-                            <option value="Distrito Federal">Distrito Federal</option>
-                            <option value="São Paulo">São Paulo</option>
-                            <option value="Espirito Santo">Espirito Santo</option>
-                            <option value="ITPS">iTPS</option>
-                          </select>
-                            <% } %>
-                          </div>
-                            <div class="col">
-                              <% if (dadosParaConferencia.tipoAdmissao) { %>
-
-                                <label for="input2">Tipo de Admissão:</label>
-                                <select id="tipoAdmissaoConf" class="form-control border-secondar shadow-none"
-                                aria-label="Default select example" required name="tipo">
-                                <option selected value="">Selecione...</option>
-                                <option value="CLT">CLT</option>
-                                <option value="Estagiário">Estagiário</option>
-                                <option value="Jovem Aprendiz">Jovem Aprediz</option>
-                                <option value="PJ">PJ</option>
-                              </select>
-                                <% } %>
-                                  <% if (dadosParaConferencia.cargo) { %>
-
-                                    <label for="input2">Novo Cargo:</label>
-                                    <input type="text" class="form-control" id="cargoConf">
-                                    <% } %>
-                                    
-                                    <% if (dadosParaConferencia.pcd) { %>
-                                      
-                                      <label for="input2">Vaga Exclusiva Para PCD:</label>
-                                      <select id="pcdConf" class="form-control border-secondar shadow-none"
-                                      aria-label="Default select example" required name="tipo">
-                                      <option selected value="">Selecione...</option>
-                                      <option value="S">Sim</option>
-                                      <option value="N">Não</option>
-                                
-                                    </select>
-                                        
-                                        <!-- <input type="text" class="form-control" id="input2"> -->
-                                        <% } %>
-
-                                        
-                            </div>
-                            <div class="text-center" style="width: 100%; display: flex; justify-content: center;">
-                              <div class="" style="margin: 10px 0; max-width: 500px; width: 100%;">
-                                <label for="motivo" style="display: block; font-size: 16px; margin-bottom: 5px;">Motivo:</label>
-                                <textarea id="motivo" readonly name="motivo" rows="4" cols="50" style="font-size: 16px;"><%=dadosParaConferencia.motivo %></textarea>
-                              </div>
-                            </div>
-
-              </div>
-            </div>
-
-
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" id="botaoConfClose" data-dismiss="modal">Fechar</button>
-              <button type="button" class="btn btn-success" id="botaoConf"
-                onclick="inserirConferencia()">Salvar</button>
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-
-
-      <% } %>
-
-
-
-
   </body>
-
-
-
-
-
-
-
-
 
 </html>

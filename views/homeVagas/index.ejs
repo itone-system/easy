@@ -1,20 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('../partials/head', { title: 'Home' } ) %>
-<script src="../../public/Vagas/home.js"></script>
-    <link rel="stylesheet" href="../../public/global.css">
-    <link rel="stylesheet" href="../../public/home/Home.css">
+    <script src="/public/home/Home.js"></script>
+    <link rel="stylesheet" href="../../../public/global.css">
+    <link rel="stylesheet" href="../../../public/home/Home.css">
+
+
     <body>
+        <!-- <link rel="stylesheet" href="../components/status.ejs"> -->
 
         <%- include('../components/Vagas/menuVagas') %>
 
             <section class="home">
                 <%- include('../components/navbar') %>
                     <div class="text">
-                        <h1 class="textoBody">Portal de Vagas</h1>
+                        <h1 style="margin-bottom: 3%;" class="textoBody"></h1>
 
-                        <p class="textoBody">Solicite e acompanhe o status das vagas</p>
-                        <hr class="my-5">
+                        <div  class="jumbotron">
+                          <div class="container">
+                            <h3 class="display-">Olá, <%= nome%>!</h3>
+                            <p style="font-size: 15px; margin-top: 5%;" >Solicite e acompanhe os status das suas requisições.</p>
+                            <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p> -->
+                          </div>
+                        </div>
+
+                        <div class="container">
+                          <!-- Example row of columns -->
+                          <div class="row">
+                          
+
+                            <% if (dadosUser.permissoes.ADMISSAO) { %>
+                                <div style="font-size: 11px;" class="col-md-4">
+                                    <h6>Vagas</h6>
+                                    <br>
+                                    <p  Align="justify">A solicitação de Abertura de Vagas será feita a partir de coordenador, validado pelo gestor imediato, validado pelo diretor da área e posteriormente pelo Diretor(a) Financeiro. </p>
+                                    <p Align="justify"> Caso haja alguma inconsistência na validação das informações, o formulário será retornado para ajuste do solicitante. </p>
+                                    <p Align="justify"> O acompanhamento poderá ser feito diretamente pelo sistema e também pelas mudanças de status através da notificação no e-mail.</p>
+                                    <p Align="justify"><a style="font-size: 12px;"  class="btn btn-secondary" href="/vagas/create"  role="button">Solicitar »</a></p>
+                                  </div>
+                            <% } %>
+
+
+                          </div>
+
+                          <hr>
+
+                        </div>
                     </div>
 
             </section>

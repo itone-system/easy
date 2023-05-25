@@ -11,7 +11,7 @@ window.onload = function () {
     });
 
 
-
+    $('[data-toggle="tooltip"]').tooltip()
 
 
     document.getElementById('previous').addEventListener('click', (event) => {

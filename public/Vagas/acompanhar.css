@@ -987,8 +987,8 @@ th {
 .button {
     align-items: center;
     appearance: none;
-    background-color: #27417B;
-    background-image: linear-gradient(1deg, #5275c0, #27417B 99%);
+    background-color: #10253F;;
+    background-image: linear-gradient(1deg, #10253F, #10253F 99%);
     background-size: calc(100% + 20px) calc(100% + 20px);
     border-radius: 100px;
     border-width: 0;
@@ -1034,8 +1034,8 @@ th {
   .button-anterior, .button-proximo {
     align-items: center;
     appearance: none;
-    background-color: #27417B;
-    background-image: linear-gradient(1deg, #5275c0, #27417B 99%);
+    background-color: #10253F;
+    background-image: linear-gradient(1deg, #10253F, #10253F 99%);
     background-size: calc(100% + 20px) calc(100% + 20px);
     border-radius: 100px;
     border-width: 0;
@@ -1159,7 +1159,22 @@ body.dark .linhas{
 
     #tabela-responsiva{
         margin-top:-10px;
+        
     }
+
+    #myTable td {
+        font-size: 12px; /* Especifique o tamanho da fonte desejado aqui */
+        line-height: 1; /* Isto ajusta a altura da linha */
+        height: 20px; /* Ajusta a altura das linhas */
+    }
+
+    /* .buttonStatusSmall {
+        height: 20px; 
+        font-size: 11px; 
+        text-align: center;
+        line-height: 9px;
+        font-weight: bold;
+    } */
 
     .button{
         padding: 5px 25px 5px 25px;
@@ -1170,4 +1185,54 @@ body.dark .linhas{
     }
 
     
+}
+
+@media screen and (min-width: 1500px) and (max-width: 2208px) {
+    .button-anterior, .button-proximo {
+        padding: 5px 40px;  /* Ajuste o padding conforme necessário */
+        margin-top: -20px;  /* Ajuste a margem conforme necessário */
+        font-size: 16px;    /* Ajuste o tamanho da fonte conforme necessário */
+    }
+
+    #Descricao, #Status2 {
+        margin-top: -10px;    /* Ajuste a margem conforme necessário */
+        margin-bottom: 15px;  /* Ajuste a margem conforme necessário */
+    }
+
+    #col {
+        margin-bottom: 45px;  /* Ajuste a margem conforme necessário */
+    }
+
+    .table-responsive {
+        max-width: 100%; /* Ajusta a largura máxima do container da tabela para 100% */
+    }
+
+    #myTable {
+        width: 100%; /* A tabela ocupa toda a largura do container */
+        max-width: 100%; /* Ajusta a largura máxima da tabela para 100% */
+        min-height: 50vh; /* Definindo a altura mínima da tabela */
+    }
+
+    #myTable td {
+        font-size: 14px; /* Especifique o tamanho da fonte desejado aqui */
+        line-height: 1; /* Isto ajusta a altura da linha */
+        height: 30px; /* Ajusta a altura das linhas */
+        vertical-align: middle; /* Centraliza o texto verticalmente */
+    }
+
+    .button {
+        padding: 5px 30px;  /* Ajuste o padding conforme necessário */
+        margin-left: 2px;    /* Ajuste a margem conforme necessário */
+        margin-bottom: 25px; /* Ajuste a margem conforme necessário */
+        margin-top: -30px;   /* Ajuste a margem conforme necessário */
+        font-size: 15px;     /* Ajuste o tamanho da fonte conforme necessário */
+    }
+
+    .buttonStatusSmall {
+        width: 220px; /* Ajuste conforme necessário para aumentar a largura */
+        padding: 18px; /* Aumenta o padding para dar mais espaço ao redor do texto */
+        line-height: 4px; /* Ajuste conforme necessário para aumentar a altura e centralizar o texto */
+        text-align: center; /* Centraliza o texto horizontalmente */
+        font-size: 13px !important;
+    }
 }

@@ -5,9 +5,10 @@ const { domain } = require('../../../config/env');
 const tokenAdapter = require('../../../infra/tokenAdapter');
 const processoSeletivo = require('../../../template-email/Vagas/processo_seletivo')
 const enviarEmail = require('../../../infra/emailAdapter');
+const aprovacaoPendente = require('../../../template-email/Vagas/aprovacao_pendente')
+const verifyIndiceAdapter = require('../../../infra/verifyIndiceAdapter');
 
 exports.insert = async (dados) => {
-    console.log(dados)
     const conexao = await sql.connect(db);
     const result = await conexao.request().query(`INSERT INTO SOLICITACAO_ADMISSAO 
     (TIPO_DE_ADMISSAO, SUBSTITUICAO, UNIDADE, DEPARTAMENTO,
@@ -23,15 +24,17 @@ VALUES
      '${dados.acessosEspecificos}', '${dados.dataDeAbertura.toISOString()}', ${dados.solicitante}, 'A', '${dados.pcd}');
 
     `)
-    console.log('dados', result.recordset[0].CODIGO)
     return result.recordset[0].CODIGO
 }
 
 exports.solicitacaoUnica = async (codigo) => {
     const conexao = await sql.connect(db);
 
-    const solicitacao = await conexao.request().query(`select * from SOLICITACAO_ADMISSAO where CODIGO = ${codigo}`)
-
+    const solicitacao = await conexao.request().query(`SELECT
+    *,
+    FORMAT(SALARIO * 1000, 'N', 'pt-BR') AS FormattedSALARIO
+    FROM SOLICITACAO_ADMISSAO
+    WHERE CODIGO = ${codigo}`)
 
     return solicitacao.recordset[0]
 
@@ -71,12 +74,22 @@ exports.listar = async (filtros, page, user) => {
     SELECT UA.CODIGO, UA.TIPO_DE_ADMISSAO, UA.SUBSTITUICAO, UA.UNIDADE, UA.DEPARTAMENTO, UA.CENTRO_DE_CUSTO, UA.SALARIO, 
             UA.CLIENTE, UA.GESTOR_IMEDIATO, UA.CARGO, UA.DEAL, UA.HORARIO, UA.EQUIPAMENTO, UA.CARTAO_DE_VISITA, UA.CELULAR_CORPORATIVO, 
             UA.USUARIO_SIMILARATIVO, UA.ACESSOS_ESPECIFICOS, CONVERT(VARCHAR(10), UA.DATA_DE_ABERTURA, 103) AS DATA_DE_ABERTURA, DATEDIFF(day, UA.DATA_DE_ABERTURA, GETDATE()) AS DIAS_EM_ABERTO, 
-            U.NOME_USUARIO AS NOME_SOLICITANTE, UA.STATUS
+            U.NOME_USUARIO AS NOME_SOLICITANTE, UA.STATUS,
+            AP.Aprovadores_Pendentes
     FROM UserAccess AS UA
     JOIN Usuarios AS U ON UA.SOLICITANTE = U.COD_USUARIO
+    LEFT JOIN (
+        SELECT A.Codigo_Solicitacao, 
+               STRING_AGG(U.NOME_USUARIO, ', ') AS Aprovadores_Pendentes
+        FROM APROVACOES_VAGAS A
+        JOIN Usuarios U ON A.Codigo_Aprovador = U.COD_USUARIO
+        WHERE A.Status = 'N'
+        GROUP BY A.Codigo_Solicitacao
+    ) AS AP ON UA.CODIGO = AP.Codigo_Solicitacao
     ORDER BY UA.CODIGO DESC
     OFFSET (@currentPage - 1) * @itemsPerPage ROWS
     FETCH NEXT @itemsPerPage ROWS ONLY;`)
+
 
     return solicitacoes.recordset
 }
@@ -165,7 +178,7 @@ exports.buscarProximoAprovador = async (codigoSolicitacao) => {
         .input('input_param', sql.Int, codigoSolicitacao)
         .query(`
                 SELECT MAX(Ordem) as UltimaOrdemAprovada 
-                FROM Aprovacoes 
+                FROM APROVACOES_VAGAS 
                 WHERE Codigo_Solicitacao = @input_param 
                 AND Status = 'Y'
             `);
@@ -179,7 +192,7 @@ exports.buscarProximoAprovador = async (codigoSolicitacao) => {
                 SELECT TOP 1 
                     t1.EMAIL_USUARIO, t1.COD_USUARIO 
                 FROM 
-                    Aprovacoes t0 
+                APROVACOES_VAGAS t0 
                 INNER JOIN Usuarios t1 ON t1.COD_USUARIO = t0.Codigo_Aprovador 
                 WHERE 
                     t0.Status = 'N' 
@@ -269,7 +282,7 @@ exports.verifyAprovador = async (codigoAprovador, codigoSolicitacao) => {
             .input('input_param', sql.Int, codigoSolicitacao)
             .query(`
                 SELECT MAX(Ordem) as UltimaOrdemAprovada 
-                FROM Aprovacoes
+                FROM APROVACOES_VAGAS
                 WHERE Codigo_Solicitacao = @input_param 
                 AND Status = 'Y'
             `);
@@ -281,7 +294,7 @@ exports.verifyAprovador = async (codigoAprovador, codigoSolicitacao) => {
             .input('input_param2', sql.Int, codigoAprovador)
             .query(`
                 SELECT Ordem 
-                FROM Aprovacoes
+                FROM APROVACOES_VAGAS
                 WHERE Codigo_Solicitacao = @input_param1
                 AND Codigo_Aprovador = @input_param2
             `);
@@ -323,7 +336,7 @@ exports.alterarStatusCO = async (codigo) => {
 
     await conexao.request().query(`update SOLICITACAO_ADMISSAO set STATUS = 'CO' where CODIGO = ${codigo}`)
 
-    await conexao.request().query(`update Aprovacoes set Status = 'N' where Codigo_Solicitacao = ${codigo}`)
+    await conexao.request().query(`update APROVACOES_VAGAS set Status = 'N' where Codigo_Solicitacao = ${codigo}`)
 
 
 }
@@ -331,17 +344,51 @@ exports.alterarStatusCO = async (codigo) => {
 exports.insertPedidoConferencia = async (dados, motivo, userCodigo, codigoSolicitacao) => {
 
     const conexao = await sql.connect(db);
+
     const data = new Date()
 
     const dataFormatada = data.toISOString().slice(0, 10);
 
+    await verifyIndiceAdapter('CONFERENCIA', 'ID')
 
     const codigo = await conexao.request().query(`insert into CONFERENCIA (CODIGO_SOLICITACAO, CAMPOS, MOTIVO, SOLICITANTE_CONFERENCIA, DATA_DE_INSERCAO
         ) OUTPUT Inserted.ID values (${codigoSolicitacao},' ${dados}', '${motivo}', ${userCodigo}, '${dataFormatada}' )`)
 
-    console.log('maldito maskceico', codigo)
 
     await conexao.request().query(`update SOLICITACAO_ADMISSAO set ATUAL_CONFERENCIA = ${codigo.recordset[0].ID} where CODIGO = ${codigoSolicitacao}`)
+
+    const emailSolicitante = await conexao.request().query(`SELECT EMAIL_USUARIO
+    FROM Usuarios
+    WHERE COD_USUARIO = (
+        SELECT SOLICITANTE
+        FROM SOLICITACAO_ADMISSAO
+        WHERE CODIGO = ${codigoSolicitacao}
+    );`)
+
+    const token = tokenAdapter({
+        codigoSolicitacao,
+        router: `/vagas/${codigoSolicitacao}/detail`
+    });
+
+    const link = `${domain}/vagas/${codigoSolicitacao}/detail?token=${token}`
+
+
+    const emailOptions = {
+        to: emailSolicitante.recordset[0].EMAIL_USUARIO,
+        subject: 'Solicitação de Revisão',
+        content: aprovacaoPendente({
+            link,
+            codigoSolicitacao: codigoSolicitacao,
+            // cargo: cargoConf,
+            // unidade: unidadeConf,
+            // departamento: departamento,
+            // gestorImediato: gestorImediato
+
+        }),
+        isHtlm: true
+    };
+
+    enviarEmail(emailOptions)
 }
 
 exports.buscarCamposConferencia = async (codigoConferencia) => {
@@ -362,17 +409,16 @@ exports.buscarCamposConferencia = async (codigoConferencia) => {
 }
 
 
-exports.criarQueryUpdate = async (codigoSolicitacao, { salario, unidade, horario, tipoAdmissao, cargo, pcd }) => {
-    
-    const conexao = await sql.connect(db)
+exports.criarQueryUpdate = async (codigoSolicitacao, { valorConf, unidadeConf, horarioConf, tipoAdmissaoConf, cargoConf, pcdConf }) => {
 
+    const conexao = await sql.connect(db)
     const dados = {
-        salario: salario,
-        unidade: unidade,
-        horario: horario,
-        tipoAdmissao:tipoAdmissao ,
-        cargo: cargo,
-        pcd: pcd,
+        salario: valorConf,
+        unidade: unidadeConf,
+        horario: horarioConf,
+        tipoAdmissao: tipoAdmissaoConf,
+        cargo: cargoConf,
+        pcd: pcdConf,
     };
 
     const colunas = {
@@ -385,17 +431,33 @@ exports.criarQueryUpdate = async (codigoSolicitacao, { salario, unidade, horario
     };
 
     const atualizacoes = Object.entries(dados)
-    .filter(([chave, valor]) => valor !== '')
-    .map(([chave, valor]) => {
-      const valorFormatado = (chave === 'salario' && !isNaN(valor)) ? valor : `'${valor}'`;
-      return `${colunas[chave]} = ${valorFormatado}`;
-    })
-    .join(', '); 
+        .filter(([chave, valor]) => valor !== '')
+        .map(([chave, valor]) => {
+            const valorFormatado = (chave === 'salario' && !isNaN(valor)) ? valor : `'${valor}'`;
+            return `${colunas[chave]} = ${valorFormatado}`;
+        })
+        .join(', ');
 
     const query = `UPDATE SOLICITACAO_ADMISSAO SET ${atualizacoes} WHERE CODIGO = ${codigoSolicitacao}`;
 
     await conexao.request().query(query)
 
     return query
+}
+
+exports.semAprovacaoVerify = async (codigo) => {
+    const conexao = await sql.connect(db)
+
+    const result = await conexao.request()
+        .input('input_parameter', sql.Int, codigo)
+        .query('SELECT Status FROM APROVACOES_VAGAS WHERE Codigo_Solicitacao = @input_parameter');
+
+    const hasApproved = result.recordset.some(row => row.Status === 'Y');
+
+    if (hasApproved) {
+        return 0;
+    } else {
+        return 1;
+    }
 }
 

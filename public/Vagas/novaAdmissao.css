@@ -1,4 +1,3 @@
-
 form .form-select {
     cursor: pointer;
 }
@@ -9,17 +8,29 @@ textarea:valid {
 
 
 
-.campo{
+.campo {
     font-size: 13px;
     display: none;
     color: red;
 }
-Label{
-    font-size: 14px;
-  
-  }
 
-  .botaoEnviar {
+Label {
+    font-size: 14px;
+
+}
+
+.botaoEnviar {
     border: none;
     background: #27417B;
-  }
+}
+
+@media screen and (max-width:1366px) {
+
+
+    
+
+    .form-control {
+        zoom: 0.8;
+    }
+
+}

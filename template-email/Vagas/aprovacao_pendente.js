@@ -16,8 +16,8 @@ module.exports = ({ link, codigoSolicitacao, cargo, unidade, departamento, gesto
           <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
             <tr>
               <td bgcolor="#ffffff" style="padding: 30px; color: #313131;">
-                <h1 style="font-size: 24px; font-weight: bold; margin: 0 0 20px 0;">Você tem uma solicitação pendente</h1>
-                <p style="font-size: 16px; line-height: 1.5em; margin: 0 0 10px 0;">Easy informa que a solicitação abaixo está aguardando aprovação:</p>
+                <h1 style="font-size: 24px; font-weight: bold; margin: 0 0 20px 0;">Você tem uma aprovação de vaga pendente</h1>
+                <p style="font-size: 16px; line-height: 1.5em; margin: 0 0 10px 0;">Easy informa que a vaga abaixo está aguardando aprovação:</p>
                 <ul style="font-size: 16px; line-height: 1.5em; margin: 0;">
                   <li><strong>Solicitação n°:</strong> ${codigoSolicitacao}</li>
                   <li><strong>Cargo:</strong> ${cargo}</li>
