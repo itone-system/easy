@@ -274,6 +274,9 @@ module.exports = {
             };
         }
 
+        const buscaNomeSolicitante = await conexao.request().query(`select NOME_USUARIO from Usuarios where COD_USUARIO = ${solicitacao.SOLICITANTE}`)
+
+        solicitacao.NOME_SOLICITANTE = buscaNomeSolicitante.recordset[0].NOME_USUARIO
 
 
         let dadosParaConferencia = null
@@ -319,7 +322,7 @@ module.exports = {
         } else {
             semAprovacao = 'N'
         }
-
+        console.log(solicitacao)
         return renderView('homeVagas/Admissao/Detail', {
             solicitacao, nome: user.nome, candidato: candidatoTratado, contratado: candidatoContratadoTratado,
             dadosUser: user, momentoAprovacao: momentoAprovacao, dadosParaConferencia,

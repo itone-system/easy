@@ -1,27 +1,44 @@
 <div class="modal" id="myModal3">
-    <div class="modal-dialog">
-        <div class="modal-content">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Itens Para Revisão:</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Itens Para Revisão:</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
 
-            <!-- Modal body -->
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col">
-                        <% if (dadosParaConferencia.salario) { %>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+          <% 
+            let counter = 0;
+            let index = 0;
 
-                            <label for="input1">Salário:</label>
-                            <input type="text" class="form-control" id="valorConf" placeholder="0,00"
-                                onkeyup="formatarMoedaConf()">
-                            <% } %>
+            for (let item in dadosParaConferencia) {
+              if (dadosParaConferencia[item]) counter++;
+            }
 
-                                <% if (dadosParaConferencia.horario) { %>
+            for (let item in dadosParaConferencia) {
+              if (dadosParaConferencia[item]) {
+                let className;
+                if (counter === 1 || index === 2) className = 'col-12';
+                else className = 'col-6';
+                index++;
 
-                                    <label for="input2">Horário de Trabalho:</label>
+                switch (item) {
+                  case 'salario':
+                  %>
+                    <div class="<%=className%>">
+                      <label for="input1">Salário:</label>
+                      <input type="text" class="form-control" id="valorConf" placeholder="0,00" onkeyup="formatarMoedaConf()">
+                    </div>
+                  <%
+                    break;
+                  case 'horario':
+                  %>
+                    <div class="<%=className%>">
+                      <label for="input2">Horário de Trabalho:</label>
                                     <select class="form-control border-secondar shadow-none"
                                         aria-label="Default select example" id="horarioConf" required name="horario">
                                         <option selected value="">Selecione um Horário...</option>
@@ -52,10 +69,13 @@
                                         <option value="22:00|2:00|3:00|7:00">22:00 - 2:00 - 3:00 - 7:00</option>
                                         <option value="23:00|3:00|4:00|8:00">23:00 - 3:00 - 4:00 - 8:00</option>
                                     </select>
-                                    <% } %>
-                                        <% if (dadosParaConferencia.unidade) { %>
-
-                                            <label for="input2">Unidade</label>
+                    </div>
+                  <%
+                    break;
+                  case 'unidade':
+                  %>
+                    <div class="<%=className%>">
+                      <label for="input2">Unidade</label>
                                             <select id="unidadeConf" class="form-control border-secondar shadow-none"
                                                 aria-label="Default select example" required name="unidade">
                                                 <option selected value="">Selecione...</option>
@@ -63,14 +83,15 @@
                                                 <option value="Distrito Federal">Distrito Federal</option>
                                                 <option value="São Paulo">São Paulo</option>
                                                 <option value="Espirito Santo">Espirito Santo</option>
-                                                <option value="ITPS">iTPS</option>
+                                                <option value="ITPS">ITPS</option>
                                             </select>
-                                            <% } %>
                     </div>
-                    <div class="col">
-                        <% if (dadosParaConferencia.tipoAdmissao) { %>
-
-                            <label for="input2">Tipo de Admissão:</label>
+                  <%
+                    break;
+                  case 'tipoAdmissao':
+                  %>
+                    <div class="<%=className%>">
+                      <label for="input2">Tipo de Admissão:</label>
                             <select id="tipoAdmissaoConf" class="form-control border-secondar shadow-none"
                                 aria-label="Default select example" required name="tipo">
                                 <option selected value="">Selecione...</option>
@@ -79,16 +100,21 @@
                                 <option value="Jovem Aprendiz">Jovem Aprediz</option>
                                 <option value="PJ">PJ</option>
                             </select>
-                            <% } %>
-                                <% if (dadosParaConferencia.cargo) { %>
-
-                                    <label for="input2">Novo Cargo:</label>
-                                    <input type="text" class="form-control" id="cargoConf">
-                                    <% } %>
-
-                                        <% if (dadosParaConferencia.pcd) { %>
-
-                                            <label for="input2">Vaga Exclusiva Para PCD:</label>
+                    </div>
+                  <%
+                    break;
+                  case 'cargo':
+                  %>
+                    <div class="<%=className%>">
+                      <label for="input2">Novo Cargo:</label>
+                       <input type="text" class="form-control" id="cargoConf">
+                    </div>
+                  <%
+                    break;
+                  case 'pcd':
+                  %>
+                    <div class="<%=className%>">
+                      <label for="input2">Vaga Exclusiva Para PCD:</label>
                                             <select id="pcdConf" class="form-control border-secondar shadow-none"
                                                 aria-label="Default select example" required name="tipo">
                                                 <option selected value="">Selecione...</option>
@@ -96,35 +122,28 @@
                                                 <option value="N">Não</option>
 
                                             </select>
-
-                                            <!-- <input type="text" class="form-control" id="input2"> -->
-                                            <% } %>
-
-
                     </div>
-                    
-                    <div class="text-center" style="width: 100%; display: flex; justify-content: center;">
-                        <div class="" style="margin: 10px 0; max-width: 500px; width: 100%;">
-                            <label for="motivo"
-                                style="display: block; font-size: 16px; margin-bottom: 5px;">Motivo:</label>
-                            <textarea id="motivo" readonly name="motivo" rows="4" cols="50"
-                                style="font-size: 16px;"><%=dadosParaConferencia.motivo %></textarea>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="botaoConfClose" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-success" id="botaoConf"
-                    onclick="inserirConferencia()">Salvar</button>
-            </div>
-
-
+                  <%
+                    break;
+                }
+              }
+            }
+          %>
         </div>
+
+        <div class="text-center" style="width: 100%; display: flex; justify-content: center;">
+          <div class="" style="margin: 10px 0; max-width: 500px; width: 100%;">
+            <label for="motivo" style="display: block; font-size: 16px; margin-bottom: 5px;">Motivo:</label>
+            <textarea id="motivo" readonly name="motivo" rows="4" cols="50" style="font-size: 16px;"><%=dadosParaConferencia.motivo %></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="botaoConfClose" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-success" id="botaoConf" onclick="inserirConferencia()">Salvar</button>
+      </div>
     </div>
+  </div>
 </div>
