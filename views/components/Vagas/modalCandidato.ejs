@@ -16,72 +16,72 @@
                                 <div class="mb-3">
                                     <label for="exampleInputText" style="font-size: 16px;" class="form-label">Nome Completo Do Candidato
                                         Aprovado:</label>
-                                    <input type="text" class="form-control border-secondar shadow-none"
-                                        id="nomeCompleto" aria-describedby="textHelp" required placeholder=""
+                                    <input type="text" class="form-control border-secondar campo-obrigatorio shadow-none"
+                                        id="nomeCompleto" aria-describedby="textHelp"  placeholder=""
                                         name="nomeProfissional">
-                                    <label class="campo"></label>
+                                    
                                 </div>
                             </div>
                             <div class="col">
                                 <label for="exampleInputText" class="form-label" style="font-size: 16px;">Tutor Durante o
                                     Onboarding:</label>
-                                <input type="text" class="form-control border-secondar shadow-none" id="tutor"
-                                    aria-describedby="textHelp" required placeholder="" name="tutorOnboarding">
-                                <label class="campo"></label>
+                                <input type="text" class="form-control campo-obrigatorio border-secondar shadow-none" id="tutor"
+                                    aria-describedby="textHelp"  placeholder="" name="tutorOnboarding">
+                                
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="exampleInputText" class="form-label" style="font-size: 16px;">Telefone Pessoal:</label>
-                                <input type="tel" class="form-control border-secondar shadow-none" id="telPessoal"
-                                    aria-describedby="textHelp" required placeholder="" onkeyup="mascaraTelefone(event)"
+                                <input type="tel" class="form-control campo-obrigatorio border-secondar shadow-none" id="telPessoal"
+                                    aria-describedby="textHelp"  placeholder="" onkeyup="mascaraTelefone(event)"
                                     maxlength="15" name="Telefone">
-                                <label class="campo"></label>
+                                
                             </div>
                             <div class="col">
                                 <label for="exampleInputText" class="form-label" style="font-size: 16px;">E-mail Pessoal:</label>
-                                <input type="text" class="form-control border-secondar shadow-none" id="emailPessoal"
-                                    aria-describedby="textHelp" required placeholder="" name="email">
-                                <label class="campo"></label>
+                                <input type="text" class="form-control campo-obrigatorio border-secondar shadow-none" id="emailPessoal"
+                                    aria-describedby="textHelp"  placeholder="" name="email">
+                                
                             </div>
                             <div class="col">
                                 <label for="exampleInputText" class="form-label">Indicação Premiada:</label>
-                                <select name="" id="indicPremiada" class="form-control">
+                                <select name="indicacaoPremiada" id="indicPremiada" class="form-control campo-obrigatorio">
                                     <option selected value="">Selecione...</option>
                                   </select>
-                                <label class="campo"></label>
+                                
                             </div>
                         </div>
 
                         <div class="row mb-4">
                             <div class="col">
                                 <label for="exampleInputText" class="form-label" style="font-size: 16px;">Email Corporativo:</label>
-                                <input type="tel" class="form-control border-secondar shadow-none" id="emailCorporativo"
-                                    aria-describedby="textHelp" required placeholder="" name="emailCorporativo">
-                                <label class="campo"></label>
+                                <input type="tel" class="form-control campo-obrigatorio border-secondar shadow-none" id="emailCorporativo"
+                                    aria-describedby="textHelp"  placeholder="" name="emailCorporativo">
+                                
                             </div>
                             <div class="col">
                                 <label for="exampleInputText" class="form-label" style="font-size: 16px;">PCD:</label>
                                 <br>
                                 <div class="form-check form-check-inline mt-2">
                                     <input class="form-check-input shadow-none" type="radio" name="pcd" id="radio09"
-                                        value="S" required>
+                                        value="S" >
                                     <label class="form-check-label">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline" style="margin-left: 5%;">
-                                    <input class="form-check-input shadow-none" type="radio" name="pcd" id="radio10"
-                                        value="N" required>
+                                    <input class="form-check-input shadow-none" checked type="radio" name="pcd" id="radio10"
+                                        value="N" >
                                     <label class="form-check-label">Não</label>
                                 </div>
-                                <label class="campo"></label>
+                                
                             </div>
                             <div class="col">
                                 <label for="exampleInputText" class="form-label" style="font-size: 16px;">Data de Inicio:</label>
-                                <input type="date" class="form-control border-secondar shadow-none" id="dateInicio"
-                                    aria-describedby="textHelp" required placeholder="indicação premiada"
+                                <input type="date" class="form-control campo-obrigatorio border-secondar shadow-none" id="dateInicio"
+                                    aria-describedby="textHelp"  placeholder="indicação premiada"
                                     name="dataInicio">
-                                <label class="campo"></label>
+                                
                             </div>
                         </div>
 
@@ -89,39 +89,39 @@
                             <div class="col">
                                 <label for="exampleInputText" class="form-label" style="font-size: 16px;">Modalidade de
                                     Trabalho:</label>
-                                <select class="form-control border-secondar shadow-none"
-                                    aria-label="Default select example" id="mdtrabalho" required name="modalidade">
+                                <select class="form-control campo-obrigatorio border-secondar shadow-none"
+                                    aria-label="Default select example" id="mdtrabalho"  name="modalidade">
                                     <option value="">Selecione....</option>
                                     <option value="Presencial">Presencial</option>
                                     <option value="Híbrido">Híbrido</option>
                                     <option value="Remoto">Remoto</option>
                                 </select>
-                                <label class="campo"></label>
+                                
                             </div>
                             <div class="col">
                                 <label for="exampleInputText" class="form-label" style="font-size: 16px;">Escala Sobreaviso:</label>
                                 <br>
                                 <div class="form-check form-check-inline mt-2">
                                     <input class="form-check-input shadow-none" type="radio" name="escala" id="radio11"
-                                        value="S" required>
+                                        value="S" >
                                     <label class="form-check-label">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline" style="margin-left: 5%;">
-                                    <input class="form-check-input shadow-none" type="radio" name="escala" id="radio12"
-                                        value="N" required>
+                                    <input class="form-check-input shadow-none" checked type="radio" name="escala" id="radio12"
+                                        value="N" >
                                     <label class="form-check-label">Não</label>
                                 </div>
-                                <label class="campo"></label>
+                                
                             </div>
                             <div class="col">
                                 <label for="exampleInputText" class="form-label" style="font-size: 16px;">Treinamento:</label>
-                                <select class="form-control border-secondar shadow-none"
-                                    aria-label="Default select example" id="treinamento" required name="treinamentos">
+                                <select class="form-control campo-obrigatorio border-secondar shadow-none"
+                                    aria-label="Default select example" id="treinamento"  name="treinamentos">
                                     <option value="">Selecione....</option>
                                     <option value="Presencial">Presencial</option>
                                     <option value="Online">Online</option>
                                 </select>
-                                <label class="campo"></label>
+                                
                             </div>
                         </div>
 
@@ -134,7 +134,7 @@
                                         <label for="exampleInputTextArea" class="form-label" style="border-bottom:1px solid #120947;
                                   font-size: 16px;">Negociação Diferenciada que for alinhada
                                             com o profissional</label>
-                                        <input type="text" class="form-control" required name="observacoes">
+                                        <input type="text" class="form-control campo-obrigatorio"  name="observacoes">
                                     </div>
                                 </div>
                             </div>

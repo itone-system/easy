@@ -65,7 +65,7 @@
                 <div class="col">
                   <label>Colaborador Substituído:</label>
                   <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
-                    value="<%=solicitacao.SUBSTITUICAO === 'S' ? 'Sim' : 'Não' %>%>" placeholder="Não existe." readonly>
+                    value="<%=solicitacao.SUBSTITUICAO === 'S' ? solicitacao.COLABORADOR_SUBSTITUIDO : 'Não' %>%>" placeholder="Não existe." readonly>
                 </div>
               </div>
               <br>

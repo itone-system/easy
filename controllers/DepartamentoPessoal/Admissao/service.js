@@ -15,14 +15,14 @@ exports.insert = async (dados) => {
     (TIPO_DE_ADMISSAO, SUBSTITUICAO, UNIDADE, DEPARTAMENTO,
      CENTRO_DE_CUSTO, SALARIO, CLIENTE, GESTOR_IMEDIATO,
      CARGO, DEAL, HORARIO, EQUIPAMENTO, CARTAO_DE_VISITA, CELULAR_CORPORATIVO, USUARIO_SIMILARATIVO,
-     ACESSOS_ESPECIFICOS, DATA_DE_ABERTURA, SOLICITANTE, STATUS, PCD) 
+     ACESSOS_ESPECIFICOS, DATA_DE_ABERTURA, SOLICITANTE, STATUS, PCD, COLABORADOR_SUBSTITUIDO) 
 OUTPUT Inserted.CODIGO 
 VALUES 
     ('${dados.tipoDeAdmissao}', '${dados.substituicao}', '${dados.unidade}', '${dados.departamento}',
      '${dados.centroDecusto}', '${dados.salario}', '${dados.cliente}',
      '${dados.gestorImediato}', '${dados.cargo}', '${dados.deal}', '${dados.horario}', '${dados.equipamento}',
      '${dados.cartaoDeVisita}', '${dados.celularCorporativo}', '${dados.usuarioSimilarAtivo}',
-     '${dados.acessosEspecificos}', '${dados.dataDeAbertura.toISOString()}', ${dados.solicitante}, 'A', '${dados.pcd}');
+     '${dados.acessosEspecificos}', '${dados.dataDeAbertura.toISOString()}', ${dados.solicitante}, 'A', '${dados.pcd}', '${dados.colaboradorSubstituido}');
 
     `)
     return result.recordset[0].CODIGO
@@ -406,7 +406,7 @@ exports.buscarCamposConferencia = async (codigoConferencia) => {
 }
 
 
-exports.criarQueryUpdate = async (codigoSolicitacao, { valorConf, unidadeConf, horarioConf, tipoAdmissaoConf, cargoConf, pcdConf }) => {
+exports.criarQueryUpdate = async (codigoSolicitacao, { valorConf, unidadeConf, horarioConf, tipoAdmissaoConf, cargoFormat, pcdConf }) => {
 
     const conexao = await sql.connect(db)
     const dados = {
@@ -414,7 +414,7 @@ exports.criarQueryUpdate = async (codigoSolicitacao, { valorConf, unidadeConf, h
         unidade: unidadeConf,
         horario: horarioConf,
         tipoAdmissao: tipoAdmissaoConf,
-        cargo: cargoConf,
+        cargo: cargoFormat,
         pcd: pcdConf,
     };
 
@@ -456,5 +456,23 @@ exports.semAprovacaoVerify = async (codigo) => {
     } else {
         return 1;
     }
+}
+
+exports.formatString = async (cargo) => {
+    return cargo.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+}
+
+exports.buscarPrimeiroAprovador = async (codigo) => {
+    const conexao = await sql.connect(db)
+
+    const busca = await conexao.request().query(`SELECT EMAIL_USUARIO
+    FROM Usuarios
+    WHERE COD_USUARIO = (
+        SELECT Codigo_Aprovador
+        FROM APROVACOES_VAGAS
+        WHERE Codigo_Solicitacao = ${codigo} and Ordem = 1
+    ); `)
+
+    return busca.recordset[0].EMAIL_USUARIO
 }
 

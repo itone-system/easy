@@ -77,6 +77,6 @@ Label {
   }
 
   .modal-body ::placeholder {
-    font-size: 9px;
+    font-size: 13px;
   }
 }

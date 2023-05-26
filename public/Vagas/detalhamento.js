@@ -37,33 +37,82 @@ function aprovarSolicitacao() {
     });
 };
 
+
+
 function validarFormulario(event) {
-  let camposVazios = [];
+
+  event.preventDefault();
 
   const form = document.querySelector('#formCandidato');
-  // Seleciona todos os campos que são obrigatórios
-  const camposObrigatorios = form.querySelectorAll('[required]');
 
-  // Percorre todos os campos obrigatórios
+  const camposObrigatorios = form.querySelectorAll('.campo-obrigatorio');
+
+
+  let camposPreenchidos = true;
   camposObrigatorios.forEach(campo => {
-    if (!campo.value) { // Verifica se o campo está vazio
-      camposVazios.push(campo.id); // Adiciona o id do campo vazio no array camposVazios
+
+    const mensagemErroExistente = campo.parentNode.querySelector('.mensagem-erro');
+    if (mensagemErroExistente) {
+      campo.parentNode.removeChild(mensagemErroExistente);
+    }
+
+    if (campo.value.trim() === '') {
+      camposPreenchidos = false;
+
+      const mensagemErro = document.createElement('div');
+      mensagemErro.textContent = '* Campo obrigatório';
+      mensagemErro.style.color = 'red';
+      mensagemErro.style.fontSize = '12px';
+      mensagemErro.classList.add('mensagem-erro');
+      campo.parentNode.appendChild(mensagemErro);
     }
   });
 
-  if (camposVazios.length > 0) { // Verifica se o array camposVazios contém algum elemento
-    alert(`Os seguintes campos são obrigatórios: ${camposVazios.join(", ")}`); // Exibe mensagem de erro com os campos vazios
-    return false; // Impede o envio do formulário
-  } else {
+
+  if (camposPreenchidos) {
     enviarDados(event)
   }
+}
 
+function validarFormularioEdit(event) {
+
+  event.preventDefault();
+
+  const form = document.querySelector('#formEdit');
+
+  const camposObrigatorios = form.querySelectorAll('.campo-obrigatorio');
+
+
+  let camposPreenchidos = true;
+  camposObrigatorios.forEach(campo => {
+
+    const mensagemErroExistente = campo.parentNode.querySelector('.mensagem-erro');
+    if (mensagemErroExistente) {
+      campo.parentNode.removeChild(mensagemErroExistente);
+    }
+
+    if (campo.value.trim() === '') {
+      camposPreenchidos = false;
+
+      const mensagemErro = document.createElement('div');
+      mensagemErro.textContent = '* Campo obrigatório';
+      mensagemErro.style.color = 'red';
+      mensagemErro.style.fontSize = '12px';
+      mensagemErro.classList.add('mensagem-erro');
+      campo.parentNode.appendChild(mensagemErro);
+    }
+  });
+
+
+  if (camposPreenchidos) {
+    collectFormData(event)
+  }
 }
 
 function enviarDados(event) {
   event.preventDefault()
 
-  const form = document.querySelector('form'); // seleciona o formulário pelo seletor CSS
+  const form = document.getElementById('formCandidato'); // seleciona o formulário pelo seletor CSS
   const inputs = form.querySelectorAll('input, select'); // seleciona todos os inputs e selects dentro do formulário
   const valores = {}; // objeto para armazenar os valores capturados
 
@@ -540,6 +589,7 @@ function collectFormData() {
   formValues['celularCorporativo'] = document.getElementById('celularCorporativo').value;
   formValues['cartaoVisita'] = document.getElementById('cartaoVisita').value;
   formValues['solicitacao'] = document.getElementById('codigoSolicitacao').value;
+  formValues['gestorImediato'] = document.getElementById('gestorImediato').value;
 
 
   fetch(endpoints.updateVaga, {

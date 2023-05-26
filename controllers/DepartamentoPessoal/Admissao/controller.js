@@ -9,6 +9,8 @@ const atualizacao_solicitante = require('../../../template-email/Vagas/atualizac
 const processo_administrativo = require('../../../template-email/Vagas/processo_dp')
 const processo_seletivoRec = require('../../../template-email/Vagas/processo_seletivoRec')
 const vaga_reprovada = require('../../../template-email/Vagas/vaga_reprovada')
+const atualizacao_aprovadorPosEdit = require('../../../template-email/Vagas/atualizacao_aprovadorPosEdit')
+const contratado = require('../../../template-email/Vagas/contratado')
 const solicitacaoService = require('./service')
 const sql = require('mssql');
 const { domain } = require('../../../config/env');
@@ -22,7 +24,7 @@ module.exports = {
             salario, cliente = 'N', gestorImediato,
             cargo, deal = 'N', horario, equipamento, cartaoDeVisita = 'S',
             celularCorporativo = 'S', pcd = 'S', usuarioSimilarAtivo, acessosEspecificos,
-            dataDeAbertura = new Date() } = request
+            dataDeAbertura = new Date(), colaboradorSubstituido } = request
 
         try {
 
@@ -30,6 +32,15 @@ module.exports = {
 
             const user = request.session.get('user');
 
+            const cargoFormatado = await solicitacaoService.formatString(cargo)
+
+            const colaboradorSubstituidoFormatado = await solicitacaoService.formatString(colaboradorSubstituido)
+
+            const gestorImediatoFormatado = await solicitacaoService.formatString(gestorImediato)
+
+            const usuarioSimilarAtivoFormatado = await solicitacaoService.formatString(usuarioSimilarAtivo)
+
+            console.log('oioioi',colaboradorSubstituidoFormatado)
             //inserir e retornar o código 
             await verifyIndiceAdapter('SOLICITACAO_ADMISSAO', 'CODIGO')
 
@@ -41,18 +52,19 @@ module.exports = {
                 centroDecusto: centroDecusto.match(/[\d\.]+/)[0].trim(),
                 salario: salario,
                 cliente: cliente,
-                gestorImediato: gestorImediato,
-                cargo: cargo,
+                gestorImediato: gestorImediatoFormatado,
+                cargo: cargoFormatado,
                 deal: deal,
                 horario: horario,
                 equipamento: equipamento,
                 cartaoDeVisita: cartaoDeVisita,
                 celularCorporativo: celularCorporativo,
-                usuarioSimilarAtivo: usuarioSimilarAtivo,
+                usuarioSimilarAtivo: usuarioSimilarAtivoFormatado,
                 acessosEspecificos: acessosEspecificos,
                 dataDeAbertura: dataDeAbertura,
                 solicitante: user.codigo,
-                pcd: pcd
+                pcd: pcd,
+                colaboradorSubstituido: colaboradorSubstituidoFormatado
             })
 
             const buscaAprovadores = await solicitacaoService.buscaAprovadores(user)
@@ -336,6 +348,11 @@ module.exports = {
         const conexao = await sql.connect(db);
 
         const user = request.session.get('user')
+        console.log(tutorOnboarding)
+        console.log(indicacaoPremiada)
+        const tutorOnboardingFormat = await solicitacaoService.formatString(tutorOnboarding)
+
+        const indicacaoPremiadaFormat = await solicitacaoService.formatString(indicacaoPremiada)
 
         await verifyIndiceAdapter('PROFISIONAIS', 'ID')
 
@@ -357,12 +374,12 @@ module.exports = {
             RESPONSÁVEL_PELO_RETORNO
         ) VALUES (
             '${nomeProfissional}',
-            '${tutorOnboarding}',
+            '${tutorOnboardingFormat}',
             '${Telefone}',
             '${dataCriacao.toISOString()}',
             ${codigo},
             '${email}',
-            '${indicacaoPremiada}',
+            '${indicacaoPremiadaFormat}',
             '${emailCorporativo}',
             '${pcd}',
             '${dataInicio}',
@@ -631,7 +648,7 @@ module.exports = {
 
             await solicitacaoService.insertPedidoConferencia(variaveisComS, motivo, user.codigo, codigo)
 
-            return renderJson('Conferência Solicitada com Suscesso')
+            return renderJson('Revisão Solicitada com Suscesso')
 
 
         } catch (error) {
@@ -648,13 +665,21 @@ module.exports = {
 
         const { valorConf = '', unidadeConf = '', horarioConf = '', tipoAdmissaoConf = '', cargoConf = '', pcdConf = '', codigoSolicitacao } = request
 
+        let cargoFormat = ''
+        if (cargoConf != '') {
+            cargoFormat = await solicitacaoService.formatString(cargoConf)
+        }
+
+
         const user = request.session.get('user')
 
         const conexao = await sql.connect(db);
 
         const cargoUser = await solicitacaoService.buscarCargoUsuario(user.codigo)
 
-        const query = await solicitacaoService.criarQueryUpdate(codigoSolicitacao, { valorConf, unidadeConf, horarioConf, tipoAdmissaoConf, cargoConf, pcdConf });
+        const solicitacao = await solicitacaoService.solicitacaoUnica(codigoSolicitacao)
+
+        const query = await solicitacaoService.criarQueryUpdate(codigoSolicitacao, { valorConf, unidadeConf, horarioConf, tipoAdmissaoConf, cargoFormat, pcdConf });
 
         await conexao.request().query(`update SOLICITACAO_ADMISSAO set STATUS = 'A' where CODIGO = ${codigoSolicitacao}`)
 
@@ -681,8 +706,8 @@ module.exports = {
                     codigoSolicitacao: codigoSolicitacao,
                     cargo: cargoConf,
                     unidade: unidadeConf,
-                    // departamento: departamento,
-                    // gestorImediato: gestorImediato
+                    departamento: solicitacao.DEPARTAMENTO,
+                    gestorImediato: solicitacao.GESTOR_IMEDIATO
 
                 }),
                 isHtlm: true
@@ -779,14 +804,24 @@ module.exports = {
         const emailRH = 'rh@itone.com.br'
         const emailDP = 'dp@itone.com.br'
 
+        const candidato = await conexao.request().query(`SELECT *, CONVERT(VARCHAR(10), DATAINICIO, 103) AS DATAINICIO_FORMATTED
+        FROM PROFISIONAIS
+        WHERE SOLICITACAO = ${solicitacao.CODIGO} AND ATIVO = 'S'`)
+
         const link = `${domain}/vagas/${codigo}/detail`
 
         const emailOptionsSolicitante = {
             to: buscaEmailSolicitante,
             subject: 'Contratado',
-            content: atualizacao_solicitante({
+            content: contratado({
                 link: link,
                 codigoSolicitacao: codigo,
+                cargo: solicitacao.CARGO,
+                dataInicio: candidato.recordset[0].DATAINICIO_FORMATTED,
+                departamento: solicitacao.DEPARTAMENTO,
+                unidade: solicitacao.UNIDADE,
+                gestorImediato: solicitacao.GESTOR_IMEDIATO,
+                nomeContratado: candidato.recordset[0].NOME_PROFISSIONAL
             }),
             isHtlm: true
         };
@@ -794,9 +829,15 @@ module.exports = {
         const emailOptionsAprovadores = {
             to: emailsAprovadores,
             subject: 'Contratado',
-            content: atualizacao_solicitante({
+            content: contratado({
                 link: link,
                 codigoSolicitacao: codigo,
+                cargo: solicitacao.CARGO,
+                dataInicio: candidato.recordset[0].DATAINICIO_FORMATTED,
+                departamento: solicitacao.DEPARTAMENTO,
+                unidade: solicitacao.UNIDADE,
+                gestorImediato: solicitacao.GESTOR_IMEDIATO,
+                nomeContratado: candidato.recordset[0].NOME_PROFISSIONAL
             }),
             isHtlm: true
         };
@@ -804,9 +845,15 @@ module.exports = {
         const emailOptionsRH = {
             to: emailRH,
             subject: 'Contratado',
-            content: atualizacao_solicitante({
+            content: contratado({
                 link: link,
                 codigoSolicitacao: codigo,
+                cargo: solicitacao.CARGO,
+                dataInicio: candidato.recordset[0].DATAINICIO_FORMATTED,
+                departamento: solicitacao.DEPARTAMENTO,
+                unidade: solicitacao.UNIDADE,
+                gestorImediato: solicitacao.GESTOR_IMEDIATO,
+                nomeContratado: candidato.recordset[0].NOME_PROFISSIONAL
             }),
             isHtlm: true
         };
@@ -814,9 +861,15 @@ module.exports = {
         const emailOptionsDP = {
             to: emailDP,
             subject: 'Contratado',
-            content: atualizacao_solicitante({
+            content: contratado({
                 link: link,
                 codigoSolicitacao: codigo,
+                cargo: solicitacao.CARGO,
+                dataInicio: candidato.recordset[0].DATAINICIO_FORMATTED,
+                departamento: solicitacao.DEPARTAMENTO,
+                unidade: solicitacao.UNIDADE,
+                gestorImediato: solicitacao.GESTOR_IMEDIATO,
+                nomeContratado: candidato.recordset[0].NOME_PROFISSIONAL
             }),
             isHtlm: true
         };
@@ -835,19 +888,26 @@ module.exports = {
 
         const { ColaboradorEdit, acessosEspecificos, cargo, cartaoVisita, celularCorporativo,
             centroDecusto, cliente, deal, departamento, horarioTrabalho, salario, substituicao,
-            tipoAdmissao, tipoEquipamento, unidadeContratacao, usuarioSimilar, vagaEspecificaPCD, solicitacao } = request
+            tipoAdmissao, tipoEquipamento, unidadeContratacao, usuarioSimilar, vagaEspecificaPCD, solicitacao, gestorImediato } = request
 
         const conexao = await sql.connect(db);
 
         const user = request.session.get('user')
 
+        const cargoFormatado = await solicitacaoService.formatString(cargo)
+
+        const colaboradorSubstituidoFormatado = await solicitacaoService.formatString(ColaboradorEdit)
+
+        const gestorImediatoFormatado = await solicitacaoService.formatString(gestorImediato)
+
         await conexao.request().query(`UPDATE SOLICITACAO_ADMISSAO
         SET ACESSOS_ESPECIFICOS = '${acessosEspecificos}',
-            CARGO = '${cargo}',
+            CARGO = '${cargoFormatado}',
             CARTAO_DE_VISITA = '${cartaoVisita}',
             CELULAR_CORPORATIVO = '${celularCorporativo}',
             CENTRO_DE_CUSTO = '${centroDecusto}',
             CLIENTE = '${cliente}',
+            GESTOR_IMEDIATO = '${gestorImediatoFormatado}',
             DEAL = '${deal}',
             DEPARTAMENTO = '${departamento}',
             HORARIO = '${horarioTrabalho}',
@@ -857,8 +917,29 @@ module.exports = {
             EQUIPAMENTO = '${tipoEquipamento}',
             UNIDADE = '${unidadeContratacao}',
             USUARIO_SIMILARATIVO = '${usuarioSimilar}',
+            COLABORADOR_SUBSTITUIDO = '${colaboradorSubstituidoFormatado}',
             PCD = '${vagaEspecificaPCD}'
         WHERE CODIGO = ${solicitacao}`)
+
+        const link = `${domain}/vagas/${solicitacao}/detail`
+
+        const emailAprovador = await solicitacaoService.buscarPrimeiroAprovador(solicitacao)
+
+        const emailOptionsAprovadores = {
+            to: emailAprovador,
+            subject: 'Atualização Vaga',
+            content: atualizacao_aprovadorPosEdit({
+                link,
+                codigoSolicitacao: solicitacao,
+                cargo: cargoFormatado,
+                unidade: unidadeContratacao,
+                departamento: departamento,
+                gestorImediato: gestorImediatoFormatado
+            }),
+            isHtlm: true
+        };
+
+        enviarEmail(emailOptionsAprovadores)
 
         return renderJson(`solicitação ${solicitacao} editada com sucesso`)
 

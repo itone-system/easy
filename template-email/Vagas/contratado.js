@@ -1,4 +1,4 @@
-module.exports = ({ link, codigoSolicitacao, cargo, unidade, departamento, gestorImediato }) => {
+module.exports = ({ link, codigoSolicitacao, cargo, unidade, departamento, gestorImediato, nomeContratado, dataInicio }) => {
     return `<body style="background-color: #f5f5f5; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0;">
     <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr>
@@ -16,8 +16,9 @@ module.exports = ({ link, codigoSolicitacao, cargo, unidade, departamento, gesto
           <table align="center" border="0" cellpadding="0" cellspacing="0" width="600">
             <tr>
               <td bgcolor="#ffffff" style="padding: 30px; color: #313131;">
-                <h1 style="font-size: 24px; font-weight: bold; margin: 0 0 20px 0;">Você tem uma aprovação de vaga pendente</h1>
-                <p style="font-size: 16px; line-height: 1.5em; margin: 0 0 10px 0;">Easy informa que a vaga abaixo está aguardando aprovação:</p>
+                <h1 style="font-size: 24px; font-weight: bold; margin: 0 0 20px 0;">Atualização de Vaga</h1>
+                <p style="font-size: 16px; line-height: 1.5em; margin: 0 0 10px 0;">EASY informa que o colaborador ${nomeContratado} foi contratado 
+                e já começa a exercer sua função a partir do dia ${dataInicio}, veja abaixo detalhes sobre o novo colaborador:</p>
                 <ul style="font-size: 16px; line-height: 1.5em; margin: 0;">
                   <li><strong>Solicitação n°:</strong> ${codigoSolicitacao}</li>
                   <li><strong>Cargo:</strong> ${cargo}</li>
@@ -31,19 +32,19 @@ module.exports = ({ link, codigoSolicitacao, cargo, unidade, departamento, gesto
 
           <!-- Footer -->
           <tr>
-                       <td style="padding: 20px; background-color:#002f71;">
-                            <center><table border="0" width="600px" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td width="85%">
+          <td style="padding: 20px; background-color:#002f71;">
+               <center><table border="0" width="600px" cellpadding="0" cellspacing="0">
+                   <tr>
+                       <td width="85%">
 
-                                    <div style="font-family: Arial, sans-serif; line-height: 19px; color: #a71616; font-size: 13px; text-align: center;">
+                       <div style="font-family: Arial, sans-serif; line-height: 19px; color: #a71616; font-size: 13px; text-align: center;">
 
-                                        <a  href=${link}  style="color: #000000; text-decoration: none; margin: 0px; text-align: center; vertical-align: baseline; border: 4px solid #ffffff; padding: 4px 9px; font-size: 13px; line-height: 21px; background-color: #fbfbfc;">&nbsp; Acessar Plataforma &nbsp;</a></center>
-                                    </div>
+                           <a  href=${link}  style="color: #000000; text-decoration: none; margin: 0px; text-align: center; vertical-align: baseline; border: 4px solid #ffffff; padding: 4px 9px; font-size: 13px; line-height: 21px; background-color: #fbfbfc;">&nbsp; Acessar Plataforma &nbsp;</a></center>
+                       </div>
 
-                            </table></center>
-                        </td>
-                    </tr>
+               </table></center>
+           </td>
+       </tr>
         </td>
       </tr>
     </table>
