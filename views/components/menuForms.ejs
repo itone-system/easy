@@ -75,10 +75,10 @@
                 style="font-size:11px;"> <i class='bx bx-file icon'></i>Encerramento – PJ </a></li>
                 <% }%>
                 <% if(acesso.FERIAS) {%>
-                  <% if(tipoRegime == 'C') {%>
+                  <% if(acesso.FERIAS && tipoRegime == 'C') {%>
               <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1K9TNN4s7djBen8l70JsM0SnMIO-7IrXd/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
                 style="font-size:11px;"> <i class='bx bx-file icon'></i>Férias  </a></li>
-                <% } else {%>
+                <% } else if (acesso.FERIAS && tipoRegime == 'E'){%>
                 <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1ioChQzT-m-rRo0JKnucslih3emzd64V7/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
                   style="font-size:11px;"> <i class='bx bx-file icon'></i>Recesso  </a></li>
                   <% }%>

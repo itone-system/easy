@@ -103,11 +103,11 @@ function getValores() {
       centroCustoSplitTraco = valorCampo[1].split(' - ')
       centroCustoSplit = centroCustosplitPonto.length == 1  ? centroCustoSplitTraco : centroCustosplitPonto
 
-      dadosDesligamento.NOME = valorCampo[0];
+      dadosDesligamento.NOME = valorCampo[1];
       dadosDesligamento.CC = document.getElementById('departamentoUser').innerText;
-      dadosDesligamento.DATA_AVISO = valorCampo[1]
-      dadosDesligamento.ULTIMO_DIA = valorCampo[2]
-      dadosDesligamento.TIPO_REGIME = valorCampo[3].substr(0,1)
+      dadosDesligamento.DATA_AVISO = valorCampo[2]
+      dadosDesligamento.ULTIMO_DIA = valorCampo[3]
+      dadosDesligamento.TIPO_REGIME = valorCampo[0].substr(0,1);
       dadosDesligamento.OBSERVACAO = valorCampo[7]
       dadosDesligamento.SUBSTITUICAO = valorCampo[8].substr(0,1)
       dadosDesligamento.NOME_SOLICITANTE = document.getElementById('nomeUser').innerText

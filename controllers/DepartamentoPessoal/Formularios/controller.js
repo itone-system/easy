@@ -574,9 +574,9 @@ module.exports = {
 
     const codigo = result.recordset[0].ID;
 
-    const buscaremailDP = await conexao.query('select * from Emails where ID = 2');
+    const buscaremailRH = await conexao.query('select * from Emails where ID = 3');
 
-    proxEmail = [buscaremailDP.recordset[0].EMAIL];
+    proxEmail = [buscaremailRH.recordset[0].EMAIL];
 
     formsService.enviarEmail(codigo, NOME, NOME_SOLICITANTE, proxEmail, 'Alteração Cadastral');
 
