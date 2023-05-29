@@ -243,6 +243,7 @@ function gerarDadosModalAlteracaoCad(codigo, tipo) {
       document.getElementById('ModGestorNovoAlter').value = data[0].GESTOR_NOVO;
       document.getElementById('Justificativa').value = data[0].JUSTIFICATIVA;
       var permissao = document.getElementById('permissaoAlter').innerText
+      console.log('permissao: ' + permissao )
       var obsRecusa = data[0].STATUS === 'I' ? data[0].OBS_INDEFERIDO : data[0].OBS_RECUSA
       codigoSolicitanteForm = data[0].COD_SOLICITANTE
       SolicitanteNome = data[0].SOLICITANTE
