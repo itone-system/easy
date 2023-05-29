@@ -17,6 +17,8 @@ centroCustoExtensoSalva = '';
 module.exports = {
   async insertNotas(req, res) {
     const {
+      codsolicitante,
+      dataSolicitacao,
       solicitante,
       CentroCusto,
       fornecedor,
@@ -38,6 +40,8 @@ module.exports = {
     let result = await conexao
       .request()
 
+      .input('codsolicitante', sql.Int, codsolicitante)
+      .input('dataSolicitacao', sql.DateTime, dataSolicitacao)
       .input('Solicitante', sql.VarChar, solicitante)
       .input('CentroCusto', sql.VarChar, CentroCusto)
       .input('Fornecedor', sql.VarChar, fornecedor)
@@ -54,7 +58,7 @@ module.exports = {
       .input('CodigoSolicitacao', sql.Int, codigoSolicitacao)
 
       .query(
-        'INSERT INTO NotaFiscal (Solicitante, CentroCusto, Fornecedor, Descricao, TipoContrato, valorNF, DataPagamento, Deal, Observacao, PossuiColaborador, Colaborador, Anexo, Boleto, CodigoSolicitacao )    OUTPUT Inserted.Codigo,  Inserted.Descricao, Inserted.Fornecedor, Inserted.Solicitante VALUES (@solicitante, @centroCusto, @fornecedor, @Descricao, @tipoContrato, @valorNF, @dataPagamento, @deal, @Observacao, @possuiColaborador, @Colaborador, @Anexo, @Boleto,  @codigoSolicitacao)'
+        'INSERT INTO NotaFiscal (COD_SOLICITANTE,DATA_SOLICITACAO, Solicitante, CentroCusto, Fornecedor, Descricao, TipoContrato, valorNF, DataPagamento, Deal, Observacao, PossuiColaborador, Colaborador, Anexo, Boleto, CodigoSolicitacao )    OUTPUT Inserted.Codigo,  Inserted.Descricao, Inserted.Fornecedor, Inserted.Solicitante VALUES (@codsolicitante, @dataSolicitacao, @solicitante, @centroCusto, @fornecedor, @Descricao, @tipoContrato, @valorNF, @dataPagamento, @deal, @Observacao, @possuiColaborador, @Colaborador, @Anexo, @Boleto,  @codigoSolicitacao)'
       );
 
     const codigo = result.recordset[0].Codigo;
@@ -174,9 +178,41 @@ module.exports = {
     listacondicoes = {
       Descricao: requ.Descricao,
       Fornecedor: requ.Fornecedor,
-      Solicitante: user.Perfil == 2 ? user.nome : requ.Solicitante,
-      CentroCusto: user.Perfil == 3 ? user.departamento : requ.CentroCusto
+      Solicitante: requ.Solicitante,
+      CentroCusto: requ.CentroCusto
     };
+
+          // INÍCIO Restrição de Dados
+
+          let tipoRestricao = user.tipoAcessos.NOTA_FISCAL;
+
+          let condicaoResticaoDados = '';
+
+          console.log(tipoRestricao);
+
+          switch (tipoRestricao) {
+            case 'FULL':
+              condicaoResticaoDados = '';
+              break;
+            case 'DIRETOR':
+              condicaoResticaoDados = ` (NOTA_FISCAL_VIEW.SOLICITANTE = '${user.nome}' OR NOTA_FISCAL_VIEW.DIRETOR = '${user.codigo}' )`;
+              break;
+            case 'GERENTE':
+              condicaoResticaoDados = ` (NOTA_FISCAL_VIEW.SOLICITANTE = '${user.nome}' OR NOTA_FISCAL_VIEW.GESTOR = '${user.codigo}' )`;
+              break;
+            case 'COORDENADOR':
+              // listacondicoes.SOLICITANTE = user.nome;
+              condicaoResticaoDados = ` (NOTA_FISCAL_VIEW.SOLICITANTE = '${user.nome}' OR NOTA_FISCAL_VIEW.COORDENADOR = '${user.codigo}' )`;
+              break;
+            case 'COLABORADOR':
+              condicaoResticaoDados = ` NOTA_FISCAL_VIEW.SOLICITANTE = '${user.nome}'`;
+              break;
+            case 'CENTRO DE CUSTO':
+              condicaoResticaoDados = ` NOTA_FISCAL_VIEW.ID_DEPARTAMENTO = '${user.departamento}'`;
+              break;
+          }
+
+          // FIM Restrição de Dados
 
     condicaoGeral = '';
 
@@ -199,12 +235,17 @@ module.exports = {
     }
     console.log(condicaoGeral);
 
+    if (condicaoResticaoDados) {
+      condicaoResticaoDados = condicaoGeral === '' ? ` where ${condicaoResticaoDados}` : ` and ${condicaoResticaoDados}`;
+    }
+
+
     if (filtroAplicado) {
       requ.pagina = 1;
     }
 
     const obterTotalSolicitacoes = await conexao.query(
-      `SELECT COUNT (Codigo) as total FROM notaFiscal ${condicaoGeral} `
+      `SELECT COUNT (Codigo) as total FROM NOTA_FISCAL_VIEW ${condicaoGeral} ${condicaoResticaoDados} `
     );
 
     const totalPaginas = Math.ceil(
@@ -234,18 +275,8 @@ module.exports = {
     console.log('limite: ' + limite);
 
     const obterSolicitacoes =
-      await conexao.query(`SELECT	left(CentroCusto,1) as [Primeiro_Codigo_CC],
-
-   case when(tipoContrato = 'R') then 'Recorrente'
-   when(tipoContrato = 'P') then 'Pagamento Único' end as [Tipo_Contrato],
-
-   case when(tipoContrato = 'B') then 'Boleto'
-   when(tipoContrato = 'P') then 'Pix'
-   when(tipoContrato = 'T') then 'Transferência'
-   when(tipoContrato = 'C') then 'Cartão de crédito'end as [Tipo_Pagamento],
-   concat(format(datapagamento,'dd'),'/',format(datapagamento,'MM'),'/',year(datapagamento)) as [Data],
-   *
-   FROM	notaFiscal  ${condicaoGeral}
+      await conexao.query(`SELECT	  *
+   FROM	NOTA_FISCAL_VIEW  ${condicaoGeral} ${condicaoResticaoDados}
    ORDER BY Codigo desc
    OFFSET	${offset} ROWS FETCH NEXT ${limite} ROWS ONLY`);
 
@@ -261,18 +292,6 @@ module.exports = {
 
     var dados = itens;
 
-    // switch(user.Perfil){
-    //    case 1:
-    //       var dados  = itens
-    //    break
-    //    case 2:
-    //       var dados  = itens.filter(x=> x.Solicitante === user.nome)
-    //    break
-    //    case 3:
-    //       var dados  = itens.filter(x => x.Primeiro_Codigo_CC === user.departamento.substr(0,1))
-    //    break
-    // }
-
     if (tokenReceive) {
       const tokenRecebido = request.tokenReceive;
 
@@ -282,7 +301,10 @@ module.exports = {
     } else {
       let = codigoToken = '';
     }
-
+    // console.log(user.permissoes.NOTA_FISCAL.RETORNAR)
+    if (!user.tipoAcessos.NOTA_FISCAL) {
+      return redirect('/menu');
+    } else {
     return renderView('home/NotaFiscal/DetailNF', {
       dados,
       notaUnica,
@@ -290,13 +312,14 @@ module.exports = {
       fornecedorSalva,
       solicitanteSalva,
       centroCustoExtensoSalva,
-      retornoUser: user.permissoesNotaFiscal,
+      retornoUser: user.permissoes.NOTA_FISCAL.RETORNAR,
       nome: user.nome,
       codigoUsuario: user.codigo,
       codigoToken
     });
 
     // return ({ notasRecebidas, notaUnica, totalPaginas, paginate, descricaoSalva, fornecedorSalva, solicitanteSalva, centroCustoExtensoSalva})
+  }
   },
 
   async atualizarStatusNota(req, res) {
@@ -372,12 +395,17 @@ module.exports = {
     console.log(user);
     const message = await request.session.message();
     const dados = {};
+    if (!user.tipoAcessos.NOTA_FISCAL) {
+      return redirect('/menu');
+    } else {
     return renderView('home/NotaFiscal/CreateNF', {
+      codigoUsuario: user.codigo,
       nome: user.nome,
       message,
       dados
     });
     //   return renderView('home/NotaFiscal/CreateNF', { nome: user.nome, message });
+  }
   },
 
   async uploadNF(request, response) {
