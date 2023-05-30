@@ -32,14 +32,16 @@ exports.buscarAprovadores = async (codigo, codSolicitante, nomeColaborador, tipo
   const conexao = await sql.connect(db);
 
   const buscarAprovador = await conexao.query(
-    `SELECT DIRETOR FROM Usuarios WHERE  COD_USUARIO   = '${codSolicitante}'`
+    `SELECT GESTOR, DIRETOR FROM Usuarios WHERE  COD_USUARIO   = '${codSolicitante}'`
   );
 
   const diretorADMFinanceiro = await conexao.query(
     'SELECT TOP 1 COD_USUARIO FROM Usuarios WHERE CARGO = \'DIRETOR(A) ADMINISTRATIVO\' AND ATIVO = \'S\''
   );
 
-  if (buscarAprovador.recordset[0].DIRETOR) {
+  if (buscarAprovador.recordset[0].GESTOR) {
+    aprovacaoes = [buscarAprovador.recordset[0].GESTOR, buscarAprovador.recordset[0].DIRETOR, diretorADMFinanceiro.recordset[0].COD_USUARIO];
+  } else if (!buscarAprovador.recordset[0].GESTOR && buscarAprovador.recordset[0].DIRETOR) {
     aprovacaoes = [buscarAprovador.recordset[0].DIRETOR, diretorADMFinanceiro.recordset[0].COD_USUARIO];
   } else {
     aprovacaoes = [diretorADMFinanceiro.recordset[0].COD_USUARIO];
@@ -88,7 +90,7 @@ exports.buscarAprovadores = async (codigo, codSolicitante, nomeColaborador, tipo
     }
   );
 
-  href = domain + '/notafiscal/buscarNotas?tokenReceive=' + token;
+  href = domain + '/formularios/consultar?tokenReceive=' + token;
 
   ejs.renderFile(
     'template-email/retornoEmailForms.ejs',
@@ -189,7 +191,7 @@ exports.enviarEmail = async (codigo, nome_colaborador, nome_solicitante, proxEma
     }
   );
 
-  href = domain + '/notafiscal/buscarNotas?tokenReceive=' + token;
+  href = domain + '/formularios/consultar?tokenReceive=' + token;
 
   console.log(proxEmail);
 
