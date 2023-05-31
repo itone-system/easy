@@ -69,16 +69,16 @@
                   <% if(acesso.RESCISAO) {%>
               <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1ghYgwciOlKLTM4-j0XwtMhvn5hLTPiZv/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
                   style="font-size:11px;"> <i class='bx bx-file icon'></i>Desligamento (CLT e Aprendiz)  </a></li>
-              <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1Jxaq0Ba0THMh59kPUz_MmrpWVY22xrY3/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
+              <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1TuxAsQhkK5bgLc1hzKBKGgyy2D6E1OBw/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
                 style="font-size:11px;"> <i class='bx bx-file icon'></i>Encerramento – Estagiário  </a></li>
-              <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1px69EIa_ZpL8CWECBCzrrd8MrInHPv5O/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
+              <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1_cFOZgBDSt8pvA6VKBWcvjlJRvH1uGdz/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
                 style="font-size:11px;"> <i class='bx bx-file icon'></i>Encerramento – PJ </a></li>
                 <% }%>
                 <% if(acesso.FERIAS) {%>
-                  <% if(tipoRegime == 'C') {%>
+                  <% if(acesso.FERIAS && tipoRegime == 'C') {%>
               <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1K9TNN4s7djBen8l70JsM0SnMIO-7IrXd/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
                 style="font-size:11px;"> <i class='bx bx-file icon'></i>Férias  </a></li>
-                <% } else {%>
+                <% } else if (acesso.FERIAS && tipoRegime == 'E'){%>
                 <li class="central"><a class=" text nav-text" href="https://drive.google.com/file/d/1ioChQzT-m-rRo0JKnucslih3emzd64V7/view?usp=share_link"  target="_blank" rel="noopener noreferrer"
                   style="font-size:11px;"> <i class='bx bx-file icon'></i>Recesso  </a></li>
                   <% }%>

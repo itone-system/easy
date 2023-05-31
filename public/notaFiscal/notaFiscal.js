@@ -213,6 +213,7 @@ function limparCampos() {
 async function insertNota() {
 
 
+  codigoUsuario = document.getElementById("codigoUsuario").innerText;
   solicitante = document.getElementById("Solicitante").value;
   centroCusto = document.getElementById("CentroCusto").value;
   fornecedor = document.getElementById("Fornecedor").value;
@@ -239,6 +240,8 @@ async function insertNota() {
   let bodyContent = JSON.stringify({
 
     "solicitante": solicitante,
+    "codsolicitante": codigoUsuario,
+    "dataSolicitacao": new Date(),
     "CentroCusto": centroCustoSplit[0].length > 10 ? centroCustoSplit2[0] : centroCustoSplit[0],
     "fornecedor": fornecedor,
     "Descricao": descServico,
