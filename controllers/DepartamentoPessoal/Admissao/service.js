@@ -239,7 +239,7 @@ exports.buscarProximoAprovador = async (codigoSolicitacao) => {
 
         const emailOptions = {
             to: email,
-            subject: 'Solicitção Aprovada',
+            subject: 'Vaga Aprovada',
             content: solicitacaoAprovada({
                 link,
                 codigoSolicitacao,
@@ -350,6 +350,8 @@ exports.insertPedidoConferencia = async (dados, motivo, userCodigo, codigoSolici
 
     const dataFormatada = data.toISOString().slice(0, 10);
 
+    const solicitacao = await conexao.request().query(`select * from SOLICITACAO_ADMISSAO where CODIGO = ${codigoSolicitacao}`)
+
     await verifyIndiceAdapter('CONFERENCIA', 'ID')
 
     const codigo = await conexao.request().query(`insert into CONFERENCIA (CODIGO_SOLICITACAO, CAMPOS, MOTIVO, SOLICITANTE_CONFERENCIA, DATA_DE_INSERCAO
@@ -380,7 +382,11 @@ exports.insertPedidoConferencia = async (dados, motivo, userCodigo, codigoSolici
         content: revisao({
             link,
             codigoSolicitacao: codigoSolicitacao,
-            motivo: motivo
+            motivo: motivo,
+            cargo: solicitacao.recordset[0].CARGO,
+            unidade: solicitacao.recordset[0].UNIDADE,
+            departamento: solicitacao.recordset[0].DEPARTAMENTO,
+            gestorImediato: solicitacao.recordset[0].GESTOR_IMEDIATO
         }),
         isHtlm: true
     };

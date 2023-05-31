@@ -9,6 +9,7 @@ const atualizacao_solicitante = require('../../../template-email/Vagas/atualizac
 const processo_administrativo = require('../../../template-email/Vagas/processo_dp')
 const processo_seletivoRec = require('../../../template-email/Vagas/processo_seletivoRec')
 const vaga_reprovada = require('../../../template-email/Vagas/vaga_reprovada')
+const vaga_cancelada = require('../../../template-email/Vagas/vaga_cancelada')
 const atualizacao_aprovadorPosEdit = require('../../../template-email/Vagas/atualizacao_aprovadorPosEdit')
 const contratado = require('../../../template-email/Vagas/contratado')
 const solicitacaoService = require('./service')
@@ -95,10 +96,10 @@ module.exports = {
                     content: aprovacaoPendente({
                         link,
                         codigoSolicitacao: codigoInsert,
-                        cargo: cargo,
+                        cargo: cargoFormatado,
                         unidade: unidade,
                         departamento: departamento,
-                        gestorImediato: gestorImediato
+                        gestorImediato: gestorImediatoFormatado
 
                     }),
                     isHtlm: true
@@ -322,7 +323,6 @@ module.exports = {
         } else {
             semAprovacao = 'N'
         }
-        console.log(solicitacao)
         return renderView('homeVagas/Admissao/Detail', {
             solicitacao, nome: user.nome, candidato: candidatoTratado, contratado: candidatoContratadoTratado,
             dadosUser: user, momentoAprovacao: momentoAprovacao, dadosParaConferencia,
@@ -351,8 +351,7 @@ module.exports = {
         const conexao = await sql.connect(db);
 
         const user = request.session.get('user')
-        console.log(tutorOnboarding)
-        console.log(indicacaoPremiada)
+
         const tutorOnboardingFormat = await solicitacaoService.formatString(tutorOnboarding)
 
         const indicacaoPremiadaFormat = await solicitacaoService.formatString(indicacaoPremiada)
@@ -417,12 +416,21 @@ module.exports = {
 
         const link = `${domain}/vagas/${codigo}/detail`
 
+        const solicitacao = await solicitacaoService.solicitacaoUnica(
+            codigo
+        );
+
         const emailOptionsAprovadores = {
             to: emailsAprovadores,
             subject: 'Atualização Vaga',
             content: atualizacao_aprovador({
                 link,
                 codigoSolicitacao: codigo,
+                cargo: solicitacao.CARGO,
+                 unidade: solicitacao.UNIDADE,
+                  departamento: solicitacao.DEPARTAMENTO,
+                   gestorImediato: solicitacao.GESTOR_IMEDIATO,
+                    motivo: solicitacao.MOTIVO
             }),
             isHtlm: true
         };
@@ -433,6 +441,11 @@ module.exports = {
             content: atualizacao_solicitante({
                 link,
                 codigoSolicitacao: codigo,
+                cargo: solicitacao.CARGO,
+                 unidade: solicitacao.UNIDADE,
+                  departamento: solicitacao.DEPARTAMENTO,
+                   gestorImediato: solicitacao.GESTOR_IMEDIATO,
+                    motivo: solicitacao.MOTIVO
             }),
             isHtlm: true
         };
@@ -555,8 +568,12 @@ module.exports = {
             to: emailSolicitante,
             subject: 'Vaga Reprovada',
             content: vaga_reprovada({
-                codigo: codigoSolicitacao,
-                motivo: motivoReprovacao
+                codigoSolicitacao: codigoSolicitacao,
+                motivo: motivoReprovacao,
+                cargo: solicitacao.CARGO, 
+                unidade: solicitacao.UNIDADE, 
+                departamento: solicitacao.DEPARTAMENTO, 
+                gestorImediato: solicitacao.GESTOR_IMEDIATO
                 
             }),
             isHtlm: true
@@ -608,9 +625,13 @@ module.exports = {
         const emailOptions = {
             to: emailSolicitante,
             subject: 'Vaga Cancelada',
-            content: vaga_reprovada({
-                codigo: codigoSolicitacao,
-                motivo: motivoReprovacao
+            content: vaga_cancelada({
+                codigoSolicitacao: codigoSolicitacao,
+                motivo: motivoReprovacao,
+                cargo: solicitacao.CARGO, 
+                unidade: solicitacao.UNIDADE, 
+                departamento: solicitacao.DEPARTAMENTO, 
+                gestorImediato: solicitacao.GESTOR_IMEDIATO
                 
             }),
             isHtlm: true
