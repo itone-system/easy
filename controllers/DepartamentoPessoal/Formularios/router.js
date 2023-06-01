@@ -6,6 +6,7 @@ const { expressAdapter } = require('../../../infra/expressAdapter');
 // Formulários
 FormularioRouter.get('/', expressAdapter(Formularios.criarHomeForms));
 FormularioRouter.get('/consultar', expressAdapter(Formularios.listarForms));
+FormularioRouter.get('/:id/:tipo/detalhamento', expressAdapter(Formularios.detalhamentoForms));
 FormularioRouter.post('/formUnico', expressAdapter(Formularios.formUnico));
 FormularioRouter.post('/statusForms', expressAdapter(Formularios.statusForms));
 FormularioRouter.post('/histAprovacoes', expressAdapter(Formularios.histAprovacoes));

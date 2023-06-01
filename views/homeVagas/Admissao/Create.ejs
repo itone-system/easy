@@ -57,9 +57,10 @@
                   <div class="col">
                     <div class="mb-3">
                       <label for="exampleInputText" class="form-label">Colaborador Substituído:</label>
-                      <select name="colaboradorSubstituido" id="ColaboradorInsert" class="form-control campo-obrigatorio">
-                        <option selected id="optionSubstituido" value="">Selecione...</option>
-                      </select>
+                      <input type="text" class="form-control campo-obrigatorio border-secondar  shadow-none" name="colaboradorSubstituido"
+                        aria-describedby="textHelp"  id="ColaboradorInsert" >
+
+
                       <!-- <input type="text" class="form-control border-secondar  shadow-none" id="empSubs"
                         aria-describedby="textHelp" placeholder="" name="colaboradorSubstituido"> -->
 
@@ -165,6 +166,7 @@
                         <option value="8:30|12:00|13:00|17:30">8:30 - 12:00 - 13:00 - 17:30</option>
                         <option value="8:30|12:00|13:30|18:00">8:30 - 12:00 - 13:30 - 18:00</option>
                         <option value="8:30|12:30">8:30 - 12:30</option>
+                        <option value="9:00|12:00|13:00|16:00">9:00 - 12:00 - 13:00 - 16:00</option>
                         <option value="9:00|12:00|13:00|18:00">9:00 - 12:00 - 13:00 - 18:00</option>
                         <option value="9:00|12:00|13:30|18:30">9:00 - 12:00 - 13:30 - 18:30</option>
                         <option value="9:00|12:00|14:00|19:00">9:00 - 12:00 - 14:00 - 19:00</option>
@@ -277,9 +279,9 @@
                   <div class="row">
                     <div class="col mt-5">
                       <label for="exampleInputText" class="form-label">Usuário Similar Ativo:</label>
-                      <input type="text" class="form-control campo-obrigatorio border-secondar  shadow-none" id="usuarioSimilar"
-                        aria-describedby="textHelp" placeholder="Caso não tenha, informe 1"
-                        name="usuarioSimilarAtivo">
+                      <select name="usuarioSimilarAtivo" id="usuarioSimilar" class="form-control campo-obrigatorio">
+                        <option selected value="N/A">Selecione...</option>
+                      </select>
 
                     </div>
                     <div class="col mt-5">

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../../partials/head', { title: 'Nova Solicitação' } ) %>
+  <link rel="stylesheet" href="../../../public/global.css">
+  <link rel="stylesheet" href="../../../public/Vagas/detalhamento.css">
+  <script src="../../../public/Vagas/detalhamento.js"></script>
+
+  <body>
+
+    <%- include('../../../components/menuForms') %>
+
+      <section class="home">
+
+        <%- include('../../../components/navbar') %>
+
+          <main class="text">
+
+            <div style="border-bottom: 1px solid #27417B; margin-bottom: 25px; margin-top: 25px; padding: 13px 0;">
+              <div class="row g-3">
+                <div class="col-lg-4">
+                  <% if(tipo === 'ferias'){%>
+                    <h2 class="title" >  Solicitação de Férias </h2>
+                    <%} else if (tipo === 'alteracao') {%>
+                      <h2 class="title" >  Solicitação de Alteração Cadastral </h2>
+                      <%} else {%>
+                        <h2 class="title" >  Solicitação de Desligamento </h2>
+                        <%} %>
+
+            </div>
+            <div class="col">
+              <span class="badge badge-primary" style=" margin-top: 1%; font-size: 13px;">Aprovado</span>
+            </div>
+            </div>
+          </div>
+            <p> </p>
+
+    <% if(tipo === 'ferias'){%>
+
+            <div class="dadosFerias">
+              <div class="row g-3">
+                <div class="col-lg-4 Solicitacao">
+                  <label>N° Solicitação: </label>
+                  <input id="NumeroSolicitacaoModalFerias" type="text" name="NumeroSolicitacaoModal"
+                    for="NumeroSolicitacao" style="font-size:13px" type="text" class="form-control"
+                    readonly>
+
+                </div>
+                <div class="col-lg-4 DataSolcitacao">
+                  <label>Data da Solicitação:</label>
+                  <input id="ModDataSolcitacao" name="ModDataSolcitacao" for="ModDataSolcitacao"
+                    style="font-size:13px" type="text" class="form-control" readonly>
+                </div>
+
+
+              </div>
+
+              <div class="row g-3">
+                <div class="col-lg-4 ColaboradorFerias">
+                  <label>Colaborador: </label>
+                  <input id="ModColaboradorFerias" type="text" name="ModColaboradorFerias" for="ModColaboradorFerias"
+                    style="font-size:13px" type="text" class="form-control" readonly>
+
+                </div>
+              </div>
+              <div class="row g-3">
+
+
+              </div>
+
+              <div class="row g-3">
+                <div class="col-lg-4 abonoFerias">
+                  <label>Abono de Férias:</label>
+                  <input id="ModabonoFerias" for="ModabonoFerias" name="ModabonoFerias"
+                    style="font-size:13px" type="text" class="form-control" readonly>
+
+                </div>
+
+                <div class="col-lg-4 Adiantamento">
+                  <label>Adiantamento:</label>
+                  <input id="ModAdiantamento" for="ModAdiantamento" style=" font-size:13px" type="text"
+                    class="form-control" readonly>
+                </div>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-lg-4 DataInicio">
+                  <label>Data Início:</label>
+                  <input id="ModDataInicio" for="ModDataInicio" style="font-size:13px" type="text"
+                    class="form-control" readonly>
+
+                </div>
+
+                <div class="col-lg-4 DataFim">
+                  <label>Data Fim:</label>
+                  <input id="ModDataFim" for="ModDataFim" style="font-size:13px" type="text"
+                    class="form-control" readonly>
+                </div>
+              </div>
+
+
+              <div class="row g-3">
+                <div class="col-lg-6 numDias">
+                  <label>Número de Dias:</label>
+                  <input id="ModnumDias" for="ModnumDias" style=" font-size:13px" type="text"
+                    class="form-control" readonly>
+                </div>
+              </div>
+
+            </div>
+
+
+            <%} else if (tipo === 'alteracao') {%>
+
+  <div class="dadosFerias">
+            <div class="row g-3">
+              <div class="col-lg-4 Solicitacao">
+                <label>N° Solicitação: </label>
+                <input id="NumeroSolicitacaoModalAlter" type="text" name="NumeroSolicitacaoModalAlter"
+                  for="NumeroSolicitacaoModalAlter" style=" font-size:13px" type="text"
+                  class="form-control" readonly>
+
+              </div>
+
+              <div class="col-lg-4 Solicitante">
+                <label>Solicitante: </label>
+                <input id="ModSolicitanteAlter" type="text" name="ModSolicitanteAlter" for="ModSolicitanteAlter"
+                  style=" font-size:13px" type="text" class="form-control" readonly>
+              </div>
+            </div>
+            <div class="row g-3">
+              <div class="col-lg-4 DataSolcitacao">
+                <label>Data da Solicitação:</label>
+                <input id="ModDataSolcitacaoAlter" name="ModDataSolcitacaoAlter" for="ModDataSolcitacaoAlter"
+                  style=" font-size:13px" type="text" class="form-control" readonly>
+
+              </div>
+
+              <div class="col-lg-4 DataMovimentacao">
+                <label>Data da Movimentação:</label>
+                <input id="ModDataMovimentacaoAlter" name="ModDataMovimentacaoAlter" for="Descricao"
+                  style="font-size:13px" type="text" class="form-control" readonly>
+              </div>
+            </div>
+            <div class="row g-3">
+              <div class="col-lg-4 Colaborador">
+                <label>Colaborador:</label>
+                <input id="ModColaboradorAlter" for="ModColaboradorAlter" style=" font-size:13px"
+                  type="text" class="form-control" readonly>
+
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-lg-4 FilialAtual">
+                <label>Filial Atual:</label>
+                <input id="ModFilialAtualAlter" for="ModFilialAtualAlter" style=" font-size:13px"
+                  type="text" class="form-control" readonly>
+
+              </div>
+
+              <div class="col-lg-4 FilialNovo">
+                <label>Filial Nova:</label>
+                <input id="ModFilialNovoAlter" for="ModFilialNovoAlter" style="font-size:13px"
+                  type="text" class="form-control" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3">
+
+            <div class="col-lg-4 DPAtual">
+              <label>Departamento Atual:</label>
+              <input id="ModDPAtualAlter" for="ModDPAtualAlter" style=" font-size:13px" type="text"
+                class="form-control" readonly>
+            </div>
+
+            <div class="col-lg-4 DPNovo">
+              <label>Departamento Novo:</label>
+              <input id="ModDPNovoAlter" for="ModDPNovoAlter" style="font-size:13px" type="text"
+                class="form-control" readonly>
+
+            </div>
+          </div>
+
+
+          <div class="row g-3">
+
+            <div class="col-lg-4 CCAtual">
+              <label>Centro de Custo Atual:</label>
+              <input id="ModCCAtualAlter" for="ModCCAtualAlter" style=" font-size:13px" type="text"
+                class="form-control" readonly>
+            </div>
+
+            <div class="col-lg-4 CCNovo">
+              <label>Centro de Custo Novo:</label>
+              <input id="ModCCNovoAlter" for="ModCCNovoAlter" style=" font-size:13px" type="text"
+                class="form-control" readonly>
+
+            </div>
+          </div>
+
+          <div class="row g-3">
+
+            <div class="col-lg-4 CargoAtual">
+              <label>Cargo Atual:</label>
+              <input id="ModCargoAtualAlter" for="ModCargoAtualAlter" style=" font-size:13px"
+                type="text" class="form-control" readonly>
+            </div>
+
+            <div class="col-lg-4 CargoNovo">
+              <label>Cargo Novo:</label>
+              <input id="ModCargoNovoAlter" for="ModCargoNovoAlter" style="font-size:13px" type="text"
+                class="form-control" readonly>
+
+            </div>
+          </div>
+
+          <div class="row g-3">
+
+            <div class="col-lg-4 SalarioAtual">
+              <label>Salário Atual:</label>
+              <input id="ModSalarioAtualAlter" for="ModSalarioAtualAlter" style=" font-size:13px"
+                type="text" class="form-control" readonly>
+            </div>
+
+            <div class="col-lg-4 SalarioNovo">
+              <label>Salário Novo:</label>
+              <input id="ModSalarioNovoAlter" for="ModSalarioNovoAlter" style=" font-size:13px"
+                type="text" class="form-control" readonly>
+
+            </div>
+          </div>
+          <div class="row g-3">
+
+            <div class="col-lg-4 GestorAtual">
+              <label>Gestor Atual:</label>
+              <input id="ModGestorAtualAlter" for="ModGestorAtualAlter" style="font-size:13px"
+                type="text" class="form-control" readonly>
+            </div>
+
+            <div class="col-lg-4 GestorNovo">
+              <label>Gestor Novo:</label>
+              <input id="ModGestorNovoAlter" for="ModGestorNovoAlter" style=" font-size:13px"
+                type="text" class="form-control" readonly>
+
+            </div>
+          </div>
+
+          <label>Justificativa:</label>
+          <input id="Justificativa" for="Justificativa" style=" font-size:13px" type="text"
+            class="form-control" readonly>
+          </div>
+
+
+              <br>
+
+              <%} else {%>
+                <div>
+              <div class="row g-3">
+                <div class="col Solicitacao">
+                  <label>N° Solicitação: </label>
+                  <input id="NumeroSolicitacaoModalDeslig" type="text" value="<%= dadosForm.ID %>" name="NumeroSolicitacaoModalDeslig"
+                    for="NumeroSolicitacaoModalDeslig" style=" font-size:13px" type="text"
+                    class="form-control " readonly>
+
+                </div>
+                <div class="col DataSolcitacao">
+                  <label>Data da Solicitação:</label>
+                  <input id="ModDataSolcitacaoDeslig" name="ModDataSolcitacaoDeslig" for="ModDataSolcitacaoDeslig"
+                    style=" font-size:13px" type="text" class="form-control" readonly>
+
+                </div>
+
+              </div>
+              <div class="row g-3">
+                <div class="col Solicitante">
+                  <label>Solicitante: </label>
+                  <input id="ModSolicitanteDeslig" type="text" name="ModSolicitanteDeslig" for="ModSolicitanteDeslig"
+                    style=" font-size:13px" type="text" class="form-control" readonly>
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col Colaborador">
+                  <label>Colaborador:</label>
+                  <input id="ModColaboradorDeslig" for="ModColaboradorDeslig" style="font-size:13px"
+                    type="text" class="form-control" readonly>
+
+                </div>
+              </div>
+
+              <div class="row g-3">
+                <div class="col DataAviso">
+                  <label>Data do Aviso:</label>
+                  <input id="ModDataAvisoDeslig" for="ModDataAvisoDeslig" style="font-size:13px"
+                    type="text" class="form-control" readonly>
+
+                </div>
+
+                <div class="col UltimoDia">
+                  <label>Último Dia:</label>
+                  <input id="ModUltimoDiaDeslig" for="ModUltimoDiaDeslig" style="font-size:13px"
+                    type="text" class="form-control" readonly>
+                </div>
+              </div>
+
+            <div class="row g-3">
+
+              <div class="col tipoRegime">
+                <label>Regime de Contratação:</label>
+                <input id="ModtipoRegimeDeslig" for="ModtipoRegimeDeslig" style=" font-size:13px"
+                  type="text" class="form-control" readonly>
+              </div>
+
+              <div class="col TipoDeslig">
+                <label>Tipo Desligamento:</label>
+                <input id="ModTipoDeslig" for="ModTipoDeslig" style="font-size:13px" type="text"
+                  class="form-control" readonly>
+
+              </div>
+            </div>
+
+
+            <div class="row g-3">
+
+              <div class="col tipoAviso">
+                <label>Tipo do Aviso:</label>
+                <input id="ModtipoAvisoDeslig" for="ModtipoAvisoDeslig" style=" font-size:13px"
+                  type="text" class="form-control" readonly>
+              </div>
+
+              <div class="col Desconto">
+                <label>Desconto:</label>
+                <input id="ModDescontoDeslig" for="ModDescontoDeslig" style="font-size:13px"
+                  type="text" class="form-control" readonly>
+
+              </div>
+            </div>
+
+            <div class="row g-3">
+
+              <div class="col Motivos">
+                <label>Motivos:</label>
+                <input id="ModMotivosDeslig" for="ModMotivosDeslig" style=" font-size:13px" type="text"
+                  class="form-control" readonly>
+              </div>
+            </div>
+
+            <div class="row g-3">
+
+              <div class="col Observacao">
+                <label>Observação:</label>
+                <input id="ModObservacaoDeslig" for="ModObservacaoDeslig" style=" font-size:13px"
+                  type="text" class="form-control" readonly>
+              </div>
+            </div>
+            <div class="row g-3">
+
+              <div class="col-lg-6 Substituicao">
+                <label>Substituição:</label>
+                <input id="ModSubstituicaoDeslig" for="ModSubstituicaoDeslig" style="margin-bottom: 3%; font-size:13px"
+                  type="text" class="form-control" readonly>
+              </div>
+            </div>
+          </div>
+          <%}%>
+        </div>
+
+                    <button style="margin-top: 2%;" class="btn btn-success text-white" onclick="aprovarSolicitacao()">Aprovar</button>
+                    <button style="margin-top: 2%;" class="btn btn-danger text-white" data-target="#myModalReprov"
+                      data-toggle="modal">Reprovar</button>
+                    <!-- <button type="button" class="btn btn-warning" style="float: right;" data-toggle="modal"
+                      data-target="#myModal2">
+                      Solicitar Revisão
+                    </button> -->
+
+
+
+
+
+
+                              <input type="text" id="codigoSolicitacao" value="" hidden>
+
+
+
+
+          </main>
+      </section>
+
+  </body>
+
+</html>
