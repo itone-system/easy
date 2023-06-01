@@ -22,6 +22,7 @@ const isProd = ENVIRONMENT !== 'dev';
 
 if (isProd && !DOMAIN) {
   throw new Error('O domínio deve ser informado!');
+
 }
 
 const domain = DOMAIN || (port !== 80 ? `http://localhost:${port}` : 'http://localhost');

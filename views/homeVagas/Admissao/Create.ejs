@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../partials/head', { title: 'Nova Solicitação' } ) %>
+  <link rel="stylesheet" href="../../../../public/global.css">
+  <link rel="stylesheet" href="../../../public/Vagas/novaAdmissao.css">
+
+  <script src="../../../public/Vagas/novaAdmissao.js"></script>
+
+
+  <body>
+
+    <%- include('../../components/Vagas/menuVagas') %>
+
+      <section class="home">
+        <%- include('../../components/navbar') %>
+
+          <main class="text">
+
+            <form style="margin-top: 3%" onsubmit="validarFormulario(event)">
+              <h3 style="border-bottom:1px solid #27417B;">Movimentação De Pessoal - Admissão</h3>
+
+              <h5 style="border-bottom:1px solid #27417B; margin-top: 3%;">Informações da Abertura de Vaga</h5>
+              <div style="margin-top: 2%">
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="EscolhadeAdmissão" class="form-label">Tipo De Admissão:</label>
+                      <select id="tipoAdmissao" class="form-control border-secondar shadow-none campo-obrigatorio"
+                        aria-label="Default select example" name="tipo">
+                        <option selected value="">Selecione...</option>
+                        <option value="CLT">CLT</option>
+                        <option value="Estagiário">Estagiário</option>
+                        <option value="Jovem Aprendiz">Jovem Aprediz</option>
+                        <option value="PJ">PJ</option>
+                      </select>
+                      
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="EscolhadeSubstuição" class="form-label">Substituição:</label>
+                      <br>
+                      <div class="form-check form-check-inline mt-2" style="align-items: center;">
+                        <input checked class="form-check-input" type="radio" name="substituicao" id="radio01" value="S"
+                          onclick="habilitarCampoSubstituicao()">
+                        <label class="form-check-label">Sim</label>
+                      </div>
+                      <div class="form-check form-check-inline" style="margin-left: 5%;">
+                        <input class="form-check-input" type="radio" name="substituicao" id="radio02" value="N"
+                          onclick="desabilitarCampoSubstituicao()">
+                        <label class="form-check-label">Não</label>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="exampleInputText" class="form-label">Colaborador Substituído:</label>
+                      <select name="colaboradorSubstituido" id="ColaboradorInsert" class="form-control campo-obrigatorio">
+                        <option selected value="">Selecione...</option>
+                      </select>
+                      <!-- <input type="text" class="form-control border-secondar  shadow-none" id="empSubs"
+                        aria-describedby="textHelp" placeholder="" name="colaboradorSubstituido"> -->
+                      
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="exampleInputText" class="form-label">Unidade de Contratação:</label>
+                      <select id="unidadeContratacao" class="campo-obrigatorio form-control border-secondar shadow-none"
+                        aria-label="Default select example" name="unidade">
+                        <option selected value="">Selecione...</option>
+                        <option value="Belo Horizonte">Belo Horizonte</option>
+                        <option value="Distrito Federal">Distrito Federal</option>
+                        <option value="São Paulo">São Paulo</option>
+                        <option value="Espirito Santo">Espirito Santo</option>
+                        <option value="ITPS">ITPS</option>
+                      </select>
+                      
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="exampleInputText" class="form-label">Centro de Custos:</label>
+                      <select class="form-control campo-obrigatorio border-secondar shadow-none" aria-label="Default select example"
+                        id="centroCusto" name="centroDecusto">
+                        <option selected value="">Selecione...</option>
+
+                      </select>
+                      
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="exampleInputText" class="form-label">Departamento:</label>
+                      <select class="form-control campo-obrigatorio border-secondar shadow-none" aria-label="Default select example"
+                        id="opcaoDepartamento" name="departamento">
+                        <option selected value="">Selecione...</option>
+                        <option value="Administrativo">Administrativo</option>
+                        <option value="Comercial">Comercial</option>
+                        <option value="Desenvolvimento de Negocios">Desenvolvimento de Negócios</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Pré Vendas">Pré Vendas</option>
+                        <option value="Produtos">Produtos</option>
+                        <option value="Serviços">Serviços</option>
+                      </select>
+                      
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="exampleInputText" class="form-label">Gestor Imediato:</label>
+                      <input type="text" class="form-control campo-obrigatorio border-secondar shadow-none" id="gestor"
+                        aria-describedby="textHelp" placeholder="" name="gestorImediato">
+                      
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="exampleInputText" class="form-label">Cargo:</label>
+                      <input type="text" class="form-control campo-obrigatorio border-secondar shadow-none" id="cargo"
+                        aria-describedby="textHelp" placeholder="" name="cargo">
+                      
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="exampleInputText" class="form-label">Salário:</label>
+                      <input type="text" class="form-control campo-obrigatorio border-secondar shadow-none" id="valor"
+                        aria-describedby="textHelp" placeholder="0,00" onkeyup="formatarMoeda()"
+                        name="salario">
+                      
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="exampleInputText" class="form-label">Horário de Trabalho:</label>
+                      <select class="form-control campo-obrigatorio border-secondar shadow-none" aria-label="Default select example"
+                        id="hrTrabalho" name="horario">
+                        <option selected value="">Selecione um Horário...</option>
+                        <option value="6:30|12:00|13:00|15:30">6:30 - 12:00 - 13:00 - 15:30</option>
+                        <option value="7:00|12:00|13:00|16:00">7:00 - 12:00 - 13:00 - 16:00</option>
+                        <option value="7:00|12:00|13:00|19:00">7:00 - 12:00 - 13:00 - 19:00</option>
+                        <option value="7:30|12:00|13:00|16:30">7:30 - 12:00 - 13:00 - 16:30</option>
+                        <option value="7:00|12:00|14:00|17:30">7:00 - 12:00 - 14:00 - 17:30</option>
+                        <option value="8:00/12:00">8:00 - 12:00</option>
+                        <option value="8:00|12:00|13:00|17:00">8:00 - 12:00 - 13:00 - 17:00</option>
+                        <option value="8:00|12:00|13:30|17:30">8:00 - 12:00 - 13:30 - 17:30</option>
+                        <option value="8:00|12:00|14:00|18:00">8:00 - 12:00 - 14:00 - 18:00</option>
+                        <option value="8:30|12:00|13:00|17:30">8:30 - 12:00 - 13:00 - 17:30</option>
+                        <option value="8:30|12:00|13:30|18:00">8:30 - 12:00 - 13:30 - 18:00</option>
+                        <option value="8:30|12:30">8:30 - 12:30</option>
+                        <option value="9:00|12:00|13:00|18:00">9:00 - 12:00 - 13:00 - 18:00</option>
+                        <option value="9:00|12:00|13:30|18:30">9:00 - 12:00 - 13:30 - 18:30</option>
+                        <option value="9:00|12:00|14:00|19:00">9:00 - 12:00 - 14:00 - 19:00</option>
+                        <option value="9:00|13:00">9:00 - 13:00</option>
+                        <option value="10:00|12:00|13:00|19:00">10:00 - 12:00 - 13:00 - 19:00</option>
+                        <option value="10:00|14:00">10:00 - 14:00</option>
+                        <option value="11:00|14:00|15:00|20:00">11:00 - 14:00 - 15:00 - 20:00</option>
+                        <option value="13:00|17:00">13:00 - 17:00</option>
+                        <option value="13:00|18:00|19:00|22:00">13:00 - 18:00 - 19:00 - 22:00</option>
+                        <option value="14:00|18:00">14:00 - 18:00</option>
+                        <option value="14:00|19:00|20:00|23:00">14:00 - 19:00 - 20:00 - 23:00</option>
+                        <option value="19:00|1:00|2:00|7:00">19:00 - 1:00 - 2:00 - 7:00</option>
+                        <option value="22:00|2:00|3:00|7:00">22:00 - 2:00 - 3:00 - 7:00</option>
+                        <option value="23:00|3:00|4:00|8:00">23:00 - 3:00 - 4:00 - 8:00</option>
+                      </select>
+                      
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="exampleInputText" class="form-label">Cliente:</label>
+                      <input type="text" class="form-control campo-obrigatorio border-secondar shadow-none" id="cliente"
+                        aria-describedby="textHelp" placeholder="Caso não tenha, informe 1" name="cliente">
+                      
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="mb-3">
+                      <label for="exampleInputText" class="form-label">Deal:</label>
+                      <input type="text" class="form-control campo-obrigatorio border-secondar shadow-nonev" id="deal"
+                        aria-describedby="textHelp" placeholder="Caso não tenha, informe 1" name="deal">
+                      
+                    </div>
+                  </div>
+                </div>
+
+                <h5 style="border-bottom:1px solid #27417B; margin-top: 1%;">Informações de Equipamentos e Acessos</h5>
+                <div style="margin-top: 1.5%">
+
+                  <div class="row">
+                    <div class="col">
+                      <div class="mb-2">
+                        <label for="EscolhadeSubstuição" class="form-label">Tipo de Equipamento:</label>
+                        <br>
+                        <div class="form-check form-check-inline mt-2">
+                          <input class="form-check-input shadow-none" type="radio" name="equipamento" id="radio03"
+                            value="Desktop">
+                          <label class="form-check-label">Desktop</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left: 5%;">
+                          <input class="form-check-input shadow-none" checked type="radio" name="equipamento" id="radio04"
+                            value="Notebook">
+                          <label class="form-check-label">Notebook</label>
+                        </div>
+                      </div>
+                      
+                    </div>
+                    <div class="col">
+                      <div class="mb-2">
+                        <label for="EscolhadeSubstuição" class="form-label">Cartão de Visita:</label>
+                        <br>
+                        <div class="form-check form-check-inline mt-2">
+                          <input class="form-check-input shadow-none" type="radio" name="cartaoDeVisita" id="radio05"
+                            value="S">
+                          <label class="form-check-label">Sim</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left: 5%;">
+                          <input class="form-check-input shadow-none" checked type="radio" name="cartaoDeVisita" id="radio06"
+                            value="N">
+                          <label class="form-check-label">Não</label>
+                        </div>
+                      </div>
+                      
+                    </div>
+                    <div class="col">
+                      <div class="mb-2">
+                        <label for="EscolhadeSubstuição" class="form-label">Celular Corporativo:</label>
+                        <br>
+                        <div class="form-check form-check-inline mt-2" style="align-items: center;">
+                          <input class="form-check-input shadow-none" type="radio" name="celularCorporativo"
+                            id="radio07" value="S">
+                          <label class="form-check-label">Sim</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left: 5%;">
+                          <input class="form-check-input shadow-none" checked type="radio" name="celularCorporativo"
+                            id="radio08" value="N">
+                          <label class="form-check-label">Não</label>
+                        </div>
+                      </div>
+                      
+                    </div>
+                    <div class="col">
+                      <div class="mb-2">
+                        <label for="EscolhadeSubstuição" class="form-label">Vaga Exclusiva Para PCD:</label>
+                        <br>
+                        <div class="form-check form-check-inline mt-2">
+                          <input class="form-check-input shadow-none" type="radio" name="pcd" id=""
+                            value="S">
+                          <label class="form-check-label">Sim</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="margin-left: 5%;">
+                          <input class="form-check-input shadow-none" checked type="radio" name="pcd" id=""
+                            value="N">
+                          <label class="form-check-label">Não</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col mt-5">
+                      <label for="exampleInputText" class="form-label">Usuário Similar Ativo:</label>
+                      <input type="text" class="form-control campo-obrigatorio border-secondar  shadow-none" id="usuarioSimilar"
+                        aria-describedby="textHelp" placeholder="Caso não tenha, informe 1"
+                        name="usuarioSimilarAtivo">
+                      
+                    </div>
+                    <div class="col mt-5">
+                      <label for="exampleInputTextArea" class="form-label">Acessos Específicos (Ex: SAP,
+                        DASHBOARDS):</label>
+
+                      <input type="text" class="form-control campo-obrigatorio border-secondar  shadow-none" id="usuarioSimilar"
+                        aria-describedby="textHelp" placeholder="" name="acessosEspecificos">
+                    </div>
+                  </div>
+
+
+                  <br>
+
+                  <div class="mb-2">
+                    <button type="submit" id="botaoEnviar" class="btn botaoEnviar text-white"
+                      value="Submit">Enviar</button>
+                  </div>
+
+            </form>
+
+
+          </main>
+
+
+      </section>
+
+
+
+  </body>
+
+
+</html>

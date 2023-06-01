@@ -1,5 +1,5 @@
 const express = require('express');
 
-module.exports = (app) => {
+module.exports = async (app) => {
   app.use('/public', express.static('public'));
 };

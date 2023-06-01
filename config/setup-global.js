@@ -1,6 +1,6 @@
 const { domain } = require('./env');
 
-module.exports = (app) => {
+module.exports = async (app) => {
   app.locals = {
     domain,
     endpoints: {
@@ -25,6 +25,16 @@ module.exports = (app) => {
       downloadItem: '/solicitacoes/downloadItem/',
       uploadItem: '/solicitacoes/uploadItem/',
       insertNF: '/notafiscal/insertnotafiscal',
+      aprovarAdmissao: '/vagas/aprovar',
+      insertVaga: '/vagas/insert',
+      solicitarConferencia: '/vagas/solicitarConferencia',
+      insertConferencia: '/vagas/insertConferencia',
+      recomecarProcessoSeletivo: '/vagas/recomecarProcessoSeletivo',
+      finalizarProcessoDP: '/vagas/finalizarProcessoDP',
+      reprovarAdmissao: '/vagas/reprovar',
+      cancelarAdmissao:'/vagas/cancelarAdmissao',
+      updateVaga: '/vagas/updateVaga',
+      insertCandidato: '/vagas/insertCandidato',
       incluirFerias: '/formularios/insertFerias',
       insertDesligamento: '/formularios/insertDesligamento',
       insertAlteracao: '/formularios/insertAlteracao',

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../partials/head', { title: 'Nova Solicitação' } ) %>
+  <link rel="stylesheet" href="../../../public/global.css">
+  <link rel="stylesheet" href="../../../public/Vagas/detalhamento.css">
+  <script src="../../../public/Vagas/detalhamento.js"></script>
+
+  <body>
+
+    <%- include('../../components/Vagas/menuVagas') %>
+
+      <section class="home">
+
+        <%- include('../../components/navbar') %>
+
+          <main class="text">
+
+            <h2 class="title" style="border-bottom: 1px solid #27417B; margin-bottom: 25px; padding: 13px 0;">
+              Detalhamento</h2>
+            <p> </p>
+
+            <%- include('../../components/Vagas/statusVagas.ejs') %>
+
+              <div class="row g-3">
+                <div class="col Descricao">
+                  <label>Tipo de Admissão:</label>
+                  <input id="Solicitante" for="Solicitante" type="text"
+                    class="form-control alterar-background inputDetail" placeholder="Solicitante" aria-label="Last name"
+                    style="font-size: 13px" value="<%=solicitacao.TIPO_DE_ADMISSAO%>" readonly>
+                </div>
+
+                <div class="col">
+                  <label>Unidade de Contratação:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.UNIDADE%>" placeholder="Descricao do Item" readonly>
+                </div>
+
+                <div class="col">
+                  <label>Solicitante:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.NOME_SOLICITANTE%>" placeholder="Descricao do Item" readonly>
+                </div>
+
+                <div class="col">
+                  <label>Gestor Imediato:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.GESTOR_IMEDIATO%>" placeholder="Descricao do Item" readonly>
+                </div>
+              </div>
+
+              <br>
+
+              <div class="row g-3">
+                <div class="col">
+                  <label>Cargo:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.CARGO%>" placeholder="Descricao do Item" readonly>
+                </div>
+                <div class="col">
+                  <label>Salário:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.FormattedSALARIO%>" placeholder="Descricao do Item" readonly>
+                </div>
+                <div class="col Descricao">
+                  <label>Usuário Similar Ativo:</label>
+                  <input id="Solicitante" for="Solicitante" type="text"
+                    class="form-control alterar-background inputDetail" placeholder="Solicitante" aria-label="Last name"
+                    style="font-size: 13px" value="<%=solicitacao.USUARIO_SIMILARATIVO%>" readonly>
+                </div>
+
+                <div class="col">
+                  <label>Colaborador Substituído:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.SUBSTITUICAO === 'S' ? solicitacao.COLABORADOR_SUBSTITUIDO : 'Não' %>%>" placeholder="Não existe." readonly>
+                </div>
+              </div>
+              <br>
+
+              <div class="row g-3">
+                <div class="col">
+                  <label>Horário de Trabalho:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.HORARIO%>" placeholder="Descricao do Item" readonly>
+                </div>
+                <div class="col">
+                  <label>Departamento:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.DEPARTAMENTO%>" placeholder="Descricao do Item" readonly>
+                </div>
+                <div class="col">
+                  <label>Centro de Custo:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.CENTRO_DE_CUSTO%>" placeholder="Descricao do Item" readonly>
+                </div>
+
+                <div class="col Descricao">
+                  <label>Vaga Para PCD:</label>
+                  <input id="Solicitante" for="Solicitante" type="text"
+                    class="form-control alterar-background inputDetail" placeholder="Solicitante" aria-label="Last name"
+                    style="font-size: 13px" value="<%= solicitacao.PCD === 'S' ? 'Sim' : 'Não' %>" readonly>
+                </div>
+              </div>
+              
+              <br>
+
+              <div class="row g-3">
+                <div class="col">
+                  <label>Acessos Específicos:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.ACESSOS_ESPECIFICOS%>" placeholder="Descricao do Item" readonly>
+                </div>
+
+                <div class="col">
+                  <label>Tipo de Equipamento:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.EQUIPAMENTO%>" placeholder="Descricao do Item" readonly>
+                </div>
+
+                <div class="col">
+                  <label>Cliente</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.CLIENTE%>" placeholder="Descricao do Item" readonly>
+                </div>
+
+                <div class="col">
+                  <label>Deal:</label>
+                  <input id="Descricao" for="Descricao" type="text" class="form-control alterar-background inputDetail"
+                    value="<%=solicitacao.DEAL%>" placeholder="Descricao do Item" readonly>
+                </div>
+              </div>
+
+              <br>
+
+              <% if (solicitacao.STATUS=='A' && dadosUser.permissoes.ADMISSAO.EDITAR && semAprovacao=='Y' && dadosUser.codigo == solicitacao.SOLICITANTE ) { %>
+                <button class="btn botaoEditar text-white" data-toggle="modal" style="background-color: #10253F;"
+                  data-target="#myModalEdit" onclick="editarSolicitacao()">Editar</button>
+                <button class="btn btn-danger text-white botaoCancelarVaga" style="float: right;"
+                  data-target="#myModalCancelarVaga" data-toggle="modal">Cancelar Vaga</button>
+                <% } %>
+
+
+
+                <%- include('../../components/Vagas/modalEdicao') %>
+
+                <%- include('../../components/Vagas/modalReprovacao') %>
+
+                <%- include('../../components/Vagas/ModalRecomecoProcesso') %>
+
+                 <%- include('../../components/Vagas/modalCancelarVaga') %>
+
+                 <%- include('../../components/Vagas/modalRevisao') %>
+
+                 <%- include('../../components/Vagas/modalCandidato') %>
+
+                  <% if (solicitacao.STATUS=='A' && dadosUser.permissoes.ADMISSAO.APROVAR && momentoAprovacao=='Y' ) {
+                    %>
+
+                    <button class="btn btn-success text-white" onclick="aprovarSolicitacao()">Aprovar</button>
+                    <button class="btn btn-danger text-white" data-target="#myModalReprov"
+                      data-toggle="modal">Reprovar</button>
+                    <button type="button" class="btn btn-warning" style="float: right;" data-toggle="modal"
+                      data-target="#myModal2">
+                      Solicitar Revisão
+                    </button>
+                    <% } %>
+
+
+
+
+
+                      <% if (solicitacao.STATUS=='PS' && dadosUser.permissoes.ADMISSAO.CANDIDATO_PS ) { %>
+
+                          <button type="button" class="btn btn-success novoProfissional" data-toggle="modal"
+                            data-target="#myModal">
+                            Incluir dados do novo Profissional
+                          </button>
+
+                          <button type="button" class="btn btn-warning" style="float: right;" data-toggle="modal"
+                            data-target="#myModal2">
+                            Solicitar Revisão
+                          </button>
+
+                          <button class="btn btn-danger text-white botaoCancelarVaga" data-target="#myModalCancelarVaga"
+                            data-toggle="modal">Cancelar Vaga</button>
+
+                        <% } %>
+
+
+                        <% if (solicitacao.STATUS=='PA'  ) { %>
+                          <%- include('../../components/Vagas/dadosProfissional') %>
+                         
+                          <% if (dadosUser.permissoes.ADMISSAO.PROCESSO_DP ) { %>
+                           
+                           <%- include('../../components/Vagas/dadosProfissional') %>
+
+                           <button type="button" class="btn btn-success finalizarProcesso"
+                             onclick="finalizarProcessoDP()">
+                             Finalizar Processo
+                           </button>
+                           <button type="button" class="btn btn-warning retomarProcesso" style="float: right;"
+                             data-toggle="modal" data-target="#myModalRecomecoProcesso">
+                             Recomeçar Processo Seletivo
+                           </button>
+                           <button type="button" class="btn btn-danger botaoCancelarVaga" data-toggle="modal"
+                             data-target="#myModalCancelarVaga">
+                             Cancelar Vaga
+                           </button>
+                           <% } %>
+                           <% } %>
+                          
+
+
+
+                              <input type="text" id="codigoSolicitacao" value="<%=solicitacao.CODIGO%>" hidden>
+                             
+
+
+
+                              <% if (solicitacao.STATUS=='CO' && dadosUser.codigo == solicitacao.SOLICITANTE) { %>
+                                <%- include('../../components/Vagas/modalItensParaRevisar') %>
+                                <button type="button" class="btn btn-warning" style="float: right;" data-toggle="modal"
+                                  data-target="#myModal3">
+                                  Realizar Revisão
+                                </button>
+                                <% } %>
+
+
+
+
+
+                                  <% if (solicitacao.STATUS=='C' ) { %>
+                                    <%- include('../../components/Vagas/dadosContratado') %>
+                                    <% } %>
+
+          </main>
+      </section>
+
+  </body>
+
+</html>

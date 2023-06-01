@@ -1,0 +1,26 @@
+<div class="modal fade" id="myModalReprov">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Motivo</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <input id="motivoReprovAtual" for="Descricao" type="text" class="form-control mandatory"
+            placeholder="Detalhe" name="descricao">
+          <div id="descricaoObrigatorio"></div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button onclick="reprovarAdmissao()" type="button" class="btn btn-success"
+            style="position:absolute ; left: 1.5%;">Salvar</button>
+        </div>
+
+      </div>
+    </div>
+  </div>

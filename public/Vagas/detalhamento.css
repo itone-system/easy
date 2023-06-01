@@ -1,0 +1,82 @@
+Label {
+    font-size: 14px;
+  }
+
+  
+
+
+.inputDetail {
+    font-size: 13px;
+}
+
+
+@media screen and (max-width:1366px){
+
+
+  .timeline-container{
+    zoom: 0.8;
+
+  }
+
+  .form-control {
+    zoom: 0.8;
+  }
+
+  .title {
+    zoom: 0.8;
+  }
+
+  Label {
+    zoom: 0.9;
+  }
+
+  .topnav {
+    zoom: 0.9;
+  }
+
+  .botaoEditar {
+    border: none;
+   
+    zoom: 0.9;
+  }
+
+  .finalizarProcesso {
+    zoom: 0.9;
+    
+  }
+
+  .retomarProcesso {
+    zoom: 0.9;
+  }
+
+  .novoProfissional {
+    border: none;
+    zoom: 0.9;
+  }
+
+  .botaoCancelarVaga {
+    border: none;
+    zoom: 0.9;
+  }
+  
+  #myModalEdit {
+    zoom: 0.9;
+  }
+
+  #myModal{
+    zoom: 0.8;
+  }
+  /* #myModal{
+    zoom: 0.8;
+
+  } */
+
+
+  .modal-body input {
+    zoom: 1.11; 
+  }
+
+  .modal-body ::placeholder {
+    font-size: 13px;
+  }
+}

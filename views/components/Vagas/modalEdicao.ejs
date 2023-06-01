@@ -1,0 +1,324 @@
+<!-- The Modal -->
+<div class="modal fade" id="myModalEdit">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Editar Solicitação</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+
+
+      <form onsubmit="return validarFormularioEdit(event)" id="formEdit">
+
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col Descricao">
+              <label>Tipo de Admissão:</label>
+              <select id="tipoAdmissao" class="form-control campo-obrigatorio border-secondary shadow-none"
+                aria-label="Default select example" name="tipo">
+                <option <% if (solicitacao.TIPO_DE_ADMISSAO==="" ) { %> selected <% } %> value="">Selecione...</option>
+                <option <% if (solicitacao.TIPO_DE_ADMISSAO==="CLT" ) { %> selected <% } %> value="CLT">CLT</option>
+                <option <% if (solicitacao.TIPO_DE_ADMISSAO==="Estagiário" ) { %> selected <% } %>
+                    value="Estagiário">Estagiário</option>
+                <option <% if (solicitacao.TIPO_DE_ADMISSAO==="Jovem Aprendiz" ) { %> selected <% } %> value="Jovem
+                    Aprendiz">Jovem Aprendiz</option>
+                <option <% if (solicitacao.TIPO_DE_ADMISSAO==="PJ" ) { %> selected <% } %> value="PJ">PJ</option>
+              </select>
+            </div>
+            <div class="col">
+              <label>Unidade de Contratação:</label>
+              <select id="unidadeContratacao" class="form-control campo-obrigatorio border-secondary shadow-none" aria-label="Default select example" name="unidade">
+                <option <% if (solicitacao.UNIDADE === "") { %> selected <% } %> value="">Selecione...</option>
+                <option <% if (solicitacao.UNIDADE === "Belo Horizonte") { %> selected <% } %> value="Belo Horizonte">Belo Horizonte</option>
+                <option <% if (solicitacao.UNIDADE === "Distrito Federal") { %> selected <% } %> value="Distrito Federal">Distrito Federal</option>
+                <option <% if (solicitacao.UNIDADE === "São Paulo") { %> selected <% } %> value="São Paulo">São Paulo</option>
+                <option <% if (solicitacao.UNIDADE === "Espirito Santo") { %> selected <% } %> value="Espirito Santo">Espirito Santo</option>
+                <option <% if (solicitacao.UNIDADE === "ITPS") { %> selected <% } %> value="ITPS">ITPS</option>
+              </select>
+            </div>
+
+
+            <div class="col">
+              <div class="mb-3">
+                <label for="EscolhadeSubstuição" class="form-label">Substituição:</label>
+                <br>
+                <div class="form-check form-check-inline mt-2" style="align-items: center;">
+                  <input class="form-check-input" type="radio" name="substituicao" id="radio01" value="S"
+                    onclick="habilitarCampoSubstituicao()" <% if (solicitacao.SUBSTITUICAO==="S" ) { %> checked <% } %>>
+                    <label class="form-check-label">Sim</label>
+                </div>
+                <div class="form-check form-check-inline" style="margin-left: 5%;">
+                  <input class="form-check-input" type="radio" name="substituicao" id="radio02" value="N"
+                    onclick="desabilitarCampoSubstituicao()" <% if (solicitacao.SUBSTITUICAO==="N" ) { %> checked <% }
+                    %>>
+                    <label class="form-check-label">Não</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="mb-3">
+
+                <label>Colaborador Substituído:</label>
+
+
+                <select name="" id="ColaboradorEdit" class="form-control campo-obrigatorio campo-obrigatorio">
+                  <option selected value="">Selecione...</option>
+                </select>
+
+
+              </div>
+            </div>
+          </div>
+          <br>
+
+          <div class="row g-3">
+            <div class="col">
+
+              <label>Cargo:</label>
+
+
+              <input id="cargo" for="Descricao" type="text"
+                class="form-control campo-obrigatorio alterar-background inputDetail" value="<%= solicitacao.CARGO %>"
+                placeholder="">
+
+
+            </div>
+            <div class="col">
+
+              <label>Salário:</label>
+
+
+              <input type="text" class="form-control campo-obrigatorio border-secondar shadow-none" id="valor"
+                aria-describedby="textHelp" placeholder="0,00" onkeyup="formatarMoeda()" name="salario"
+                value="<%= solicitacao.FormattedSALARIO %>">
+
+
+            </div>
+            <div class="col Descricao">
+              <label>Usuário Similar Ativo:</label>
+
+              <input id="usuarioSimilar" for="Solicitante" type="text"
+                class="form-control campo-obrigatorio alterar-background inputDetail" placeholder=""
+                aria-label="Last name" style="font-size: 13px" value="<%=solicitacao.USUARIO_SIMILARATIVO %>">
+
+            </div>
+
+            <div class="col Descricao">
+              <label>Gestor Imediato:</label>
+
+              <input id="gestorImediato" for="Solicitante" type="text"
+                class="form-control campo-obrigatorio alterar-background inputDetail" placeholder=""
+                aria-label="Last name" style="font-size: 13px" value="<%=solicitacao.GESTOR_IMEDIATO %>">
+
+            </div>
+
+
+          </div>
+          <br>
+
+          <div class="row g-3">
+            <div class="col">
+              <label>Horário de Trabalho:</label>
+              <select class="form-control campo-obrigatorio border-secondary shadow-none"
+                aria-label="Default select example" id="hrTrabalho" name="horario">
+                <option <% if (solicitacao.HORARIO==="" ) { %> selected <% } %> value="">Selecione um Horário...
+                </option>
+                <option <% if (solicitacao.HORARIO==="6:30|12:00|13:00|15:30" ) { %> selected <% } %>
+                    value="6:30|12:00|13:00|15:30">6:30 - 12:00 - 13:00 - 15:30</option>
+                <option <% if (solicitacao.HORARIO==="7:00|12:00|13:00|16:00" ) { %> selected <% } %>
+                    value="7:00|12:00|13:00|16:00">7:00 - 12:00 - 13:00 - 16:00</option>
+                <option <% if (solicitacao.HORARIO==="7:00|12:00|13:00|19:00" ) { %> selected <% } %>
+                    value="7:00|12:00|13:00|19:00">7:00 - 12:00 - 13:00 - 19:00</option>
+                <option <% if (solicitacao.HORARIO==="7:30|12:00|13:00|16:30" ) { %> selected <% } %>
+                    value="7:30|12:00|13:00|16:30">7:30 - 12:00 - 13:00 - 16:30</option>
+                <option <% if (solicitacao.HORARIO==="7:00|12:00|14:00|17:30" ) { %> selected <% } %>
+                    value="7:00|12:00|14:00|17:30">7:00 - 12:00 - 14:00 - 17:30</option>
+                <option <% if (solicitacao.HORARIO==="8:00/12:00" ) { %> selected <% } %> value="8:00/12:00">8:00 -
+                    12:00</option>
+                <option <% if (solicitacao.HORARIO==="8:00|12:00|13:00|17:00" ) { %> selected <% } %>
+                    value="8:00|12:00|13:00|17:00">8:00 - 12:00 - 13:00 - 17:00</option>
+                <option <% if (solicitacao.HORARIO==="8:00|12:00|13:30|17:30" ) { %> selected <% } %>
+                    value="8:00|12:00|13:30|17:30">8:00 - 12:00 - 13:30 - 17:30</option>
+                <option <% if (solicitacao.HORARIO==="8:00|12:00|14:00|18:00" ) { %> selected <% } %>
+                    value="8:00|12:00|14:00|18:00">8:00 - 12:00 - 14:00 - 18:00</option>
+                <option <% if (solicitacao.HORARIO==="8:30|12:00|13:00|17:30" ) { %> selected <% } %>
+                    value="8:30|12:00|13:00|17:30">8:30 - 12:00 - 13:00 - 17:30</option>
+                <option <% if (solicitacao.HORARIO==="8:30|12:00|13:30|18:00" ) { %> selected <% } %>
+                    value="8:30|12:00|13:30|18:00">8:30 - 12:00 - 13:30 - 18:00</option>
+                <option <% if (solicitacao.HORARIO==="8:30|12:30" ) { %> selected <% } %> value="8:30|12:30">8:30 -
+                    12:30</option>
+                <option <% if (solicitacao.HORARIO==="9:00|12:00|13:00|18:00" ) { %> selected <% } %>
+                    value="9:00|12:00|13:00|18:00">9:00 - 12:00 - 13:00 - 18:00</option>
+                <option <% if (solicitacao.HORARIO==="9:00|12:00|13:30|18:30" ) { %> selected <% } %>
+                    value="9:00|12:00|13:30|18:30">9:00 - 12:00 - 13:30 - 18:30</option>
+                <option <% if (solicitacao.HORARIO==="9:00|12:00|14:00|19:00" ) { %> selected <% } %>
+                    value="9:00|12:00|14:00|19:00">9:00 - 12:00 - 14:00 - 19:00</option>
+                <option <% if (solicitacao.HORARIO==="9:00|13:00" ) { %> selected <% } %> value="9:00|13:00">9:00 -
+                    13:00</option>
+                <option <% if (solicitacao.HORARIO==="10:00|12:00|13:00|19:00" ) { %> selected <% } %>
+                    value="10:00|12:00|13:00|19:00">10:00 - 12:00 - 13:00 - 19:00</option>
+                <option <% if (solicitacao.HORARIO==="10:00|14:00" ) { %> selected <% } %> value="10:00|14:00">10:00 -
+                    14:00</option>
+                <option <% if (solicitacao.HORARIO==="11:00|14:00|15:00|20:00" ) { %> selected <% } %>
+                    value="11:00|14:00|15:00|20:00">11:00 - 14:00 - 15:00 - 20:00</option>
+                <option <% if (solicitacao.HORARIO==="13:00|17:00" ) { %> selected <% } %> value="13:00|17:00">13:00 -
+                    17:00</option>
+                <option <% if (solicitacao.HORARIO==="13:00|18:00|19:00|22:00" ) { %> selected <% } %>
+                    value="13:00|18:00|19:00|22:00">13:00 - 18:00 - 19:00 - 22:00</option>
+                <option <% if (solicitacao.HORARIO==="14:00|18:00" ) { %> selected <% } %> value="14:00|18:00">14:00 -
+                    18:00</option>
+                <option <% if (solicitacao.HORARIO==="14:00|19:00|20:00|23:00" ) { %> selected <% } %>
+                    value="14:00|19:00|20:00|23:00">14:00 - 19:00 - 20:00 - 23:00</option>
+                <option <% if (solicitacao.HORARIO==="19:00|1:00|2:00|7:00" ) { %> selected <% } %>
+                    value="19:00|1:00|2:00|7:00">19:00 - 1:00 - 2:00 - 7:00</option>
+                <option <% if (solicitacao.HORARIO==="22:00|2:00|3:00|7:00" ) { %> selected <% } %>
+                    value="22:00|2:00|3:00|7:00">22:00 - 2:00 - 3:00 - 7:00</option>
+                <option <% if (solicitacao.HORARIO==="23:00|3:00|4:00|8:00" ) { %> selected <% } %>
+                    value="23:00|3:00|4:00|8:00">23:00 - 3:00 - 4:00 - 8:00</option>
+              </select>
+            </div>
+
+            <div class="col">
+              <label>Departamento:</label>
+              <select class="form-control campo-obrigatorio border-secondary shadow-none"
+                aria-label="Default select example" id="opcaoDepartamento" name="departamento">
+                <option <% if (solicitacao.DEPARTAMENTO==="" ) { %> selected <% } %> value="">Selecione...</option>
+                <option <% if (solicitacao.DEPARTAMENTO==="Administrativo" ) { %> selected <% } %>
+                    value="Administrativo">Administrativo</option>
+                <option <% if (solicitacao.DEPARTAMENTO==="Comercial" ) { %> selected <% } %>
+                    value="Comercial">Comercial</option>
+                <option <% if (solicitacao.DEPARTAMENTO==="Gente e Cultura" ) { %> selected <% } %> value="Gente e
+                    Cultura">Gente e Cultura</option>
+                <option <% if (solicitacao.DEPARTAMENTO==="Marketing" ) { %> selected <% } %>
+                    value="Marketing">Marketing</option>
+                <option <% if (solicitacao.DEPARTAMENTO==="Pré Vendas" ) { %> selected <% } %> value="Pré Vendas">Pré
+                    Vendas</option>
+                <option <% if (solicitacao.DEPARTAMENTO==="Produtos" ) { %> selected <% } %> value="Produtos">Produtos
+                </option>
+                <option <% if (solicitacao.DEPARTAMENTO==="Serviços" ) { %> selected <% } %> value="Serviços">Serviços
+                </option>
+              </select>
+            </div>
+
+            <div class="col">
+
+              <label>Centro de Custo:</label>
+
+
+              <select class="form-control campo-obrigatorio border-secondar shadow-none"
+                aria-label="Default select example" id="centroCustoEdit" name="centroDecusto">
+                <option selected value="">Selecione...</option>
+
+
+              </select>
+
+
+            </div>
+
+            <div class="col Descricao">
+              <label>Vaga específica Para PCD:</label>
+
+              <select name="" id="vagaEspecificaPCD" class="form-control campo-obrigatorio">
+                <option <% if (!solicitacao.SUBSTITUICAO) { %> selected <% } %> value="">Selecione...</option>
+                <option <% if (solicitacao.SUBSTITUICAO==="S" ) { %> selected <% } %> value="S">Sim</option>
+                <option <% if (solicitacao.SUBSTITUICAO==="N" ) { %> selected <% } %> value="N">Não</option>
+              </select>
+
+
+
+
+
+
+
+            </div>
+          </div>
+          <br>
+          <div class="row g-3">
+
+            <div class="col">
+
+              <label>Acessos Específicos:</label>
+
+
+              <input id="acessosEspecificos" for="Descricao" type="text"
+                class="form-control campo-obrigatorio alterar-background inputDetail"
+                value="<%= solicitacao.ACESSOS_ESPECIFICOS %>" placeholder="">
+
+            </div>
+
+            <div class="col">
+              <label>Tipo de Equipamento:</label>
+              <select id="tipoEquipamento" class="form-control campo-obrigatorio" name="">
+                <option <% if (solicitacao.EQUIPAMENTO==="" ) { %> selected <% } %> value="">Selecione...</option>
+                <option <% if (solicitacao.EQUIPAMENTO==="Notebook" ) { %> selected <% } %> value="Notebook">Notebook
+                </option>
+                <option <% if (solicitacao.EQUIPAMENTO==="Desktop" ) { %> selected <% } %> value="Desktop">Desktop
+                </option>
+              </select>
+            </div>
+
+
+            <div class="col">
+
+              <label>Cliente</label>
+
+
+              <input id="cliente" for="Descricao" type="text"
+                class="form-control campo-obrigatorio alterar-background inputDetail" value="<%= solicitacao.CLIENTE %>"
+                placeholder="Caso não tenha, informe 1">
+
+
+            </div>
+
+            <div class="col">
+
+              <label>Deal:</label>
+
+
+              <input id="deal" for="Descricao" type="text"
+                class="form-control campo-obrigatorio alterar-background inputDetail" value="<%= solicitacao.DEAL %>"
+                placeholder="Caso não tenha, informe 1">
+
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col mt-5">
+              <label for="EscolhadeSubstição" class="form-label">Celular Corporativo:</label>
+              <select id="celularCorporativo" class="form-control campo-obrigatorio" name="">
+                <option <% if (solicitacao.CELULAR_CORPORATIVO==="" ) { %> selected <% } %> value="">Selecione...
+                </option>
+                <option <% if (solicitacao.CELULAR_CORPORATIVO==="S" ) { %> selected <% } %> value="S">Sim</option>
+                <option <% if (solicitacao.CELULAR_CORPORATIVO==="N" ) { %> selected <% } %> value="N">Não</option>
+              </select>
+            </div>
+            <div class="col mt-5">
+              <label for="EscolhadeSubstição" class="form-label">Cartão de Visita:</label>
+              <select id="cartaoVisita" class="form-control campo-obrigatorio" name="">
+                <option <% if (solicitacao.CARTAO_DE_VISITA==="" ) { %> selected <% } %> value="">Selecione...</option>
+                <option <% if (solicitacao.CARTAO_DE_VISITA==="S" ) { %> selected <% } %> value="S">Sim</option>
+                <option <% if (solicitacao.CARTAO_DE_VISITA==="N" ) { %> selected <% } %> value="N">Não</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+
+          <button type="submit" class="btn btn-success">Salvar</button>
+        </div>
+      </form>
+
+
+      <!-- Modal footer -->
+
+
+    </div>
+  </div>
+</div>

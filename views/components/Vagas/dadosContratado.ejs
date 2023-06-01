@@ -1,0 +1,114 @@
+<div style="margin-top: 1.5%">
+
+    <div class="row">
+      <div class="col">
+        <div class="mb-3">
+          <label for="exampleInputText" class="form-label">Nome Completo Do Candidato
+            Aprovado:</label>
+          <input type="text" class="form-control border-secondar shadow-none"
+            id="nomeCompleto" aria-describedby="textHelp" required readonly placeholder=""
+            name="nomeProfissional" value="<%=contratado.NOME_PROFISSIONAL %>">
+          <label class="campo"></label>
+        </div>
+      </div>
+      <div class="col">
+        <label for="exampleInputText" class="form-label">Tutor Durante o Onboarding:</label>
+        <input type="text" class="form-control border-secondar shadow-none" id="tutor"
+          aria-describedby="textHelp" readonly required placeholder="" name="tutorOnboarding"
+          value="<%=contratado.TUTOR_ONBOARDING %>">
+        <label class="campo"></label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col mb-3">
+        <label for="exampleInputText" class="form-label">Telefone Pessoal:</label>
+        <input type="tel" class="form-control border-secondar shadow-none" id="telPessoal"
+          aria-describedby="textHelp" readonly required placeholder=""
+          value="<%=contratado.TELEFONE %>">
+        <label class="campo"></label>
+      </div>
+      <div class="col">
+        <label for="exampleInputText" class="form-label">E-mail Pessoal:</label>
+        <input type="text" class="form-control border-secondar shadow-none" id="emailPessoal"
+          aria-describedby="textHelp" required readonly placeholder="" name="email"
+          value="<%=contratado.EMAIL %>">
+        <label class="campo"></label>
+      </div>
+      <div class="col">
+        <label for="exampleInputText" class="form-label">Indicação Premiada:</label>
+        <input type="text" class="form-control border-secondar shadow-none" id="indicPremiada"
+          aria-describedby="textHelp" required readonly placeholder=""
+          name="indicacaoPremiada" value="<%=contratado.INDICACAO_PREMIADA %>">
+        <label class="campo"></label>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col">
+        <label for="exampleInputText" class="form-label">Email Corporativo:</label>
+        <input type="tel" class="form-control border-secondar shadow-none"
+          id="emailCorporativo" aria-describedby="textHelp" required readonly placeholder=""
+          name="emailCorporativo" value="<%=contratado.EMAIL_CORPORATIVO %>">
+        <label class="campo"></label>
+      </div>
+      <div class="col">
+        <label for="exampleInputText" class="form-label">PCD:</label>
+        <input type="tel" class="form-control border-secondar shadow-none"
+          id="emailCorporativo" aria-describedby="textHelp" required readonly placeholder=""
+          name="emailCorporativo" value="<%= contratado.PCD === 'S' ? 'Sim' : 'Não' %>">
+        <label class="campo"></label>
+      </div>
+      <div class="col">
+        <label for="exampleInputText" class="form-label">Data de Inicio:</label>
+        <input type="text" class="form-control border-secondar shadow-none" id="dateInicio"
+          aria-describedby="textHelp" required readonly placeholder="indicação premiada"
+          name="dataInicio" value="<%=contratado.DATAINICIO_FORMATTED %>">
+        <label class="campo"></label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="exampleInputText" class="form-label">Modalidade de Trabalho:</label>
+        <input type="text" class="form-control border-secondar shadow-none" id="dateInicio"
+          aria-describedby="textHelp" required readonly placeholder="indicação premiada"
+          name="dataInicio" value="<%=contratado.MODALIDADE %>">
+        <label class="campo"></label>
+      </div>
+      <div class="col">
+        <label for="exampleInputText" class="form-label">Escala Sobreaviso:</label>
+        <input type="text" class="form-control border-secondar shadow-none" id="dateInicio"
+          aria-describedby="textHelp" required readonly placeholder="indicação premiada"
+          name="dataInicio" value="<%= contratado.ESCALA === 'S' ? 'Sim' : 'Não' %>">
+        <label class="campo"></label>
+      </div>
+      <div class="col">
+        <div class="col">
+          <label for="exampleInputText" class="form-label">Treinamento:</label>
+          <input type="text" class="form-control border-secondar shadow-none" id="dateInicio"
+            aria-describedby="textHelp" required readonly placeholder="indicação premiada"
+            name="dataInicio" value="<%= contratado.TREINAMENTOS %>">
+          <label class="campo"></label>
+        </div>
+        <label class="campo"></label>
+      </div>
+    </div>
+
+    <h5 style="border-bottom:1px solid #120947; margin-top: 1%;">Observações Gerais</h5>
+    <div style="margin-top: 0.5%">
+      <div class="row">
+        <div class="col">
+          <div class="mb-3">
+            <label for="exampleInputTextArea" class="form-label" style="border-bottom:1px solid #120947;
+                    font-size: 15px;">Negociação Diferenciada que for alinhada com o
+              profissional</label>
+            <input type="text" class="form-control" required readonly name="observacoes"
+              value="<%= contratado.OBSERVACOES %>">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>

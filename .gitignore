@@ -1,7 +1,5 @@
 /node_modules
 .env
 package-lock.json
-initdb.sh
 dump.sql
-docker-compose.yml
 /storage
