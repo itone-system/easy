@@ -408,6 +408,44 @@ module.exports = {
     // return ({ notasRecebidas, notaUnica, totalPaginas, paginate, descricaoSalva, fornecedorSalva, solicitanteSalva, centroCustoExtensoSalva})
   },
 
+  async detalhamentoForms (request) {
+    // Controller destinado apenas para abrir a página de inserir uma nova solicitação
+    const user = request.session.get('user');
+
+    const conexao = await sql.connect(db);
+
+    tipo = request.tipo + '_view';
+
+    const obterForm = await conexao.query(
+      `select * from ${tipo} WHERE ID = '${request.id}'`
+    );
+
+    const dados = obterForm.recordsets[0];
+
+    const message = await request.session.message();
+
+    console.log(dados)
+
+    if (!user.tipoAcessos.FERIAS) {
+      return redirect('/formularios');
+    } else {
+      return renderView('home/Movimentacao/Formularios/Detail', {
+        dadosForm: dados[0],
+        tipo: request.tipo,
+        nome: user.nome,
+        codigo: user.codigo,
+        departamento: user.departamento,
+        nomeCompleto: user.nomeCompleto,
+        acesso: user.tipoAcessos,
+        tipoRegime: user.tipoRegime,
+        permissoes: user.permissoes,
+        message,
+        dados
+      });
+    }
+    //   return renderView('home/NotaFiscal/CreateNF', { nome: user.nome, message });
+  },
+
   async validacaoFormDP (request) {
     const { CODIGO, COLABORADOR, SOLICITANTE, TIPO, STATUS, MOTIVO_RECUSA, DATA_APROVACAO, TIPO_FORM, APROVADOR } = request;
 

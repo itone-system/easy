@@ -97,7 +97,7 @@ function enviarDados(event) {
 }
 
 function desabilitarCampoSubstituicao () {
-  document.getElementById("optionSubstituido").value = 'N/A';
+  document.getElementById("ColaboradorInsert").value = 'N/A';
   document.getElementById("ColaboradorInsert").disabled = true;
 
 }
@@ -203,7 +203,7 @@ const conveniaColaborares = () => {
     });
 
     listaColab.forEach(element => {
-      var localColab = document.getElementById('ColaboradorInsert')
+      var localColab = document.getElementById('usuarioSimilar')
       var option = document.createElement('option');
       option.textContent = element;
       localColab.appendChild(option);
