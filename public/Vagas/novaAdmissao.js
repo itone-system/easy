@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 function validarFormulario(event) {
 
   event.preventDefault();
@@ -31,8 +32,6 @@ function validarFormulario(event) {
     enviarDados(event)
   }
 }
-
-
 
 window.onload = () => {
   const toggle = body.querySelector(".toggle")
@@ -97,8 +96,10 @@ function enviarDados(event) {
     });
 }
 
-function desabilitarCampoSubstituicao() {
+function desabilitarCampoSubstituicao () {
+  document.getElementById("optionSubstituido").value = 'N/A';
   document.getElementById("ColaboradorInsert").disabled = true;
+
 }
 
 function habilitarCampoSubstituicao() {
@@ -139,7 +140,7 @@ const conveniaCentroCusto = () => {
     });
 };
 
-function verificarOpcaoSelecionada(elementoSelect) {
+function verificarOpcaoSelecionada (elementoSelect) {
   const opcaoSelecionada = elementoSelect.options[elementoSelect.selectedIndex].value;
 
   if (opcaoSelecionada == 'Recursos Dedicado') {
@@ -152,7 +153,7 @@ function verificarOpcaoSelecionada(elementoSelect) {
   }
 }
 
-function formatarMoeda() {
+function formatarMoeda () {
   var elemento = document.getElementById('valor');
   var valor = elemento.value;
 
@@ -169,7 +170,7 @@ function formatarMoeda() {
   if (valor == 'NaN') elemento.value = '';
 }
 
-function getFormValues() {
+function getFormValues () {
   const formValues = {};
   const formInputs = document.querySelectorAll("input, select");
 
@@ -179,8 +180,6 @@ function getFormValues() {
   });
   console.log(formValues)
 }
-
-
 
 const conveniaColaborares = () => {
 
