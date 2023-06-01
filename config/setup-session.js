@@ -9,13 +9,13 @@ const loadSessionCache = async () => {
       const { createClient } = (await import('redis')).default;
 
       let redisClient = createClient({
-        host: sessionCacheService.host, 
-        port: sessionCacheService.port, 
+        host: sessionCacheService.host,
+        port: sessionCacheService.port,
         password: sessionCacheService.password,
       })
 
       redisClient.connect().catch(console.error)
-  
+
       const store = new redisStore({
         client: redisClient,
         prefix: sessionCacheService.prefix

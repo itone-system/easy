@@ -11,13 +11,13 @@ const verifyIndiceAdapter = require('../../../infra/verifyIndiceAdapter');
 
 exports.insert = async (dados) => {
     const conexao = await sql.connect(db);
-    const result = await conexao.request().query(`INSERT INTO SOLICITACAO_ADMISSAO 
+    const result = await conexao.request().query(`INSERT INTO SOLICITACAO_ADMISSAO
     (TIPO_DE_ADMISSAO, SUBSTITUICAO, UNIDADE, DEPARTAMENTO,
      CENTRO_DE_CUSTO, SALARIO, CLIENTE, GESTOR_IMEDIATO,
      CARGO, DEAL, HORARIO, EQUIPAMENTO, CARTAO_DE_VISITA, CELULAR_CORPORATIVO, USUARIO_SIMILARATIVO,
-     ACESSOS_ESPECIFICOS, DATA_DE_ABERTURA, SOLICITANTE, STATUS, PCD, COLABORADOR_SUBSTITUIDO) 
-OUTPUT Inserted.CODIGO 
-VALUES 
+     ACESSOS_ESPECIFICOS, DATA_DE_ABERTURA, SOLICITANTE, STATUS, PCD, COLABORADOR_SUBSTITUIDO)
+OUTPUT Inserted.CODIGO
+VALUES
     ('${dados.tipoDeAdmissao}', '${dados.substituicao}', '${dados.unidade}', '${dados.departamento}',
      '${dados.centroDecusto}', '${dados.salario}', '${dados.cliente}',
      '${dados.gestorImediato}', '${dados.cargo}', '${dados.deal}', '${dados.horario}', '${dados.equipamento}',
@@ -50,7 +50,7 @@ exports.listar = async (filtros, page, user) => {
     const solicitacoes = await conexao.request().query(`
     DECLARE @userCode INT = ${user.codigo};
     DECLARE @userAccessType VARCHAR(50) = '${user.tipoAcessos.ADMISSAO === 'GERENTE' ? 'GESTOR' : user.tipoAcessos.ADMISSAO}';
-    
+
     DECLARE @filterSolicitante INT = NULLIF(${filtros.solicitante || 0}, 0);
     DECLARE @filterDepartamento VARCHAR(50) = NULLIF('${filtros.departamento || ''}', '');
     DECLARE @filterUnidade VARCHAR(50) = NULLIF('${filtros.unidade || ''}', '');
@@ -72,20 +72,36 @@ exports.listar = async (filtros, page, user) => {
         AND (SA.STATUS = @filterStatus OR @filterStatus IS NULL)
     )
 
-    SELECT UA.CODIGO, UA.TIPO_DE_ADMISSAO, UA.SUBSTITUICAO, UA.UNIDADE, UA.DEPARTAMENTO, UA.CENTRO_DE_CUSTO, UA.SALARIO, 
-            UA.CLIENTE, UA.GESTOR_IMEDIATO, UA.CARGO, UA.DEAL, UA.HORARIO, UA.EQUIPAMENTO, UA.CARTAO_DE_VISITA, UA.CELULAR_CORPORATIVO, 
-            UA.USUARIO_SIMILARATIVO, UA.ACESSOS_ESPECIFICOS, CONVERT(VARCHAR(10), UA.DATA_DE_ABERTURA, 103) AS DATA_DE_ABERTURA, DATEDIFF(day, UA.DATA_DE_ABERTURA, GETDATE()) AS DIAS_EM_ABERTO, 
+    SELECT UA.CODIGO, UA.TIPO_DE_ADMISSAO, UA.SUBSTITUICAO, UA.UNIDADE, UA.DEPARTAMENTO, UA.CENTRO_DE_CUSTO, UA.SALARIO,
+            UA.CLIENTE, UA.GESTOR_IMEDIATO, UA.CARGO, UA.DEAL, UA.HORARIO, UA.EQUIPAMENTO, UA.CARTAO_DE_VISITA, UA.CELULAR_CORPORATIVO,
+            UA.USUARIO_SIMILARATIVO, UA.ACESSOS_ESPECIFICOS, CONVERT(VARCHAR(10), UA.DATA_DE_ABERTURA, 103) AS DATA_DE_ABERTURA, DATEDIFF(day, UA.DATA_DE_ABERTURA, GETDATE()) AS DIAS_EM_ABERTO,
             U.NOME_USUARIO AS NOME_SOLICITANTE, UA.STATUS,
             AP.Aprovadores_Pendentes
     FROM UserAccess AS UA
     JOIN Usuarios AS U ON UA.SOLICITANTE = U.COD_USUARIO
     LEFT JOIN (
-        SELECT A.Codigo_Solicitacao, 
-               STRING_AGG(U.NOME_USUARIO, ', ') AS Aprovadores_Pendentes
-        FROM APROVACOES_VAGAS A
-        JOIN Usuarios U ON A.Codigo_Aprovador = U.COD_USUARIO
-        WHERE A.Status = 'N'
-        GROUP BY A.Codigo_Solicitacao
+                SELECT distinct A.Codigo_Solicitacao,
+
+                -- STRING_AGG(U.NOME_USUARIO, ', ') AS Aprovadores_Pendentes,
+          left(STUFF((SELECT   CONVERT(VARCHAR(MAX), Usuarios.NOME_USUARIO) + ','
+              from APROVACOES_VAGAS U
+              JOIN Usuarios ON U.Codigo_Aprovador = Usuarios.COD_USUARIO
+              where U.Codigo_Solicitacao = A.Codigo_Solicitacao
+                FOR XML PATH(''), TYPE
+                ).value('.', 'NVARCHAR(MAX)')
+              ,1,0,''),LEN(STUFF((SELECT   CONVERT(VARCHAR(MAX), Usuarios.NOME_USUARIO) + ','
+              from APROVACOES_VAGAS U
+              JOIN Usuarios ON U.Codigo_Aprovador = Usuarios.COD_USUARIO
+              where U.Codigo_Solicitacao = A.Codigo_Solicitacao
+                FOR XML PATH(''), TYPE
+                ).value('.', 'NVARCHAR(MAX)')
+              ,1,0,''))-1) AS Aprovadores_Pendentes
+
+
+          FROM APROVACOES_VAGAS A
+          JOIN Usuarios U ON A.Codigo_Aprovador = U.COD_USUARIO
+          WHERE A.Status = 'N'
+          GROUP BY A.Codigo_Solicitacao, A.Codigo_Aprovador
     ) AS AP ON UA.CODIGO = AP.Codigo_Solicitacao
     ORDER BY UA.CODIGO DESC
     OFFSET (@currentPage - 1) * @itemsPerPage ROWS
@@ -119,18 +135,18 @@ exports.buscaAprovadores = async (user) => {
     const conexao = await sql.connect(db);
 
 
-    const busca = await conexao.request().query(`DECLARE @userCode INT = ${user.codigo}; 
-  
+    const busca = await conexao.request().query(`DECLARE @userCode INT = ${user.codigo};
+
     DECLARE @coordenador INT, @gestor INT, @diretor INT;
     SELECT @coordenador = COORDENADOR, @gestor = GESTOR, @diretor = DIRETOR
     FROM Usuarios
     WHERE COD_USUARIO = @userCode;
-    
+
     DECLARE @diretorAdministrativo INT;
     SELECT @diretorAdministrativo = COD_USUARIO
     FROM Usuarios
     WHERE CARGO = 'DIRETOR(a) ADMINISTRATIVO' AND ATIVO = 'S';
-    
+
     WITH Aprovadores AS (
         SELECT COD_USUARIO,
             CASE
@@ -178,9 +194,9 @@ exports.buscarProximoAprovador = async (codigoSolicitacao) => {
     let result1 = await conexao.request()
         .input('input_param', sql.Int, codigoSolicitacao)
         .query(`
-                SELECT MAX(Ordem) as UltimaOrdemAprovada 
-                FROM APROVACOES_VAGAS 
-                WHERE Codigo_Solicitacao = @input_param 
+                SELECT MAX(Ordem) as UltimaOrdemAprovada
+                FROM APROVACOES_VAGAS
+                WHERE Codigo_Solicitacao = @input_param
                 AND Status = 'Y'
             `);
 
@@ -190,16 +206,16 @@ exports.buscarProximoAprovador = async (codigoSolicitacao) => {
         .input('input_param1', sql.Int, codigoSolicitacao)
         .input('input_param2', sql.Int, ultimaOrdemAprovada)
         .query(`
-                SELECT TOP 1 
-                    t1.EMAIL_USUARIO, t1.COD_USUARIO 
-                FROM 
-                APROVACOES_VAGAS t0 
-                INNER JOIN Usuarios t1 ON t1.COD_USUARIO = t0.Codigo_Aprovador 
-                WHERE 
-                    t0.Status = 'N' 
+                SELECT TOP 1
+                    t1.EMAIL_USUARIO, t1.COD_USUARIO
+                FROM
+                APROVACOES_VAGAS t0
+                INNER JOIN Usuarios t1 ON t1.COD_USUARIO = t0.Codigo_Aprovador
+                WHERE
+                    t0.Status = 'N'
                     AND t0.Codigo_Solicitacao = @input_param1
                     AND t0.Ordem > @input_param2
-                ORDER BY 
+                ORDER BY
                     t0.Ordem ASC
             `);
 
@@ -282,9 +298,9 @@ exports.verifyAprovador = async (codigoAprovador, codigoSolicitacao) => {
         let ultimaOrdemAprovadaResult = await conexao.request()
             .input('input_param', sql.Int, codigoSolicitacao)
             .query(`
-                SELECT MAX(Ordem) as UltimaOrdemAprovada 
+                SELECT MAX(Ordem) as UltimaOrdemAprovada
                 FROM APROVACOES_VAGAS
-                WHERE Codigo_Solicitacao = @input_param 
+                WHERE Codigo_Solicitacao = @input_param
                 AND Status = 'Y'
             `);
 
@@ -294,7 +310,7 @@ exports.verifyAprovador = async (codigoAprovador, codigoSolicitacao) => {
             .input('input_param1', sql.Int, codigoSolicitacao)
             .input('input_param2', sql.Int, codigoAprovador)
             .query(`
-                SELECT Ordem 
+                SELECT Ordem
                 FROM APROVACOES_VAGAS
                 WHERE Codigo_Solicitacao = @input_param1
                 AND Codigo_Aprovador = @input_param2
