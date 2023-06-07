@@ -13,6 +13,9 @@ let erroDataMenor = false;
 let campos = ["Solicitante", 'CentroCusto', 'Fornecedor', 'DescServico', 'TipoContrato', 'valorNF', 'Deal', 'Observacao', 'fileInput'];
 let colaboradorNome = '';
 let boletoNomeArquivoSemAcento = '';
+let NFVazio = false;
+let boletoVazio = false;
+let listaErrosCamposVazios = [];
 
 
 $(document).ready(function () {
@@ -27,15 +30,44 @@ $(document).ready(function () {
   const dataPag = document.getElementById('DataPagamento')
 
   fileInput.addEventListener('change', event => {
+
     const files = event.target.files;
-    arquivoAnexo = files[0]
-    NomeArquivoSemAcento = fileInput.value.replace('C:\\fakepath\\', '').normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+    if (files.length > 0 && files[0].size === 0) {
+      boletoOuNotaVazia('fileInput', 'add')
+      boletoOuNotaObrigatorio('fileInput')
+      NFVazio = true;
+
+    } else if (files.length > 0) {
+      boletoOuNotaVazia('fileInput', 'remove')
+      boletoOuNotaObrigatorio('fileInput')
+      removerCamposObr('fileInput', 'done')
+      NFVazio = false;
+      arquivoAnexo = files[0]
+      NomeArquivoSemAcento = fileInput.value.replace('C:\\fakepath\\', '').normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    } else {
+      removerCamposObr('fileInput',  'remove')
+    }
   });
 
   boleto.addEventListener("change", event => {
     const boletofiles = event.target.files;
-    boletoAnexo = boletofiles[0]
-    boletoNomeArquivoSemAcento = boleto.value.replace('C:\\fakepath\\', '').normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    if (boletofiles.length > 0 && boletofiles[0].size === 0) {
+      boletoOuNotaVazia('boleto', 'add')
+      boletoOuNotaObrigatorio('boleto')
+      boletoVazio = true;
+
+    } else if (boletofiles.length > 0) {
+      boletoOuNotaVazia('boleto', 'remove')
+      boletoOuNotaObrigatorio('boleto')
+      removerCamposObr('boleto', 'done')
+      boletoVazio = false;
+      boletoAnexo = boletofiles[0]
+      boletoNomeArquivoSemAcento = boleto.value.replace('C:\\fakepath\\', '').normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    }
+    else {
+      removerCamposObr('boleto', 'remove')
+    }
   });
 
   enviarNF.addEventListener("click", function () {
@@ -73,8 +105,6 @@ function dataAtual() {
   document.getElementById("DataPagamento").setAttribute('min', dataAtualConf)
 
 }
-
-
 
 function adicionarCampoColaborador() {
   var campoColaborador = document.getElementById('campoColaborador')
@@ -208,6 +238,8 @@ function limparCampos() {
   });
 
   alert('Documento Enviado!')
+
+  location.reload()
 }
 
 async function insertNota() {
@@ -277,59 +309,6 @@ async function insertNota() {
   limparCampos()
 }
 
-// function validarCamposBackup() {
-
-//     buscarValoresCampos()
-
-//     validarCampoData(document.getElementById('DataPagamento').value)
-
-
-//     if(!trueColaborador) { listaErros.splice(listaErros.indexOf('Colaborador'), 1) }
-
-//     for (let i = 0; i < campos.length; i++) {
-
-//         var camposObr = document.querySelector('.obrigatorio-'+campos[i])
-
-//         const busca = lista.find(element => element == campos[i])
-//         if (document.getElementById(campos[i]).value == '' && !busca) {
-
-//             const campoObrigatorio = campos[i] == 'valorNF' || campos[i] == 'Deal' ? document.querySelector('.col-lg-2.' + campos[i]) : document.querySelector('.col.' + campos[i])
-
-//             var labelObrigatorio = document.createElement('label')
-//             labelObrigatorio.setAttribute('ID', 'obrigatorio');
-//             labelObrigatorio.setAttribute('class','obrigatorio-'+campos[i]);
-//             labelObrigatorio.textContent = '* Campo obrigatório';
-//             campoObrigatorio.appendChild(labelObrigatorio)
-//             listaErros.push(campos[i])
-//             lista = listaErros
-
-//         }
-
-//         else if(camposObr && document.getElementById(campos[i]).value != '')  {
-//             camposObr.remove()
-
-//             listaErros.splice(listaErros.indexOf(campos[i]), 1);
-
-//         }
-
-//         const dadosCompleto = {
-//             Campo: campos[i],
-//             Buscas: busca,
-//             ValorCampo: document.getElementById(campos[i]).value,
-//             listaErros: listaErros
-
-//         }
-//         // console.log(dadosCompleto)
-
-//     }
-
-//     if(listaErros == '' || listaErros == undefined ){
-//         this.insertNota()
-
-//     }
-
-// };
-
 function validarCampos() {
 
   buscarValoresCampos()
@@ -344,7 +323,7 @@ function validarCampos() {
 
     if (document.getElementById(campos[i]).value == '' && !busca) {
 
-      const campoObrigatorio = campos[i] == 'valorNF' || campos[i] == 'Deal' || campos[i] == 'fileInput' ? document.querySelector('.col-lg-2.' + campos[i]) : document.querySelector('.col.' + campos[i])
+      const campoObrigatorio = campos[i] == 'valorNF' || campos[i] == 'Deal' ? document.querySelector('.col-lg-2.' + campos[i]) : document.querySelector('.col.' + campos[i])
       var labelObrigatorio = document.createElement('label')
       labelObrigatorio.setAttribute('ID', 'obrigatorio');
       labelObrigatorio.setAttribute('class', 'obrigatorio-' + campos[i]);
@@ -361,8 +340,13 @@ function validarCampos() {
     }
 
   }
+  console.log(listaErrosCamposVazios.length)
+  console.log(listaErrosCamposVazios)
+  console.log(listaErros.length)
+  console.log(listaErros)
 
-  if (listaErros == '' || listaErros == undefined) {
+
+  if (listaErros.length === 0 && listaErrosCamposVazios.length === 0) {
     this.insertNota()
 
   }
@@ -407,7 +391,7 @@ function validarCampoData(valorCampoDataPagamento) {
   }
 }
 
-function formatarMoeda(){
+function formatarMoeda() {
   var elemento = document.getElementById('valorNF');
   var valor = elemento.value;
 
@@ -424,4 +408,100 @@ function formatarMoeda(){
   if (valor == 'NaN') elemento.value = '';
 };
 
+function boletoOuNotaObrigatorio(tipo) {
+
+  boletOorFile = tipo === 'boleto' ? 'fileInput' : 'boleto';
+  const buscaListaErrosCamposVazio = listaErrosCamposVazios.find(element => element == tipo)
+  const buscaCamposObrigatorios = campos.find(element => element == boletOorFile)
+  const CamposObrigatoriosInicial = campos.find(element => element == tipo)
+  const buscaListaErros = listaErros.find(element => element == boletOorFile)
+
+  // tira um e coloca outro como obrigatório
+  if (!CamposObrigatoriosInicial) {
+    campos.push(tipo)
+  }
+
+  if (buscaCamposObrigatorios) {
+    campos.splice(campos.indexOf(boletOorFile), 1);
+  }
+
+  if (buscaListaErros) {
+    listaErros.splice(listaErros.indexOf(boletOorFile), 1);
+    camposObr = document.querySelector('.obrigatorio-' + boletOorFile)
+    camposVazios = document.querySelector('.campoVazio-' + boletOorFile)
+
+    if (camposObr) {
+      camposObr.remove()
+    }
+    if (camposVazios) {
+      camposVazios.remove()
+    }
+  }
+}
+
+function boletoOuNotaVazia(tipo, funcao) {
+
+  boletOorFile = tipo === 'boleto' ? 'fileInput' : 'boleto';
+   const buscaListaErros = listaErros.find(element => element == boletOorFile)
+
+
+  // arquivo vazio
+  if (funcao === 'add' && !buscaListaErros) {
+    listaErrosCamposVazios.push(tipo)
+    const campoObrigatorio = document.querySelector('.col.' + tipo)
+    var labelObrigatorio = document.createElement('label')
+    labelObrigatorio.setAttribute('ID', 'campoVazio');
+    labelObrigatorio.setAttribute('class', 'campoVazio-' + tipo);
+    labelObrigatorio.textContent = '* Arquivo vazio';
+    campoObrigatorio.appendChild(labelObrigatorio)
+
+  } else {
+    camposObr = document.querySelector('.campoVazio-' + tipo)
+
+    if (buscaListaErros) {
+      listaErrosCamposVazios.splice(listaErrosCamposVazios.indexOf(tipo), 1);
+    }
+    if (camposObr) {
+      camposObr.remove()
+    }
+  }
+
+}
+
+function removerCamposObr(tipo, status){
+
+  const CamposObrigatoriosInicial = campos.find(element => element == tipo)
+  const buscaListaErros = listaErros.find(element => element == tipo)
+  const buscaListaErrosCamposVazios = listaErrosCamposVazios.find(element => element == tipo)
+
+  // tira um e coloca outro como obrigatório
+  if (CamposObrigatoriosInicial && status != 'done') {
+    campos.splice(campos.indexOf(tipo), 1);
+  }
+
+  if (buscaListaErros) {
+    listaErros.splice(listaErros.indexOf(tipo), 1);
+    camposObr = document.querySelector('.obrigatorio-' + tipo)
+
+    if (camposObr) {
+      camposObr.remove()
+    }
+
+  }
+
+  if (buscaListaErrosCamposVazios) {
+    camposVazios = document.querySelector('.campoVazio-' + tipo)
+    listaErrosCamposVazios.splice(listaErrosCamposVazios.indexOf(tipo), 1);
+    if (camposVazios) {
+      camposVazios.remove()
+    }
+  }
+  const CamposObrigatoriosBoleto = campos.find(element => element == 'boleto')
+  const CamposObrigatoriosNF = campos.find(element => element == 'fileInput')
+
+  if(!CamposObrigatoriosNF && !CamposObrigatoriosBoleto){
+    campos.push('fileInput')
+  }
+
+}
 conveniaCentroCusto();

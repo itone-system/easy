@@ -15,10 +15,10 @@ $(document).ready(function () {
   conveniaCentroCusto();
 
 
-  const downloadArquivoNF = document.getElementById('baixararq');
-  downloadArquivoNF.addEventListener('click', function () {
-    downloadNF();
-  });
+  // const downloadArquivoNF = document.getElementById('baixararq');
+  // downloadArquivoNF.addEventListener('click', function () {
+  //   downloadNF();
+  // });
 
 
 
@@ -581,7 +581,7 @@ function gerarDadosModal(codigo) {
       document.getElementById('DataPagamento').value = data[0].Data_Pagamento;
       document.getElementById('Observacao').value = data[0].Observacao;
       document.getElementById('Colaborador').value = data[0].Colaborador;
-      document.getElementById('NomeAnexo').innerText = data[0].Anexo;
+      // document.getElementById('NomeAnexo').innerText = data[0].Anexo;
       // document.getElementById('NomeAnexoBoleto').innerText = data[0].BOLETO;
 
       retornarNFUser = document.getElementById('retornarNFUser').innerText;
@@ -615,6 +615,25 @@ function gerarDadosModal(codigo) {
       }else{
         document.querySelector(".camposBoleto").innerHTML = ""
       }
+
+      if(data[0].Anexo){
+        document.querySelector(".camposNFAnexo").innerHTML = `<div class="row g-3"  style=" margin-top: 3%; ">
+        <div class="col" style=" margin-top: 3%;  font-size:13px">
+
+              <i class='bx bx-download bx-flip-horizontal'  undefined ></i>
+              <label style=" margin-right: 1%;">Nota Fiscal:</label>
+
+                <label id="NomeAnexo"> ${data[0].Anexo}</label>
+
+
+                <a id="baixar" download><button id="baixararq" class="btn btn-secondary" onclick="downloadNF()" style=" margin-left: 3%;font-size:12px"> Baixar Anexo</button></a>
+                </div>
+
+        </div>`
+      }else{
+        document.querySelector(".camposNFAnexo").innerHTML = ""
+      }
+
 
     });
 }

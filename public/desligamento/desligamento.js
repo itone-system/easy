@@ -26,24 +26,6 @@ window.onload = function () {
   });
 }
 
-// function bodyDesligamento(){
-
-//   this.NOME = nome;
-//   this.CC = centroCusto;
-//   this.DATA_AVISO = dataAviso
-//   this.ULTIMO_DIA = ultimoDia
-//   this.TIPO_REGIME = tipoRegime
-//   this.TIPO_DESLIGAMENTO = tipoDesligamento
-//   this.TIPO_AVISO = tipoAviso
-//   this.DESCONTO = desconto
-//   this.MOTIVO = motivo
-//   this.OBSERVACAO = observacao
-//   this.SUBSTITUICAO = substituicao
-
-//   }
-
-
-
 function validarCamposTeste(formData) {
 
   for (const [key, value] of formData) {
@@ -52,8 +34,9 @@ function validarCamposTeste(formData) {
 
     const busca = listaErros.find(element => element == key)
 
+    console.log(key)
 
-    if (value == '' && !busca) {
+    if (value == '' && !busca && key!= 'OBSERVACAO') {
       adicionarCampoErro(key)
     }
 
