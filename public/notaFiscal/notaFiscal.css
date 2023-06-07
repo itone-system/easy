@@ -1122,7 +1122,7 @@ img#foto {
 
   }
 
-  #obrigatorio{
+  #obrigatorio, #campoVazio{
     color: rgb(253, 0, 0);
     font-size: 11px;
 
