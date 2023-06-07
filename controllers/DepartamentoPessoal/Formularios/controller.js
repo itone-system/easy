@@ -363,7 +363,7 @@ module.exports = {
       }
     );
 
-    href = domain + '/notafiscal/buscarNotas?tokenReceive=' + token;
+    href = domain + '/formularios/consultar?tokenReceive=' + token;
 
     ejs.renderFile(
       'template-email/retornoEmailForms.ejs',
@@ -424,7 +424,7 @@ module.exports = {
 
     const message = await request.session.message();
 
-    console.log(dados)
+    console.log(dados);
 
     if (!user.tipoAcessos.FERIAS) {
       return redirect('/formularios');
